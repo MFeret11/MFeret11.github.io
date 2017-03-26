@@ -1,103 +1,109 @@
 <!DOCTYPE HTML>
-<!--
-	Visualize by TEMPLATED
-	templated.co @templatedco
-	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
--->
-<html>
+<html lang="en">
 
 <head>
-
-	<title>Website by M F</title>
 	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<link rel="stylesheet" href="assets/css/main.css" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="A portfolio for developer Matthew Feret inspired by Material Design.">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+	<title>MFeret</title>
+	<!-- Added for material design -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.light_green-deep_purple.min.css" />
+	<link rel="stylesheet" href="styles.css" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 
 <body>
-<style>
-	.l_graytext {
-		color: #E3EAE5;
-		font-weight: 900;
-	}
-	.d_graytext {
-		color: #E3EAE5;
-		font-weight: 900;
-	}
-</style>
-</style>
-
-
-
 	<!-- Wrapper -->
-	<div id="wrapper">
-
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 		<!-- Header -->
-		<header id="header">
-			<!--<span class="avatar"><img src="images/avatar.jpg" alt="" /></span>-->
-			<h1><b>This is My Website!</b></h1>
-			<ul class="icons">
-				<li><a href="#" class="icon style2 fa-envelope-o"><span class="label">Email</span></a></li>
-			</ul>
+		<header class="mdl-layout__header mdl-layout__header--waterfall portfolio-header">
+			<div class="mdl-layout__header-row portfolio-logo-row">
+				<span class="mdl-layout__title">
+                    <div class="portfolio-logo"></div>
+				</span>
+			</div>
+			<div class="mdl-layout__header-row portfolio-navigation-row mdl-layout--large-screen-only">
+				<nav class="mdl-navigation mdl-typography--body-1-force-preferred-font">
+					<a class="mdl-navigation__link is-active" href="index.html">Home</a>
+					<a class="mdl-navigation__link" href="projects.html">Projects</a>
+					<a class="mdl-navigation__link" href="about.html">About</a>
+					<a class="mdl-navigation__link" href="contact.html">Contact</a>
+				</nav>
+			</div>
 		</header>
-
+		<div class="mdl-layout__drawer mdl-layout--small-screen-only">
+			<nav class="mdl-navigation mdl-typography--body-1-force-preferred-font">
+				<a class="mdl-navigation__link is-active" href="index.html">Home</a>
+				<a class="mdl-navigation__link" href="projects.html">Projects</a>
+				<a class="mdl-navigation__link" href="about.html">About</a>
+				<a class="mdl-navigation__link" href="contact.html">Contact</a>
+			</nav>
+		</div>
 		<!-- Main -->
-		<section id="main">
+		<main class="mdl-layout__content">
+			<div class="mdl-grid portfolio-max-width">
+				<div class="mdl-cell mdl-card mdl-shadow--4dp portfolio-card">
+					<div class="mdl-card__media">
+						<!--<img class="article-image" src=" images/example-work01.jpg" border="0" alt="">-->
+					</div>
+					<div class="mdl-card__title">
+						<h2 class="mdl-card__title-text">Projects</h2>
+					</div>
+					<div class="mdl-card__supporting-text">
+						I have started and completed many personal projects through the years. Here are a few:
+						<div>Racko: a game of racks</div>
+						<div>SimpleJavaCalculator (as a MVC showcase)</div>
+						<div>Untitled Original Android App TBA</div>
+						<div>FoxClimbers (a snowclimbers knockoff)</div>
+						<div>This site is also still in the working stages.</div>
+					</div>
+					<div class="mdl-card__actions mdl-card--border">
+						<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--accent" href="projects.html">Read more</a>
+					</div>
+				</div>
+				<div class="mdl-cell mdl-card mdl-shadow--4dp portfolio-card">
+					<div class="mdl-card__media">
+						<!--<img class="article-image" src=" images/example-work07.jpg" border="0" alt="">-->
+					</div>
+					<div class="mdl-card__title">
+						<h2 class="mdl-card__title-text">About</h2>
+					</div>
+					<div class="mdl-card__supporting-text">
+						I am a recent graduate of West Chester University with a Bachelors in Computer Science. To learn more about me click read more. To contact me go to my contact page.
+					</div>
+					<div class="mdl-card__actions mdl-card--border">
+						<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--accent" href="about.html">Read more</a>
 
-			<!-- Thumbnails -->
-			<div>
-				<h2 class="l_graytext">here is my Github page: <a href="https://github.com/MFeret11"> MFeret11</a></h2>
-
+					</div>
+				</div>
+				<div class="mdl-cell mdl-card mdl-shadow--4dp portfolio-card">
+					<div class="mdl-card__media">
+						<!--<img class="article-image" src=" images/example-work02.jpg" border="0" alt="">-->
+					</div>
+					<div class="mdl-card__title">
+						<h2 class="mdl-card__title-text">Interests</h2>
+					</div>
+					<div class="mdl-card__supporting-text">
+						I have many interests including:
+						<div>Android development</br></div>
+						<div>Cyber Security</div>
+						<div>Big data analysis</div>
+						<div>Web development</div>
+						<div>Video Game development in Unity</div>
+						<div>Skiing</div>
+						<div>Classical Guitar</div>
+						<div>Seeing live music acts</div>
+					</div>
+					<div class="mdl-card__actions mdl-card--border">
+						<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--accent" href="about.html">Read more</a>
+					</div>
+				</div>
 			</div>
-			<div>
-				<h2 class="l_graytext">I am a recent CS graduate of West Chester University</h2>
-			</div>
-
-
-			<h1>Areas of interest:</h1>
-			<p class="l_graytext">
-				<div>Android development</br>
-				</div>
-				<div>Web development</br>
-				</div>
-				<div>Video Game development in Unity</br>
-				</div>
-				<div>Cyber Security</br>
-				</div>
-				<div>Skiing</br>
-				</div>
-				<div>Classic Guitar</br>
-				</div>
-			</p>
-
-
-			<h1>Current projects:</h1>
-			<p class="graytext">
-				<div>Racko: a game of racks</div>
-
-				<div>Untitled Original Android App TBA</div>
-
-				<div>FoxClimbers (a snowclimbers knockoff)</div>
-
-				<div>This site!</div>
-			</p>
-		</section>
-
-<div<div align="center">
-</br></br>
-<h4>More to come soon!</h4>   
-
-</div>>
-
-
+		</main>
 	</div>
-
 	<!-- Scripts -->
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/js/jquery.poptrox.min.js"></script>
-	<script src="assets/js/skel.min.js"></script>
-	<script src="assets/js/main.js"></script>
-
+	<script src="https://code.getmdl.io/1.0.6/material.min.js"></script>
 </body>
-
 </html>
