@@ -78,7 +78,7 @@
   position: absolute;
   bottom: 0;
   left: 0;
-  background-color: rgb(255,64,129);
+  background-color: rgb(5,72,80);
   left: 15%;
 }
 
@@ -162,9 +162,3 @@ img.article-image {
   max-width: 550px;
   margin: auto;
 }
-
-footer {
-  background-image: url(images/footer-background.png);
-  background-size: cover;
-}
-
