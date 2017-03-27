@@ -59,7 +59,11 @@
       -ms-flex: 1;
           flex: 1;
   line-height: 42px;
-  color: #B2DFDB;
+  /*Text color of tabs*/
+  /*color: #fff;*/
+  color: #fff;
+    text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+  border: 2px solid #B2DFDB;
 
 }
 
