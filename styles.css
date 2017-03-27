@@ -59,6 +59,8 @@
       -ms-flex: 1;
           flex: 1;
   line-height: 42px;
+  color: #B2DFDB;
+
 }
 
 .portfolio-header .mdl-layout__drawer-button {
@@ -78,6 +80,7 @@
   position: absolute;
   bottom: 0;
   left: 0;
+  /*Eagles color. highlights selected page-tab.*/
   background-color: rgb(5,72,80);
   left: 15%;
 }
