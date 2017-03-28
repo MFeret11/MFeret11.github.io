@@ -75,6 +75,10 @@
   position: relative;
   font-weight: bold;
 }
+/*.portfolio-navigation-row .onmouseover{
+  position: relative;
+  background-color: black;
+}*/
 
 .portfolio-navigation-row .is-active:after {
   content: "";
@@ -168,4 +172,18 @@ img.article-image {
 .portfolio-contact form {
   max-width: 550px;
   margin: auto;
+}
+
+.icons {
+  align-self: center;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  /*margin: 0 16px;*/
+  /*width: 24px;
+  height: 24px;*/
+  cursor: pointer;
+  opacity: 0.75;
+  border-radius: 2px;
 }
