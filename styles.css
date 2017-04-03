@@ -19,7 +19,6 @@
 .mdl-layout__content {
   /*background-image: url(images/bg.jpg);*/
   background: url(images/bg.jpg) repeat;
-  min-height: 100%;
 }
 
 .is-compact .mdl-layout__title span {
