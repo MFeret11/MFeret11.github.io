@@ -16,6 +16,11 @@
   font-weight: 300;
 }
 
+.mdl-layout__content {
+  background-image: url(images/bg.jpg);
+
+}
+
 .is-compact .mdl-layout__title span {
   display: none;
 }
@@ -183,7 +188,7 @@ img.article-image {
   /*margin: 0 16px;*/
   /*width: 24px;
   height: 24px;*/
-  cursor: pointer;
+  /*cursor: pointer;*/
   opacity: 0.75;
   border-radius: 2px;
 }
