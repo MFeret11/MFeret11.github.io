@@ -1,19 +1,27 @@
 <?php
-    $name = $_POST['Name'];
-    $email = $_POST['Email'];
-    $note = $_POST['note'];
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $message = $_POST['message'];
     $from = 'From: TangledDemo';
-    $to = 'mferet11@gmail.com';
-   $subject = 'Hello';
+    $to = 'admin@mferet.com';
+    $subject = 'Hello';
+    $human = $_POST['human'];
 
-   $body = "From: $name\n E-Mail: $email\n Message:\n $note";
+    $body = "From: $name\n E-Mail: $email\n Message:\n $message";
 
-   if ($_POST['submit']) {
-    /* Anything that goes in here is only performed if the form is submitted */
-      if (mail ($to, $subject, $body, $from)) {
-       echo '<p>Your message has been sent!</p>';
-     } else {
-       echo '<p>Something went wrong, go back and try again!</p>';
-     }
-   }
+    if ($_POST['submit']) {
+    if ($name != '' && $email != '') {
+        if ($human == '4') {
+            if (mail ($to, $subject, $body, $from)) {
+	        echo '<p>Your message has been sent!</p>';
+	    } else {
+	        echo '<p>Something went wrong, go back and try again!</p>';
+	    }
+	} else if ($_POST['submit'] && $human != '4') {
+	    echo '<p>You answered the anti-spam question incorrectly!</p>';
+	}
+    } else {
+        echo '<p>You need to fill in all required fields!!</p>';
+    }
+}
 ?>
