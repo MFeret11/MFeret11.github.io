@@ -72,28 +72,27 @@
 					<div class="mdl-card__media">
 						<img class="article-image" src=" images/contact-image.jpg" border="0" alt="">
 					</div>
-						<div class="mdl-cell mdl-cell--10-col mdl-card__supporting-text no-padding ">
-							<p>If you'd like to contact me please leave name and message below. Thank you! NOT YET IMPLEMENTED.</p>
-							<p>You can also email me at admin[at]mferet[dot]com.</p>
-						</div>
+					<div class="mdl-cell mdl-cell--10-col mdl-card__supporting-text no-padding ">
+						<p>If you'd like to contact me please leave name and message below. Thank you! NOT YET IMPLEMENTED.</p>
+						<p>You can also email me at admin[at]mferet[dot]com.</p>
+					</div>
 
 
 
-
-						<form action="contact.php" method="POST" enctype="multipart/form-data">
-							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-								<input class="mdl-textfield__input" pattern="[A-Z,a-z, ]*" type="text" id="Name">
-								<label class="mdl-textfield__label" for="Name">Name: </label>
-								<span class="mdl-textfield__error">Letters and spaces only</span></div>
-							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-								<input class="mdl-textfield__input" type="text" id="Email">
-								<label class="mdl-textfield__label" for="Email">Email: </label></div>
-							<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-								<textarea class="mdl-textfield__input" type="text" rows="5" id="note"></textarea>
-								<label class="mdl-textfield__label" for="note">Enter note</label></div>
-							<p><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-								value="send email" id="submit" type="submit">Submit</button></p>
-						</form>
+					<!--contact form-->
+					<form action="http://mferet.com/contact.php" method="POST" enctype="multipart/form-data">
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" pattern="[A-Z,a-z, ]*" type="text" id="Name">
+							<label class="mdl-textfield__label" for="Name">Name: </label>
+							<span class="mdl-textfield__error">Letters and spaces only</span></div>
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<input class="mdl-textfield__input" type="text" id="Email">
+							<label class="mdl-textfield__label" for="Email">Email: </label></div>
+						<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<textarea class="mdl-textfield__input" type="text" rows="5" id="note"></textarea>
+							<label class="mdl-textfield__label" for="note">Enter note</label></div>
+						<p><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" value="send email" id="submit" type="submit">Submit</button></p>
+					</form>
 
 					<!-- Icon button -->
 					<div class="icons">
