@@ -16,12 +16,13 @@
   font-weight: 300;
 }
 
+/*Added for text background color*/
 .mdl-cell {
-  background-color: #EDE7F6;
+  background-color: #F1F8E9;
 }
 
+/*Full background picture*/
 .mdl-layout__content {
-  /*background-image: url(images/bg.jpg);*/
   background: url(images/bg.jpg) repeat;
 }
 
@@ -37,11 +38,12 @@
   min-height: auto;
 }
 
+/*MF Logo*/
 .portfolio-logo {
   background: url(images/favicon/mf-logo.png) 50% no-repeat;
   background-size: cover;
-  height: 235px;
-  width: 235px;
+  height: 125px;
+  width: 125px;
   margin: auto auto 10px;
 }
 
@@ -70,7 +72,7 @@
   line-height: 42px;
   /*Text color of tabs*/
   /*color: #fff;*/
-  color: #EDE7F6;
+  color: #F1F8E9;
     text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
   /*border: 2px solid #7C4DFF;*/
 
