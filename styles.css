@@ -56,7 +56,7 @@
 .portfolio-navigation-row {
   background-color: rgba(0, 0, 0, 0.08);
   text-transform: uppercase;
-  height: 45px;
+  height: 42px;
 }
 
 .portfolio-navigation-row  .mdl-navigation {
@@ -71,11 +71,8 @@
           flex: 1;
   line-height: 42px;
   /*Text color of tabs*/
-  /*color: #fff;*/
   color: #F1F8E9;
     text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
-  /*border: 2px solid #7C4DFF;*/
-
 }
 
 .portfolio-header .mdl-layout__drawer-button {
@@ -86,10 +83,6 @@
   position: relative;
   font-weight: bold;
 }
-/*.portfolio-navigation-row .onmouseover{
-  position: relative;
-  background-color: black;
-}*/
 
 .portfolio-navigation-row .is-active:after {
   content: "";
