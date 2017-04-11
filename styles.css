@@ -79,6 +79,10 @@
     background-color: rgba(197, 197, 197, 0.44);
 }
 
+.mdl-layout__drawer{
+   background-color: #F1F8E9;
+}
+
 .portfolio-navigation-row .is-active {
   position: relative;
   font-weight: bold;
@@ -92,7 +96,7 @@
   position: absolute;
   bottom: 0;
   left: 0;
-  /*Eagles color. highlights selected page-tab.*/
+  /*highlights selected page-tab.*/
   background-color: #7C4DFF;
   left: 15%;
 }
