@@ -188,10 +188,21 @@ img.article-image {
   background-size: contain;
   background-repeat: no-repeat;
   background-color: transparent;
-  /*margin: 0 16px;*/
-  /*width: 24px;
-  height: 24px;*/
-  /*cursor: pointer;*/
+}
+
+.a{
   opacity: 0.75;
-  border-radius: 2px;
+  transition: all 0.3s ease 0s;
+}
+
+.a:hover {
+ opacity: 1;
+}
+
+.b{
+  transition: all 0.3s ease 0s;
+}
+
+.b:hover {
+ background: #4FC3F7;
 }
