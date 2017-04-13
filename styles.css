@@ -1,6 +1,8 @@
 .portfolio-header {
   position: relative;
   background-image: url(images/skiLift.jpg);
+  background-repeat:no-repeat;
+  background-size:cover;
 }
 
 .portfolio-header .mdl-layout__header-row {
@@ -24,6 +26,8 @@
 /*Full background picture*/
 .mdl-layout__content {
   background: url(images/bg.jpg) repeat;
+  background-repeat:no-repeat;
+  background-size:cover;
 }
 
 .is-compact .mdl-layout__title span {
