@@ -52,11 +52,12 @@
   width: 50px;
   margin-top: 7px;
 }
-
+/* Grey background to nav row*/
 .portfolio-navigation-row {
   background-color: rgba(0, 0, 0, 0.08);
   text-transform: uppercase;
   height: 42px;
+  /*background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #9575CD);*/
 }
 
 .portfolio-navigation-row  .mdl-navigation {
@@ -87,6 +88,9 @@
   position: relative;
   font-weight: bold;
 }
+
+/* For ripple effect on nav bar selector */
+a.mdl-js-ripple-effect { position: relative; }
 
 .portfolio-navigation-row .is-active:after {
   content: "";
@@ -189,20 +193,25 @@ img.article-image {
   background-repeat: no-repeat;
   background-color: transparent;
 }
-
+/* .a is for icons such at github and facebook*/
 .a{
   opacity: 0.75;
   transition: all 0.3s ease 0s;
 }
-
 .a:hover {
  opacity: 1;
 }
-
+/* .b is for github project links*/
 .b{
   transition: all 0.3s ease 0s;
 }
-
 .b:hover {
  background: #9575CD;
+}
+/* .c is for gradient shading for nav links*/
+.c{
+  transition: all 0.5s ease 0s;
+}
+.c:hover {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(149, 117, 205, 0.6));
 }
