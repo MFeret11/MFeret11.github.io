@@ -208,10 +208,10 @@ img.article-image {
 }
 /* .b is for github project links*/
 .b{
-  transition: all 0.3s ease 0s;
+  transition: all 0.3s ease-in-out;
 }
 .b:hover {
- background: #9575CD;
+ background: #40c4ff;
 }
 /* .c is for gradient shading for nav links*/
 .c{
@@ -232,20 +232,9 @@ img.article-image {
   -webkit-transform-origin: 0;
   transform-origin: 0;
   opacity:1;
-  background: linear-gradient(to bottom, rgba(149, 117, 205, 0.6), rgba(129,212,250,1));
-}
-
-.resume{
-  opacity:0.8;
-  transition: all .4s ease-in-out;
-}
-
-.resume:hover {
-  -ms-transform: scale(1.25, 1); /* IE 9 */
-  -webkit-transform: scale(1.25,1);
-  transform: scale(1.25, 1);
-  -webkit-transform-origin: 0;
-  transform-origin: 0;
-  opacity:1;
-  background: linear-gradient(to bottom, rgba(149, 117, 205, 0.6), rgba(129,212,250,1));
+  background: rgba(64,196,255,1); /* For browsers that do not support gradients */
+  background: -webkit-radial-gradient(rgba(149, 117, 205, 0), rgba(64,196,255,1), rgba(149, 117, 205, 0.5)); /* For Safari 5.1 to 6.0 */
+  background: -o-radial-gradient(rgba(149, 117, 205, 0), rgba(64,196,255,1), rgba(149, 117, 205, 0.5)); /* For Opera 11.1 to 12.0 */
+  background: -moz-radial-gradient(rgba(149, 117, 205, 0), rgba(64,196,255,1), rgba(149, 117, 205, 0.5)); /* For Firefox 3.6 to 15 */
+  background: radial-gradient(rgba(149, 117, 205, 0), rgba(64,196,255,1), rgba(149, 117, 205, 0.5)); /* Standard syntax */
 }
