@@ -229,6 +229,8 @@ img.article-image {
   -webkit-transform: scale(1.25);
   -webkit-transform-origin: 0;
   opacity:1;
+  background: linear-gradient(to bottom, rgba(149, 117, 205, 0.6), rgba(129,212,250,1));
+
 }
 
 .resume{
@@ -239,4 +241,5 @@ img.article-image {
 .resume:hover {
   -webkit-transform-origin: 0;
   opacity:1;
+  background: linear-gradient(to bottom, rgba(149, 117, 205, 0.6), rgba(129,212,250,1));
 }
