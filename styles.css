@@ -222,15 +222,17 @@ img.article-image {
 }
 .readmore{
   opacity:0.8;
-  transition: all .4s ease-in-out;
+  transition: all .3s ease-in-out;
 }
 
 .readmore:hover {
-  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25, 1); /* IE 9 */
+  -webkit-transform: scale(1.25,1);
+  transform: scale(1.25, 1);
   -webkit-transform-origin: 0;
+  transform-origin: 0;
   opacity:1;
   background: linear-gradient(to bottom, rgba(149, 117, 205, 0.6), rgba(129,212,250,1));
-
 }
 
 .resume{
@@ -239,7 +241,11 @@ img.article-image {
 }
 
 .resume:hover {
+  -ms-transform: scale(1.25, 1); /* IE 9 */
+  -webkit-transform: scale(1.25,1);
+  transform: scale(1.25, 1);
   -webkit-transform-origin: 0;
+  transform-origin: 0;
   opacity:1;
   background: linear-gradient(to bottom, rgba(149, 117, 205, 0.6), rgba(129,212,250,1));
 }
