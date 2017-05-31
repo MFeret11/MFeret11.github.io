@@ -7,6 +7,7 @@
 	<meta name="description" content="A portfolio for developer Matthew Feret that uses Material Design.">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 	<title>MFeret</title>
+
 	<!--Only for favicon-->
 	<link rel="apple-touch-icon" sizes="144x144" href="images/favicon/apple-touch-icon.png">
 	<link rel="icon" type="image/png" href="images/favicon/favicon-32x32.png" sizes="32x32">
@@ -59,224 +60,201 @@
 					</div>
 					<div class="mdl-grid portfolio-copy no-padding">
 						<div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text no-padding ">
-							<p>Below I have listed projects that are currently in the works or are completed.
-							These projects are created using Java, PHP, C#, among other languages.
-							My working environment includes these IDEs and text editors: NetBeans, Eclipse, Android Studio, Atom, and TextWrangler.
-							Many of these projects are on my github page and you can click on the github icon to
-							access each project. And as always, more to come - expect consistent updates!</p>
+							<p>Below I have listed many of my projects. To view details click on the titles. These projects are created using Java, PHP, C#, among other languages. My working environment includes these IDEs and text editors: NetBeans, Eclipse, Android Studio,
+								Atom, and TextWrangler. Many of these projects are on my github page and you can click on the github icon to access each project. And as always, more to come - expect consistent updates!</p>
 							<!--<span>Category: <a href="#">Latest</a></span>-->
 						</div>
+						<div onclick="  toggle_Visibility(1)" class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet  mdl-button mdl-js-button mdl-js-ripple-effect b">C3 Mobile</div>
+						<div onclick="  toggle_Visibility(2)" class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet  mdl-button mdl-js-button mdl-js-ripple-effect b">Calc</div>
+						<div onclick="  toggle_Visibility(3)" class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet  mdl-button mdl-js-button mdl-js-ripple-effect b">Racko</div>
+						<div onclick="  toggle_Visibility(4)" class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet  mdl-button mdl-js-button mdl-js-ripple-effect b">flowershop</div>
+						<div onclick="  toggle_Visibility(5)" class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet  mdl-button mdl-js-button mdl-js-ripple-effect b">foxclimber</div>
+						<div onclick="  toggle_Visibility(6)" class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet  mdl-button mdl-js-button mdl-js-ripple-effect b">labrynth</div>
+						<div onclick="  toggle_Visibility(7)" class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet  mdl-button mdl-js-button mdl-js-ripple-effect b">rsa</div>
+						<div onclick="  toggle_Visibility(8)" class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet  mdl-button mdl-js-button mdl-js-ripple-effect b">euler</div>
+						<div onclick="  toggle_Visibility(9)" class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet  mdl-button mdl-js-button mdl-js-ripple-effect b">war</div>
+					  <div onclick="  toggle_Visibility(10)" class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet  mdl-button mdl-js-button mdl-js-ripple-effect b">slime arcade</div>
 					</div>
 				</div>
+
 				<!-- 1 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp">
-					<div class="mdl-card__title ">
+				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp" id="1" style="display:none;" onclick=" toggle_Visibility(1)">
+					<div class="mdl-card__title">
 						<i class="material-icons">android</i>
 						<img src="images/logo/c3logo.png" alt="c3logo" style="width:30px; padding:4px">
 						<h2 class="mdl-card__title-text" style="margin:auto;padding-right:15%;">C3 Mobile </h2>
 					</div>
 					<div class="mdl-card__supporting-text">
-						<p>As part of my internship while in school and as a recent graduate
-							I worked on a native-Android app called C3Mobile. I made numerous changes to
-							the existing app such as fixing bugs, framework changes, data verification, error-handling,
-							and enhancing code to work with latest versions of android. This is an intensive
-							project worked on by a small group using git and agile methodologies.</p>
+						<p>As part of my internship while in school and as a recent graduate I worked on a native-Android app called C3Mobile. I made numerous changes to the existing app such as fixing bugs, framework changes, data verification, error-handling, and enhancing
+							code to work with latest versions of android. This is an intensive project worked on by a small group using git and agile methodologies.</p>
 					</div>
-
 				</div>
 				<!-- 2 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp">
+				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp" id="2" style="display:none;" onclick=" toggle_Visibility(2)">
 					<div class="mdl-card__title">
-
 						<h2 class="mdl-card__title-text" style="margin:auto;">Simple Java Calculator</h2>
 						<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised b">
-						<a href="https://github.com/MFeret11/SimpleJavaCalc" target="_blank">
-							<img class="icon" src="images/logo/ghlogo.png" style="width:30px;height:30px;">
-						</a>
-					</button>
-					</div>
-					<div class="mdl-card__media">
+								<a href="https://github.com/MFeret11/SimpleJavaCalc" target="_blank">
+									<img class="icon" src="images/logo/ghlogo.png" style="width:30px;height:30px;">
+								</a>
+							</button>
 					</div>
 					<div class="mdl-card__supporting-text">
-						<p>As a demonstration and tool for learning Model-View-Controller design principles
-							I created a simple Java calculator using Java swing. This calculator is capable of
-							normal arithmetic and exponentiation as well as clearing data fields.
-							 To run simply download download project from Github.
-							 You can then run the project from the cmd line by executing the jar file if you wish.</p>
+						<p>As a demonstration and tool for learning Model-View-Controller design principles I created a simple Java calculator using Java swing. This calculator is capable of normal arithmetic and exponentiation as well as clearing data fields. To run simply
+							download download project from Github. You can then run the project from the cmd line by executing the jar file if you wish.</p>
 					</div>
 
 				</div>
 				<!-- 3 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp">
+				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp" id="3" style="display:none;" onclick=" toggle_Visibility(3)">
 					<div class="mdl-card__title">
 						<i class="material-icons" style="padding-right:7%;">games</i>
 						<h2 class="mdl-card__title-text" style="margin:auto;padding-right:10%;">Racko: a game of racks</h2>
 						<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised b">
-						<a href="https://github.com/MFeret11/Racko" target="_blank">
-							<img class="icon" src="images/logo/ghlogo.png" style="width:30px;height:30px;">
-						</a>
-					</button>
+								<a href="https://github.com/MFeret11/Racko" target="_blank">
+									<img class="icon" src="images/logo/ghlogo.png" style="width:30px;height:30px;">
+								</a>
+							</button>
 					</div>
-					<div class="mdl-card__media">
-					</div>
+
 					<div class="mdl-card__supporting-text">
-						<p>A current project: Racko: The game of racks. I have been working on a digital version
-							of Rack-o created by Milton Bradley. Being designed using C#. Initially planned as a GUI made in Unity,
-							I decided on making it text-based. Good for 2-4 players. Suitable for ages 2-120 years.
-							</p>
+						<p>A current project: Racko: The game of racks. I have been working on a digital version of Rack-o created by Milton Bradley. Being designed using C#. Initially planned as a GUI made in Unity, I decided on making it text-based. Good for 2-4 players.
+							Suitable for ages 2-120 years.
+						</p>
 					</div>
 				</div>
 				<!-- 4 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp">
-					<div class="mdl-card__title">
+				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp" id="4" style="display:none;" onclick=" toggle_Visibility(4)">
+					<div class="mdl-card__title accordion">
 						<i class="material-icons" style="padding:4px;">school</i>
 						<h2 class="mdl-card__title-text" style="padding-left:25%;"> Flowershop</h2>
 					</div>
-					<div class="mdl-card__media">
-					</div>
 					<div class="mdl-card__supporting-text">
-						<p>An assignment in my User Interfaces class which I am proud of: a virtual flowershop where
-							we individually designed the UI and database structure. Fully implemented using PHP with smarty
-							template in the Fuel framework.</p>
+						<p>An assignment in my User Interfaces class which I am proud of: a virtual flowershop where we individually designed the UI and database structure. Fully implemented using PHP with smarty template in the Fuel framework.</p>
 					</div>
 				</div>
 				<!-- 5 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp">
+				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp" id="5" style="display:none;" onclick=" toggle_Visibility(5)">
 					<div class="mdl-card__title">
 						<i class="material-icons" style="padding:4px;">school</i>
 
-							<img src="images/logo/unitylogo.png" alt="unity logo" style="width:24px; padding:4px">
-							<h2 class="mdl-card__title-text" style="margin:auto;padding-right:10%;"> FoxClimbers</h2>
+						<img src="images/logo/unitylogo.png" alt="unity logo" style="width:24px; padding:4px">
+						<h2 class="mdl-card__title-text" style="margin:auto;padding-right:10%;"> FoxClimbers</h2>
 
-							<!-- Icon button -->
-								<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised b">
+						<!-- Icon button -->
+						<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised b">
 								<a href="https://github.com/MFeret11/foxclimbers" target="_blank">
 									<img class="icon" src="images/logo/ghlogo.png" style="width:30px;height:30px;">
 								</a>
 							</button>
 					</div>
-					<div class="mdl-card__media">
-					</div>
 					<div class="mdl-card__supporting-text">
-						<p>What started out as an open-ended assignment in my large-scale projects class warped into a
-							fun pet-project for me.
-							Written in C# and created in Unity, FoxClimbers was inspired by the old school game IceClimbers.
-							There is plenty to add still, but you can check it out and let me know what you think!
-							to play click on the github link, download, and click game1.app.</p>
+						<p>What started out as an open-ended assignment in my large-scale projects class warped into a fun pet-project for me. Written in C# and created in Unity, FoxClimbers was inspired by the old school game IceClimbers. There is plenty to add still, but
+							you can check it out and let me know what you think! to play click on the github link, download, and click game1.app.</p>
 					</div>
 				</div>
 				<!-- 6 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp">
-					<div class="mdl-card__title">
+				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp" id="6" style="display:none;" onclick=" toggle_Visibility(6)">
+					<div class="mdl-card__title accordion">
 						<i class="material-icons" style="padding:4px;">school</i>
-							<img src="images/logo/unitylogo.png" alt="unity logo" style="width:24px; height:24px;padding:4px">
+						<img src="images/logo/unitylogo.png" alt="unity logo" style="width:24px; height:24px;padding:4px">
 						<h2 class="mdl-card__title-text" style="margin:auto;padding-right:5%;"> LabrythnGame</h2>
 						<!-- Icon button -->
-							<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised b">
+						<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised b">
 							<a href="https://github.com/MFeret11/LabyrnthGame" target="_blank">
 								<img class="icon" src="images/logo/ghlogo.png" style="width:30px;height:30px;">
 							</a>
 						</button>
 					</div>
-					<div class="mdl-card__media">
-					</div>
 					<div class="mdl-card__supporting-text">
-						<p>A fun school project about a little marble that could... finish a labrythn. Very difficult!
-							Made by 1 colleague and myself. Avoid the red dots, find the black dots.
-							To play click on the github link, download and click on game2.app in the assets folder.</p>
+						<p>A fun school project about a little marble that could... finish a labrythn. Very difficult! Made by 1 colleague and myself. Avoid the red dots, find the black dots. To play click on the github link, download and click on game2.app in the assets
+							folder.
+						</p>
 					</div>
 				</div>
 				<!-- 7 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp">
+				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp" id="7" style="display:none;" onclick=" toggle_Visibility(7)">
 					<div class="mdl-card__title">
 						<i class="material-icons" style="padding:4px;">school</i>
 						<i class="material-icons" style="padding:4px;">security</i>
 
 						<h2 class="mdl-card__title-text" style="margin:auto;padding-right:7%;"> RSA Encryption</h2>
 
-							<!-- Icon button -->
-								<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised b">
+						<!-- Icon button -->
+						<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised b">
 								<a href="https://github.com/MFeret11/RSA_Example" target="_blank">
 									<img class="icon" src="images/logo/ghlogo.png" style="width:30px;height:30px;">
 								</a>
 							</button>
 
 					</div>
-					<div class="mdl-card__media">
-					</div>
+
 					<div class="mdl-card__supporting-text">
-						<p>A Java implementation of the famous asymmetric cryptographic algorithm
-							created by Rivest, Shamir, and Adleman in 1978.
-							Can be used to encrypt and decrypt messages. Uses BigInteger.</p>
+						<p>A Java implementation of the famous asymmetric cryptographic algorithm created by Rivest, Shamir, and Adleman in 1978. Can be used to encrypt and decrypt messages. Uses BigInteger.</p>
 					</div>
 				</div>
 				<!-- 8 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp">
+				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp" id="8" style="display:none;" onclick=" toggle_Visibility(8)">
 					<div class="mdl-card__title">
-
 						<h2 class="mdl-card__title-text" style="margin:auto;"> Project Euler Problems</h2>
 						<!-- Icon button -->
 						<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised b">
-						<a href="https://github.com/MFeret11/ProjectEulerJava" target="_blank">
-							<img class="icon" src="images/logo/ghlogo.png" style="width:30px;height:30px;">
-						</a>
-					</button>
-					</div>
-					<div class="mdl-card__media">
+								<a href="https://github.com/MFeret11/ProjectEulerJava" target="_blank">
+									<img class="icon" src="images/logo/ghlogo.png" style="width:30px;height:30px;">
+								</a>
+							</button>
 					</div>
 					<div class="mdl-card__supporting-text">
-						<p>I have completed numerous Project Euler problems using Java.
-							More will be uploaded. Currently the first 7 problems are up.
-							Through this process I have learned to think about and create algorithms to solve open-ended problems.
-						This process also keeps my programming skills sharp.</p>
+						<p>I have completed numerous Project Euler problems using Java. More will be uploaded. Currently the first 7 problems are up. Through this process I have learned to think about and create algorithms to solve open-ended problems. This process also keeps
+							my programming skills sharp.</p>
 					</div>
 				</div>
 				<!-- 9 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp">
-					<div class="mdl-card__title">
+				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp" id="9" style="display:none;" onclick=" toggle_Visibility(9)">
+					<div class=" mdl-card__title">
 						<i class="material-icons" style="no-padding">games</i>
 						<h2 class="mdl-card__title-text" style="margin:auto;padding-right:5%;">War: The Card Game</h2>
 						<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised b">
-						<a href="https://github.com/MFeret11/WarCardGame" target="_blank">
-							<img class="icon" src="images/logo/ghlogo.png" style="width:30px;height:30px;">
-						</a>
-					</button>
-					</div>
-					<div class="mdl-card__media">
+								<a href="https://github.com/MFeret11/WarCardGame" target="_blank">
+									<img class="icon" src="images/logo/ghlogo.png" style="width:30px;height:30px;">
+								</a>
+							</button>
 					</div>
 					<div class="mdl-card__supporting-text">
 						<p>A text-based C# implementation of War the card game. Demonstrates the OOP paradigm. Sometimes the simple classics are the most fun!</p>
 					</div>
 				</div>
 				<!-- 10 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp">
+				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp" id="10" style="display:none;" onclick=" toggle_Visibility(10)">
 					<div class="mdl-card__title">
 						<i class="material-icons" style="padding:4px;">school</i>
-
-							<img src="images/logo/unitylogo.png" alt="unity logo" style="width:24px; padding:4px">
-							<h2 class="mdl-card__title-text" style="margin:auto;padding-right:7%;">Slime Arcade</h2>
-
-							<!-- Icon button -->
-								<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised b">
+						<img src="images/logo/unitylogo.png" alt="unity logo" style="width:24px; padding:4px">
+						<h2 class="mdl-card__title-text" style="margin:auto;padding-right:7%;">Slime Arcade</h2>
+						<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised b">
 								<a href="https://github.com/MFeret11/SlimeArcade" target="_blank">
 									<img class="icon" src="images/logo/ghlogo.png" style="width:30px;height:30px;">
 								</a>
 							</button>
 					</div>
-					<div class="mdl-card__media">
-					</div>
+
 					<div class="mdl-card__supporting-text">
-						<p>Slime Arcade is a remake of the classic Slime Volleyball internet game plus two more slime games: dodgeball and soccer.
-							Written in C# and created in Unity, Slime Arcade was created as a school project with two other students.
-							Though simple, this is probably the most fun game I've created and is made for two players.
-							to play click on the github link, download, and click game1.app.</p>
+						<p>Slime Arcade is a remake of the classic Slime Volleyball internet game plus two more slime games: dodgeball and soccer. Written in C# and created in Unity, Slime Arcade was created as a school project with two other students. Though simple, this
+							is probably the most fun game I've created and is made for two players. to play click on the github link, download, and click game1.app.</p>
 					</div>
 				</div>
-
-
 			</div>
 		</main>
 	</div>
+	<script>
+		function toggle_Visibility(id) {
+			var x = document.getElementById(id);
+			if (x.style.display === 'none')
+				x.style.display = 'block';
+			else
+				x.style.display = 'none';
+		}
+	</script>
+
 	<script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 </body>
 
