@@ -78,7 +78,7 @@
 				</div>
 
 				<!-- 1 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp" id="1" style="display:none;" onclick=" toggle_Visibility(1)">
+				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp slowtrans" id="1" style="display:none;" onclick=" toggle_Visibility(1)">
 					<div class="mdl-card__title">
 						<i class="material-icons">android</i>
 						<img src="images/logo/c3logo.png" alt="c3logo" style="width:30px; padding:4px">
@@ -248,10 +248,7 @@
 	<script>
 		function toggle_Visibility(id) {
 			var x = document.getElementById(id);
-			if (x.style.display === 'none')
-				x.style.display = 'block';
-			else
-				x.style.display = 'none';
+			x.style.display = (x.style.display == 'none') ? 'block' : 'none';
 		}
 	</script>
 
