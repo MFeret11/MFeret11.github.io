@@ -21,6 +21,8 @@
 	<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.deep_purple-light_blue.min.css" />
 	<link rel="stylesheet" href="styles.css" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<!-- JQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -64,21 +66,21 @@
 								Atom, and TextWrangler. Many of these projects are on my github page and you can click on the github icon to access each project. And as always, more to come - expect consistent updates!</p>
 							<!--<span>Category: <a href="#">Latest</a></span>-->
 						</div>
-						<div onclick="  toggle_Visibility(1)" class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet  mdl-button mdl-js-button mdl-js-ripple-effect b">C3 Mobile</div>
-						<div onclick="  toggle_Visibility(2)" class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet  mdl-button mdl-js-button mdl-js-ripple-effect b">Calculator</div>
-						<div onclick="  toggle_Visibility(3)" class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet  mdl-button mdl-js-button mdl-js-ripple-effect b">Racko</div>
-						<div onclick="  toggle_Visibility(4)" class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet  mdl-button mdl-js-button mdl-js-ripple-effect b">flowershop</div>
-						<div onclick="  toggle_Visibility(5)" class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet  mdl-button mdl-js-button mdl-js-ripple-effect b">foxclimber</div>
-						<div onclick="  toggle_Visibility(6)" class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet  mdl-button mdl-js-button mdl-js-ripple-effect b">labrynth</div>
-						<div onclick="  toggle_Visibility(7)" class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet  mdl-button mdl-js-button mdl-js-ripple-effect b">RSA encryption</div>
-						<div onclick="  toggle_Visibility(8)" class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet  mdl-button mdl-js-button mdl-js-ripple-effect b">Project euler</div>
-						<div onclick="  toggle_Visibility(9)" class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet  mdl-button mdl-js-button mdl-js-ripple-effect b">war: card game</div>
-					  <div onclick="  toggle_Visibility(10)" class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet  mdl-button mdl-js-button mdl-js-ripple-effect b">slime arcade</div>
+						<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet  mdl-button mdl-js-button mdl-js-ripple-effect b" id="21">C3 Mobile</div>
+						<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet  mdl-button mdl-js-button mdl-js-ripple-effect b" id="22">Calculator</div>
+						<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet  mdl-button mdl-js-button mdl-js-ripple-effect b" id="23">Racko</div>
+						<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet  mdl-button mdl-js-button mdl-js-ripple-effect b" id="24">flowershop</div>
+						<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet  mdl-button mdl-js-button mdl-js-ripple-effect b" id="25">foxclimber</div>
+						<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet  mdl-button mdl-js-button mdl-js-ripple-effect b" id="26">labrynth</div>
+						<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet  mdl-button mdl-js-button mdl-js-ripple-effect b" id="27">RSA encryption</div>
+						<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet  mdl-button mdl-js-button mdl-js-ripple-effect b" id="28">Project euler</div>
+						<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet  mdl-button mdl-js-button mdl-js-ripple-effect b" id="29">war: card game</div>
+					  <div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet  mdl-button mdl-js-button mdl-js-ripple-effect b" id="210">slime arcade</div>
 					</div>
 				</div>
 
 				<!-- 1 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp slowtrans" id="1" style="display:none;" onclick=" toggle_Visibility(1)">
+				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp" id="1" style="display:none;" >
 					<div class="mdl-card__title">
 						<i class="material-icons">android</i>
 						<img src="images/logo/c3logo.png" alt="c3logo" style="width:30px; padding:4px">
@@ -90,7 +92,7 @@
 					</div>
 				</div>
 				<!-- 2 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp" id="2" style="display:none;" onclick=" toggle_Visibility(2)">
+				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp" id="2" style="display:none;" >
 					<div class="mdl-card__title">
 						<h2 class="mdl-card__title-text" style="margin:auto;">Simple Java Calculator</h2>
 						<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised b">
@@ -106,7 +108,7 @@
 
 				</div>
 				<!-- 3 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp" id="3" style="display:none;" onclick=" toggle_Visibility(3)">
+				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp" id="3" style="display:none;" >
 					<div class="mdl-card__title">
 						<i class="material-icons" style="padding-right:7%;">games</i>
 						<h2 class="mdl-card__title-text" style="margin:auto;padding-right:10%;">Racko: the Game of Racks</h2>
@@ -124,7 +126,7 @@
 					</div>
 				</div>
 				<!-- 4 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp" id="4" style="display:none;" onclick=" toggle_Visibility(4)">
+				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp" id="4" style="display:none;" >
 					<div class="mdl-card__title">
 						<i class="material-icons" style="padding:4px;">school</i>
 						<h2 class="mdl-card__title-text" style="padding-left:25%;">Flowershop</h2>
@@ -134,7 +136,7 @@
 					</div>
 				</div>
 				<!-- 5 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp" id="5" style="display:none;" onclick=" toggle_Visibility(5)">
+				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp" id="5" style="display:none;" >
 					<div class="mdl-card__title">
 						<i class="material-icons" style="padding:4px;">school</i>
 
@@ -154,7 +156,7 @@
 					</div>
 				</div>
 				<!-- 6 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp" id="6" style="display:none;" onclick=" toggle_Visibility(6)">
+				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp" id="6" style="display:none;" >
 					<div class="mdl-card__title">
 						<i class="material-icons" style="padding:4px;">school</i>
 						<img src="images/logo/unitylogo.png" alt="unity logo" style="width:24px; height:24px;padding:4px">
@@ -173,7 +175,7 @@
 					</div>
 				</div>
 				<!-- 7 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp" id="7" style="display:none;" onclick=" toggle_Visibility(7)">
+				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp" id="7" style="display:none;" >
 					<div class="mdl-card__title">
 						<i class="material-icons" style="padding:4px;">school</i>
 						<i class="material-icons" style="padding:4px;">security</i>
@@ -194,7 +196,7 @@
 					</div>
 				</div>
 				<!-- 8 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp" id="8" style="display:none;" onclick=" toggle_Visibility(8)">
+				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp" id="8" style="display:none;" >
 					<div class="mdl-card__title">
 						<h2 class="mdl-card__title-text" style="margin:auto;"> Project Euler Problems</h2>
 						<!-- Icon button -->
@@ -210,7 +212,7 @@
 					</div>
 				</div>
 				<!-- 9 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp" id="9" style="display:none;" onclick=" toggle_Visibility(9)">
+				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp" id="9" style="display:none;" >
 					<div class=" mdl-card__title">
 						<i class="material-icons" style="no-padding">games</i>
 						<h2 class="mdl-card__title-text" style="margin:auto;padding-right:5%;">War: The Card Game</h2>
@@ -225,7 +227,7 @@
 					</div>
 				</div>
 				<!-- 10 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp" id="10" style="display:none;" onclick=" toggle_Visibility(10)">
+				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp" id="10" style="display:none;" >
 					<div class="mdl-card__title">
 						<i class="material-icons" style="padding:4px;">school</i>
 						<img src="images/logo/unitylogo.png" alt="unity logo" style="width:24px; padding:4px">
@@ -245,12 +247,50 @@
 			</div>
 		</main>
 	</div>
-	<script>
+	<!-- JS Function-->
+	<!-- <script>
 		function toggle_Visibility(id) {
 			var x = document.getElementById(id);
+
 			x.style.display = (x.style.display == 'none') ? 'block' : 'none';
 		}
-	</script>
+	</script> -->
+
+<!-- jquery function-->
+	<script>
+	$(document).ready(function(id){
+		$("#21").click(function(){
+			$("#1").fadeToggle(500);
+		})
+		$("#22").click(function(){
+			$("#2").fadeToggle(500);
+		})
+		$("#23").click(function(){
+			$("#3").fadeToggle(500);
+		})
+		$("#24").click(function(){
+			$("#4").fadeToggle(500);
+		})
+		$("#25").click(function(){
+			$("#5").fadeToggle(500);
+		})
+		$("#26").click(function(){
+			$("#6").fadeToggle(500);
+		})
+		$("#27").click(function(){
+			$("#7").fadeToggle(500);
+		})
+		$("#28").click(function(){
+			$("#8").fadeToggle(500);
+		})
+		$("#29").click(function(){
+			$("#9").fadeToggle(500);
+		})
+		$("#210").click(function(){
+			$("#10").fadeToggle(500);
+		})
+	});
+</script>
 
 	<script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 </body>
