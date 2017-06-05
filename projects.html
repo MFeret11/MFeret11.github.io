@@ -56,11 +56,12 @@
 		<main class="mdl-layout__content">
 			<div class="mdl-grid portfolio-max-width">
 				<!-- Title & Intro-->
-				<div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp no-padding">
+				<div class="mdl-cell mdl-cell--12-col mdl-shadow--4dp b" id="12" style="display:none;text-align:center;"><h4>Projects</h4></div>
+				<div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp no-padding" id="11">
 					<div class="mdl-card__title">
 						<h2 class="mdl-card__title-text">Projects</h2>
 					</div>
-						<div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text no-padding ">
+						<div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text no-padding">
 							<p>Below I have listed many of my projects. To view details click on the titles. These projects are created using Java, PHP, C#, among other languages. My working environment includes these IDEs and text editors: NetBeans, Eclipse, Android Studio,
 								Atom, and TextWrangler. Many of these projects are on my github page and you can click on the github icon to access each project. And as always, more to come - expect consistent updates!</p>
 							<!--<span>Category: <a href="#">Latest</a></span>-->
@@ -259,90 +260,92 @@
 	$(document).ready(function(){
 
 		$("#21").click(function(){
-			$("#1").fadeToggle(500);
 			$(this).hide();
+			$("#1").fadeToggle(1000);
 		})
 		$("#1").click(function(){
 			$(this).hide();
-			$("#21").fadeToggle(500);
+			$("#21").slideToggle(500);
 		})
-
 		$("#22").click(function(){
-			$("#2").fadeToggle(500);
 			$(this).hide();
+			$("#2").fadeToggle(1000);
 		})
 		$("#2").click(function(){
 			$(this).hide();
-			$("#22").fadeToggle(500);
+			$("#22").slideToggle(500);
 		})
-
 		$("#23").click(function(){
-			$("#3").fadeToggle(500);
 			$(this).hide();
+			$("#3").fadeToggle(1000);
 		})
 		$("#3").click(function(){
 			$(this).hide();
-			$("#23").fadeToggle(500);
+			$("#23").slideToggle(500);
 		})
-
 		$("#24").click(function(){
-			$("#4").fadeToggle(500);
 			$(this).hide();
+			$("#4").fadeToggle(1000);
 		})
 		$("#4").click(function(){
 			$(this).hide();
-			$("#24").fadeToggle(500);
+			$("#24").slideToggle(500);
 		})
-
 		$("#25").click(function(){
-			$("#5").fadeToggle(500);
 			$(this).hide();
+			$("#5").fadeToggle(1000);
 		})
 		$("#5").click(function(){
 			$(this).hide();
-			$("#25").fadeToggle(500);
+			$("#25").slideToggle(500);
 		})
-
 		$("#26").click(function(){
-			$("#6").fadeToggle(500);
 			$(this).hide();
+			$("#6").fadeToggle(1000);
 		})
 		$("#6").click(function(){
 			$(this).hide();
-			$("#26").fadeToggle(500);
+			$("#26").slideToggle(500);
 		})
-
 		$("#27").click(function(){
-			$("#7").fadeToggle(500);
 			$(this).hide();
+			$("#7").fadeToggle(1000);
 		})
 		$("#7").click(function(){
 			$(this).hide();
-			$("#27").fadeToggle(500);
+			$("#27").slideToggle(500);
 		})
 		$("#28").click(function(){
-			$("#8").fadeToggle(500);
 			$(this).hide();
+			$("#8").fadeToggle(1000);
 		})
 		$("#8").click(function(){
 			$(this).hide();
-			$("#28").fadeToggle(500);
+			$("#28").slideToggle(500);
 		})
 		$("#29").click(function(){
-			$("#9").fadeToggle(500);
 			$(this).hide();
+			$("#9").fadeToggle(1000);
 		})
 		$("#9").click(function(){
 			$(this).hide();
-			$("#29").fadeToggle(500);
+			$("#29").slideToggle(500);
 		})
 		$("#210").click(function(){
-			$("#10").fadeToggle(500);
 			$(this).hide();
+			$("#10").fadeToggle(1000);
 		})
 		$("#10").click(function(){
 			$(this).hide();
-			$("#210").fadeToggle(500);
+			$("#210").slideToggle(500);
+		})
+		$("#11").click(function(){
+			$(this).hide();
+			$("#12").fadeToggle(1000);
+		})
+		$("#12").click(function(){
+			$(this).hide();
+			$("#11").fadeToggle(200);
 		})
 	});
 </script>
