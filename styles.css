@@ -136,8 +136,11 @@ a.mdl-js-ripple-effect { position: relative; }
 }
 
 img.article-image {
-  width: 100%;
-  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  height: 50%;
 }
 
 .portfolio-max-width {
