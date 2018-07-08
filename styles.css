@@ -44,7 +44,7 @@
 
 /*MF Logo*/
 .portfolio-logo {
-  background: url(images/favicon/mf-logo2.png) no-repeat;
+  background: url(images/favicon/mf-logo2.png) 50% no-repeat;
   background-size: cover;
   height: 165px;
   width: 125px;
