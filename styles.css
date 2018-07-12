@@ -23,6 +23,12 @@
   background-color: #F1F8E9;
 }
 
+.footer {
+  background-color: rgba(241, 248, 235);
+  background-repeat:no-repeat;
+  background-size:cover;
+}
+
 /*Full background picture*/
 .mdl-layout__content {
   background: url(images/bg.jpg) repeat;
