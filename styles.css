@@ -1,37 +1,92 @@
+:root {
+  --primary-color: #6200ea;
+  --secondary-color: #03dac6;
+  --background-color: #ffffff;
+  --text-color: #000000;
+}
+
 .portfolio-header {
   position: relative;
-  background-image: url(images/skiLift.jpg);
-  background-repeat:no-repeat;
-  background-size:cover;
+  background-image: url(images/compressed/skiLift.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;    /* Better image positioning */
+  will-change: transform;         /* Optimize animations */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+body.loading {
+  visibility: hidden;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 .portfolio-header .mdl-layout__header-row {
   padding: 0;
   -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  transform: translateZ(0);      /* Hardware acceleration */
+}
+
+.mdl-layout__header {
+  will-change: transform;
+  transform: translateZ(0);      /* Hardware acceleration */
+}
+
+.mdl-layout__header-row,
+.mdl-layout__header,
+.mdl-layout__title {
+    transform: translateZ(0);
+    will-change: transform;
+    backface-visibility: hidden;
 }
 
 .mdl-layout__title {
   font-size: 14px;
   text-align: center;
   font-weight: 300;
+  transform: translateZ(0);      /* Hardware acceleration */
+}
+
+/* Add responsive image loading */
+@media (max-width: 768px) {
+  .portfolio-header {
+    background-image: -webkit-image-set(
+        url(images/compressed/skiLift.jpg) 1x,
+        url(images/compressed/skiLift@2x.jpg) 2x
+    );
+    background-image: url(images/compressed/skiLift-small.jpg);
+    scroll-behavior: smooth;
+    will-change: transform;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
 }
 
 /*Added for text background color*/
 .mdl-cell {
   background-color: #F1F8E9;
+  will-change: opacity;
 }
 
 .footer {
   background-color: rgba(241, 248, 235);
-  background-repeat:no-repeat;
-  background-size:cover;
+  contain: layout style paint;
 }
 
 /*Full background picture*/
 .mdl-layout__content {
-  background: url(images/bg.jpg) repeat;
+  background: url(images/compressed/bg.jpg) repeat;
   background-repeat:no-repeat;
   background-size:cover;
 }
@@ -50,11 +105,12 @@
 
 /*MF Logo*/
 .portfolio-logo {
-  background: url(images/favicon/mf-logo2.png) 50% no-repeat;
+  background: url(images/compressed/favicon/mf-logo2.png) 50% no-repeat;
   background-size: cover;
   height: 165px;
   width: 125px;
   margin: auto auto 10px;
+  transform: translateZ(0);
 }
 
 .is-compact .portfolio-logo {
@@ -120,15 +176,15 @@ a.mdl-js-ripple-effect { position: relative; }
 }
 
 .portfolio-blog-card-full-bg {
-  background: url(images/example-blog03.jpg) center / cover;
+  background: url(images/compressed/example-blog03.jpg) center / cover;
 }
 
 .portfolio-blog-card-event-bg {
-  background: url(images/example-blog05.jpg) center / cover;
+  background: url(images/compressed/example-blog05.jpg) center / cover;
 }
 
 .portfolio-blog-card-strip-bg {
-  background: url(images/example-blog06.jpg) center / cover;
+  background: url(images/compressed/example-blog06.jpg) center / cover;
 }
 
 .portfolio-blog-card-compact .mdl-card__title {
@@ -248,6 +304,15 @@ img.article-image {
   /* background: -o-radial-gradient(rgba(149, 117, 205, 0), rgba(64,196,255,1), rgba(149, 117, 205, 0.5)); /* For Opera 11.1 to 12.0 */
   /* background: -moz-radial-gradient(rgba(149, 117, 205, 0), rgba(64,196,255,1), rgba(149, 117, 205, 0.5)); /* For Firefox 3.6 to 15 */
   /* background: radial-gradient(rgba(149, 117, 205, 0), rgba(64,196,255,1), rgba(149, 117, 205, 0.5)); /* Standard syntax */
+}
+
+/*@font-face */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto'), local('Roboto-Regular'), url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxP.ttf) format('truetype');
+  font-display: swap;
 }
 
 /*.slowtrans{

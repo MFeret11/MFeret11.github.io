@@ -17,14 +17,19 @@
 	<meta name="theme-color" content="#ffffff">
 	<!---->
 	<!-- Added for material design -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="preload" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" as="style">
+	<link rel="preload" href="https://code.getmdl.io/1.3.0/material.deep_purple-light_blue.min.css" as="style">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
 	<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.deep_purple-light_blue.min.css" />
 	<link rel="stylesheet" href="styles.css" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<!-- JQuery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 </head>
-<body>
+<body class="loading">
 	<!-- Wrapper -->
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 		<!-- Header -->
@@ -70,7 +75,7 @@
 				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp hide">
 					<div class="mdl-card__title">
 						<i class="material-icons">android</i>
-						<img src="images/logo/c3logo.png" alt="c3logo" style="width:30px; padding:4px">
+						<img src="images/logo/c3logo.png" alt="c3logo" style="width:30px; padding:4px" loading="lazy">
 						<h2 class="mdl-card__title-text" style="margin:auto;padding-right:15%;">C3 Mobile </h2>
 					</div>
 					<div class="mdl-card__supporting-text">
@@ -85,7 +90,7 @@
 						<h2 class="mdl-card__title-text" style="margin:auto;">Simple Java Calculator</h2>
 						<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised b">
 								<a href="https://github.com/MFeret11/SimpleJavaCalc" target="_blank">
-									<img class="icon" src="images/logo/ghlogo.png" style="width:30px;height:30px;">
+									<img class="icon" src="images/compressed/logo/ghlogo.png" style="width:30px;height:30px;" loading="lazy">
 								</a>
 							</button>
 					</div>
@@ -103,7 +108,7 @@
 						<h2 class="mdl-card__title-text" style="margin:auto;padding-right:10%;">Racko: the Game of Racks</h2>
 						<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised b">
 								<a href="https://github.com/MFeret11/Racko" target="_blank">
-									<img class="icon" src="images/logo/ghlogo.png" style="width:30px;height:30px;">
+									<img class="icon" src="images/compressed/logo/ghlogo.png" style="width:30px;height:30px;" loading="lazy">
 								</a>
 							</button>
 					</div>
@@ -130,13 +135,13 @@
 					<div class="mdl-card__title">
 						<i class="material-icons" style="padding:4px;">school</i>
 
-						<img src="images/logo/unitylogo.png" alt="unity logo" style="width:24px; padding:4px">
+						<img src="images/compressed/logo/unitylogo.png" alt="unity logo" style="width:24px; padding:4px" loading="lazy">
 						<h2 class="mdl-card__title-text" style="margin:auto;padding-right:10%;">FoxClimbers</h2>
 
 						<!-- Icon button -->
 						<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised b">
 								<a href="https://github.com/MFeret11/foxclimbers" target="_blank">
-									<img class="icon" src="images/logo/ghlogo.png" style="width:30px;height:30px;">
+									<img class="icon" src="images/compressed/logo/ghlogo.png" style="width:30px;height:30px;" loading="lazy">
 								</a>
 							</button>
 					</div>
@@ -150,12 +155,12 @@
 				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp hide">
 					<div class="mdl-card__title">
 						<i class="material-icons" style="padding:4px;">school</i>
-						<img src="images/logo/unitylogo.png" alt="unity logo" style="width:24px; height:24px;padding:4px">
+						<img src="images/compressed/logo/unitylogo.png" alt="unity logo" style="width:24px; height:24px;padding:4px" loading="lazy">
 						<h2 class="mdl-card__title-text" style="margin:auto;padding-right:5%;">LabrythnGame</h2>
 						<!-- Icon button -->
 						<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised b">
 							<a href="https://github.com/MFeret11/LabyrnthGame" target="_blank">
-								<img class="icon" src="images/logo/ghlogo.png" style="width:30px;height:30px;">
+								<img class="icon" src="images/compressed/logo/ghlogo.png" style="width:30px;height:30px;" loading="lazy">
 							</a>
 						</button>
 					</div>
@@ -177,7 +182,7 @@
 						<!-- Icon button -->
 						<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised b">
 								<a href="https://github.com/MFeret11/RSA_Example" target="_blank">
-									<img class="icon" src="images/logo/ghlogo.png" style="width:30px;height:30px;">
+									<img class="icon" src="images/compressed/logo/ghlogo.png" style="width:30px;height:30px;" loading="lazy">
 								</a>
 							</button>
 
@@ -195,7 +200,7 @@
 						<!-- Icon button -->
 						<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised b">
 								<a href="https://github.com/MFeret11/ProjectEulerJava" target="_blank">
-									<img class="icon" src="images/logo/ghlogo.png" style="width:30px;height:30px;">
+									<img class="icon" src="images/compressed/logo/ghlogo.png" style="width:30px;height:30px;" loading="lazy">
 								</a>
 							</button>
 					</div>
@@ -208,11 +213,11 @@
 				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-button mdl-js-button mdl-js-ripple-effect b d">war: card game</div>
 				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp hide" >
 					<div class=" mdl-card__title">
-						<i class="material-icons" style="no-padding">games</i>
+						<i class="material-icons" style="padding:0">games</i>
 						<h2 class="mdl-card__title-text" style="margin:auto;padding-right:5%;">War: The Card Game</h2>
 						<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised b">
 								<a href="https://github.com/MFeret11/WarCardGame" target="_blank">
-									<img class="icon" src="images/logo/ghlogo.png" style="width:30px;height:30px;">
+									<img class="icon" src="images/compressed/logo/ghlogo.png" style="width:30px;height:30px;" loading="lazy">
 								</a>
 							</button>
 					</div>
@@ -225,11 +230,11 @@
 				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp hide">
 					<div class="mdl-card__title">
 						<i class="material-icons" style="padding:4px;">school</i>
-						<img src="images/logo/unitylogo.png" alt="unity logo" style="width:24px; padding:4px">
+						<img src="images/compressed/logo/unitylogo.png" alt="unity logo" style="width:24px; padding:4px" loading="lazy">
 						<h2 class="mdl-card__title-text" style="margin:auto;padding-right:7%;">Slime Arcade</h2>
 						<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised b">
 								<a href="https://github.com/MFeret11/SlimeArcade" target="_blank">
-									<img class="icon" src="images/logo/ghlogo.png" style="width:30px;height:30px;">
+									<img class="icon" src="images/compressed/logo/ghlogo.png" style="width:30px;height:30px;" loading="lazy">
 								</a>
 							</button>
 					</div>
@@ -270,9 +275,11 @@
 			$(this).hide();
 			$(this).prev().fadeToggle(500);})
 	});
+	window.addEventListener('load', function() {
+		document.body.classList.remove('loading');
+	});
 </script>
 
-	<script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 </body>
 
 </html>

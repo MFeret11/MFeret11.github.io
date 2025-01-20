@@ -24,21 +24,25 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 	<title>MFeret</title>
 	<!--Only for favicon-->
-	<link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon.png">
-	<link rel="icon" type="image/png" href="images/favicon/favicon-32x32.png" sizes="32x32">
-	<link rel="icon" type="image/png" href="images/favicon/favicon-16x16.png" sizes="16x16">
-	<link rel="manifest" href="images/favicon/manifest.json">
-	<link rel="mask-icon" href="images/favicon/safari-pinned-tab.svg" color="#5bbad5">
+	<link rel="apple-touch-icon" sizes="144x144" href="images/compressed/favicon/apple-touch-icon.png">
+	<link rel="icon" type="image/png" href="images/compressed/favicon/favicon-32x32.png" sizes="32x32">
+	<link rel="icon" type="image/png" href="images/compressed/favicon/favicon-16x16.png" sizes="16x16">
+	<link rel="manifest" href="images/compressed/favicon/manifest.json">
+	<link rel="mask-icon" href="images/compressed/favicon/safari-pinned-tab.svg" color="#5bbad5">
 	<meta name="theme-color" content="#ffffff">
 	<!---->
 	<!-- Added for material design -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="preload" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" as="style">
+	<link rel="preload" href="https://code.getmdl.io/1.3.0/material.deep_purple-light_blue.min.css" as="style">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
 	<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.deep_purple-light_blue.min.css" />
 	<link rel="stylesheet" href="styles.css" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 
-<body>
+<body class="loading">
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 		<header class="mdl-layout__header mdl-layout__header--waterfall portfolio-header">
 			<div class="mdl-layout__header-row portfolio-logo-row">
@@ -83,23 +87,28 @@
 						<a class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab
 						mdl-button--accent mdl-js-ripple-effect a"
 						href="https://github.com/MFeret11/">
-						<img src="images/logo/ghlogo.png" style="width:40px;height:40px;"></a>
+						<img src="images/compressed/logo/ghlogo.png" style="width:40px;height:40px;" loading="lazy"></a>
 
 						<a class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab
 						mdl-button--accent mdl-js-ripple-effect a"
 						href="https://soundcloud.com/mferet">
-						<img src="images/logo/sclogo2.png" style="width:40px;height:40px;"></a>
+						<img src="images/compressed/logo/sclogo2.png" style="width:40px;height:40px;" loading="lazy"></a>
 
 						<a class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab
 						mdl-button--accent mdl-js-ripple-effect a"
 						href="https://www.linkedin.com/in/mferet/">
-						<img src="images/logo/lilogo.png" style="width:40px;height:40px;"></a>
+						<img src="images/compressed/logo/lilogo.png" style="width:40px;height:40px;" loading="lazy"></a>
 					</div>
 				</div>
 			</div>
 		</main>
 	</div>
-	<script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+	<script async defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+	<script>
+		window.addEventListener('load', function() {
+			document.body.classList.remove('loading');
+		});
+	</script>
 </body>
 
 </html>
