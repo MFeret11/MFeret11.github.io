@@ -1,114 +1,110 @@
-<!DOCTYPE HTML>
+<!doctype html>
 <html lang="en">
-
 <head>
-
-	<link rel="shortcut icon" href="images/favicon/favicon.ico" type="image/x-icon">
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="description" content="A portfolio for developer Matthew Feret inspired by Material Design.">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-	<meta name="keywords" content="Matthew Feret, Portfolio, Software Developer, Projects, Resume">
-	<meta name="author" content="Matthew Feret">
-
-	<!--Only for favicon-->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Matthew Feret · Software engineer who automated his basement</title>
+	<meta name="description" content="Matthew Feret builds backend systems by day and teaches his basement to run itself by night. Play with the basement simulator and read the stories behind the build.">
+	<meta property="og:title" content="Matthew Feret · Software engineer who automated his basement">
+	<meta property="og:description" content="Backend engineer by day. By night, a Raspberry Pi runs the basement theater. Come play with it.">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://mferet.com/">
+	<meta property="og:image" content="https://mferet.com/images/compressed/skiLift.jpg">
+	<link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png">
 	<link rel="apple-touch-icon" sizes="144x144" href="images/favicon/apple-touch-icon.png">
-	<link rel="icon" type="image/png" href="images/favicon/favicon-32x32.png" sizes="32x32">
-	<link rel="icon" type="image/png" href="images/favicon/favicon-16x16.png" sizes="16x16">
 	<link rel="manifest" href="images/favicon/manifest.json">
-	<link rel="mask-icon" href="images/favicon/safari-pinned-tab.svg" color="#5bbad5">
-	<meta name="theme-color" content="#ffffff">
-	<!---->
-	<title>MFeret</title>
-	<!-- Added for material design -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link rel="preload" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" as="style">
-	<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.deep_purple-light_blue.min.css" as="style">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.deep_purple-light_blue.min.css" />
-	<link rel="stylesheet" href="styles.css" />
-	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+	<link rel="stylesheet" href="styles.css">
+	<script>
+		(function () {
+			var t;
+			try { t = localStorage.getItem("theme"); } catch (e) {}
+			if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+			document.documentElement.dataset.theme = t;
+		})();
+	</script>
+	<script defer src="site.js"></script>
 </head>
-
-<body class="loading" aria-label="Main Body">
-	<!-- Wrapper -->
-	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-		<!-- Header -->
-		<header class="mdl-layout__header mdl-layout__header--waterfall portfolio-header" aria-label="Main Header">
-			<div class="mdl-layout__header-row portfolio-logo-row">
-				<span class="mdl-layout__title">
-                    <div class="portfolio-logo"></div>
-				</span>
-			</div>
-			<div class="mdl-layout__header-row portfolio-navigation-row mdl-layout--large-screen-only">
-				<nav class="mdl-navigation mdl-typography--body-1-force-preferred-font">
-					<a class="mdl-navigation__link is-active mdl-js-button mdl-js-ripple-effect c" href="index.html">Home</a>
-					<a class="mdl-navigation__link mdl-js-button mdl-js-ripple-effect c" href="projects.html">Projects</a>
-					<a class="mdl-navigation__link mdl-js-button mdl-js-ripple-effect c" href="about.html">About</a>
-					<a class="mdl-navigation__link mdl-js-button mdl-js-ripple-effect c" href="contact.html">Contact</a>
-				</nav>
-			</div>
-		</header>
-		<div class="mdl-layout__drawer mdl-layout--small-screen-only mdl-js-ripple-effect" aria-label="Navigation Drawer">
-			<nav class="mdl-navigation mdl-typography--body-1-force-preferred-font">
-				<a class="mdl-navigation__link is-active c" href="index.html" aria-current="page">Home</a>
-				<a class="mdl-navigation__link c" href="projects.html">Projects</a>
-				<a class="mdl-navigation__link c" href="about.html">About</a>
-				<a class="mdl-navigation__link c" href="contact.html">Contact</a>
+<body>
+	<a class="skip" href="#main">Skip to content</a>
+	<header class="site-header">
+		<div class="wrap header-inner">
+			<a class="brand" href="index.html"><img src="images/compressed/favicon/mf-logo2.png" alt="" width="24" height="32">Matthew Feret</a>
+			<nav class="site-nav" aria-label="Main">
+				<a href="index.html" aria-current="page">Home</a>
+				<a href="basement.html">The Basement</a>
+				<a href="projects.html">Stories</a>
+				<a href="about.html">About</a>
 			</nav>
+			<button class="lights" type="button" aria-pressed="false"><span class="lights-track" aria-hidden="true"></span><span class="lights-label">Movie mode</span></button>
 		</div>
-		<!-- Main -->
-		<main class="mdl-layout__content" aria-label="Main Content">
-			<div class="mdl-grid portfolio-max-width">
-				<div class="mdl-cell mdl-card mdl-shadow--4dp portfolio-card">
+	</header>
 
-					<div class="mdl-card__title">
-						<h2 class="mdl-card__title-text">Projects</h2>
-					</div>
-					<div class="mdl-card__supporting-text">
-						A sample of projects I've worked on and applications I've built.
-					</div>
-					<div class="mdl-card__actions mdl-card--border">
-						<a class="mdl-button mdl-js-button mdl-button--accent mdl-js-ripple-effect mdl-button--raised mdl-shadow--8dp readmore" href="projects.html">Read more</a>
-					</div>
-				</div>
-				<div class="mdl-cell mdl-card mdl-shadow--4dp portfolio-card">
-					<div class="mdl-card__media">
-						<!-- <img class="article-image" src="images/example-work07.jpg" border="0" alt="" loading="lazy"> -->
-					</div>
-					<div class="mdl-card__title">
-						<h2 class="mdl-card__title-text">About</h2>
-					</div>
-					<div class="mdl-card__supporting-text">
-						I am a professional software developer living in the Greater Philadelphia area.
-					</div>
-					<div class="mdl-card__actions mdl-card--border">
-						<a class="mdl-button mdl-js-button mdl-button--accent mdl-button--raised mdl-js-ripple-effect mdl-shadow--8dp readmore" href="about.html">Read more</a>
-					</div>
-				</div>
-				<div class="mdl-cell mdl-card mdl-shadow--4dp portfolio-card">
-					<div class="mdl-card__title">
-						<h2 class="mdl-card__title-text">Interests</h2>
-					</div>
-					<div class="mdl-card__supporting-text">
-						To learn about my interests click read more.
-					</div>
-					<div class="mdl-card__actions mdl-card--border">
-						<a class="mdl-button mdl-js-button mdl-button--accent mdl-js-ripple-effect mdl-button--raised mdl-shadow--6dp readmore" href="about.html#interests">Read more</a>
-					</div>
+	<main id="main" class="wrap">
+		<section class="hero">
+			<div>
+				<p class="eyebrow">Hi, I'm Matt</p>
+				<h1>I build backend systems by day. At night, my basement runs itself.</h1>
+				<p class="lede">
+					I'm a senior software engineer in the Philadelphia area. At work that means Java, Python and AWS.
+					At home it means a Raspberry Pi that knows when I pause a movie, cools the projector before it
+					cuts the power, and throws an Eagles party in the lights every time we score.
+				</p>
+				<div class="actions">
+					<a class="btn primary" href="basement.html">Play with the basement →</a>
+					<a class="btn" href="projects.html">Read the stories</a>
 				</div>
 			</div>
-		</main>
+			<figure class="hero-art">
+				<img src="images/compressed/skiLift.jpg" alt="Empty chairlift chairs disappearing into fog on a ski slope" width="1499" height="415">
+				<figcaption>Where I'd rather be: on a chairlift, somewhere cold.</figcaption>
+			</figure>
+		</section>
 
-		<!-- Scripts -->
-		<script defer src="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.min.js"></script>
-		<script>
-			setTimeout(function() { document.body.classList.remove('loading'); }, 3000);
-		window.addEventListener('load', function() {
-				document.body.classList.remove('loading');
-			});
-		</script>
-	</div>
+		<section class="section" aria-labelledby="explore">
+			<h2 id="explore">Poke around</h2>
+			<div class="grid">
+				<a class="card" href="basement.html">
+					<p class="eyebrow">Interactive</p>
+					<h3>The Basement</h3>
+					<p>Press play on a movie and watch the lights, receiver and projector react. Score a touchdown. Then try to break the projector's safety interlock.</p>
+					<p class="go">Go downstairs →</p>
+				</a>
+				<a class="card" href="projects.html">
+					<p class="eyebrow">Stories</p>
+					<h3>Bugs, fixes and design decisions</h3>
+					<p>The projector you must not unplug, the TV tuner code that never worked, and why my slowest trip up the stairs took 18.76 seconds.</p>
+					<p class="go">Read them →</p>
+				</a>
+				<a class="card" href="about.html">
+					<p class="eyebrow">Off the clock</p>
+					<h3>Guitar, synths and snow</h3>
+					<p>I record music at home, ski whenever I can and go to a lot of live shows. There's a SoundCloud player on the About page.</p>
+					<p class="go">About me →</p>
+				</a>
+			</div>
+		</section>
+
+		<section class="section card" aria-labelledby="now">
+			<h2 id="now">The day job, briefly</h2>
+			<ul class="now">
+				<li><strong>Senior Software Engineer</strong> at JPMorgan Chase</li>
+				<li><strong>10+ years</strong> in financial services and e-commerce</li>
+				<li><strong>AWS Certified</strong> Developer – Associate</li>
+				<li><strong>Daily</strong> agentic AI development</li>
+			</ul>
+			<p style="margin-top:12px">The full version lives on <a href="https://www.linkedin.com/in/mferet/">LinkedIn</a>, or <a href="about.html#contact">ask me for a résumé</a>.</p>
+		</section>
+	</main>
+
+	<footer class="site-footer">
+		<div class="wrap">
+			<p>admin [at] mferet [dot] com · <a href="https://github.com/MFeret11">GitHub</a> · <a href="https://www.linkedin.com/in/mferet/">LinkedIn</a> · <a href="https://soundcloud.com/mferet">SoundCloud</a></p>
+			<p class="fine">Hand-written HTML and CSS. The old version of this site used a UI framework until its CDN disappeared, so this one doesn't.</p>
+		</div>
+	</footer>
 </body>
 </html>

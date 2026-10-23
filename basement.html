@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>The Basement · Matthew Feret</title>
+	<meta name="description" content="A playable simulation of Matthew Feret's automated basement theater: lights, receiver, projector cooldown interlock and Eagles touchdown flashes.">
+	<meta property="og:title" content="The Basement · Matthew Feret">
+	<meta property="og:description" content="Press play, score a touchdown, then try to break the projector's safety interlock.">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://mferet.com/basement.html">
+	<link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="images/favicon/apple-touch-icon.png">
+	<link rel="manifest" href="images/favicon/manifest.json">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+	<link rel="stylesheet" href="styles.css">
+	<script>
+		(function () {
+			var t;
+			try { t = localStorage.getItem("theme"); } catch (e) {}
+			if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+			document.documentElement.dataset.theme = t;
+		})();
+	</script>
+	<script defer src="site.js"></script>
+	<script defer src="basement.js"></script>
+</head>
+<body>
+	<a class="skip" href="#main">Skip to content</a>
+	<header class="site-header">
+		<div class="wrap header-inner">
+			<a class="brand" href="index.html"><img src="images/compressed/favicon/mf-logo2.png" alt="" width="24" height="32">Matthew Feret</a>
+			<nav class="site-nav" aria-label="Main">
+				<a href="index.html">Home</a>
+				<a href="basement.html" aria-current="page">The Basement</a>
+				<a href="projects.html">Stories</a>
+				<a href="about.html">About</a>
+			</nav>
+			<button class="lights" type="button" aria-pressed="false"><span class="lights-track" aria-hidden="true"></span><span class="lights-label">Movie mode</span></button>
+		</div>
+	</header>
+
+	<main id="main" class="wrap">
+		<p class="eyebrow">Interactive</p>
+		<h1>The Basement</h1>
+		<p class="lede">
+			My basement theater runs on Home Assistant and a Raspberry Pi. This is a toy version of the same
+			rules, running in your browser. Press play, pause, score a touchdown, then end the session and
+			watch the projector cooldown. Nothing here talks to my actual house.
+		</p>
+
+		<div class="sim">
+			<div>
+				<div class="card room" id="room">
+					<svg viewBox="0 0 800 440" role="img" aria-labelledby="room-title" id="room-svg">
+						<title id="room-title">Cartoon of the basement theater: ceiling lights, projector, screen with bias lighting, receiver, couch and staircase</title>
+						<defs>
+							<filter id="blur-sm" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4"/></filter>
+							<filter id="blur-lg" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="28"/></filter>
+							<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+								<stop offset="0" stop-color="#1f2b55"/>
+								<stop offset="0.6" stop-color="#b05f6d"/>
+								<stop offset="1" stop-color="#f2a65a"/>
+							</linearGradient>
+							<clipPath id="screen-clip"><rect x="220" y="80" width="360" height="200" rx="3"/></clipPath>
+						</defs>
+
+						<!-- room -->
+						<rect x="0" y="0" width="800" height="340" fill="#cdbfae"/>
+						<rect x="0" y="340" width="800" height="100" fill="#7a6656"/>
+						<rect x="0" y="0" width="800" height="12" fill="#b9ab9a"/>
+
+						<!-- stairs -->
+						<g id="stairs">
+							<path d="M650 340 V310 H680 V280 H710 V250 H740 V220 H770 V190 H800 V340 Z" fill="#9c8a77"/>
+							<path class="stairlight" id="stairlight" d="M650 336 H680 M680 306 H710 M710 276 H740 M740 246 H770 M770 216 H800" stroke="#ffd9a8" stroke-width="5" stroke-linecap="round" opacity="0"/>
+							<path id="stairglow" class="stairlight" d="M650 336 H680 M680 306 H710 M710 276 H740 M740 246 H770 M770 216 H800" stroke="#ffd9a8" stroke-width="22" filter="url(#blur-sm)" opacity="0"/>
+						</g>
+
+						<!-- darkness: opacity set by how much light is on -->
+						<rect id="dark" x="0" y="0" width="800" height="440" fill="#05040a" opacity="0.2"/>
+
+						<!-- light pools from ceiling bulbs and dimmer cans -->
+						<g id="pools"></g>
+
+						<!-- bias light behind the screen -->
+						<rect id="bias" x="196" y="58" width="408" height="244" rx="20" fill="#bcd4ff" filter="url(#blur-lg)" opacity="0"/>
+
+						<!-- projector and beam -->
+						<polygon id="beam" points="392,52 222,82 578,82 408,52" fill="#fff8e1" opacity="0"/>
+						<rect x="370" y="28" width="60" height="24" rx="5" fill="#2b2733"/>
+						<circle id="lens" cx="400" cy="46" r="5" fill="#444"/>
+						<line x1="400" y1="12" x2="400" y2="28" stroke="#2b2733" stroke-width="4"/>
+
+						<!-- ceiling bulbs and dimmer cans -->
+						<g id="bulbs"></g>
+
+						<!-- screen -->
+						<rect x="214" y="74" width="372" height="212" rx="6" fill="#16141b"/>
+						<g clip-path="url(#screen-clip)">
+							<rect x="220" y="80" width="360" height="200" fill="#1c1a22"/>
+							<g id="scr-movie" opacity="0">
+								<rect x="220" y="80" width="360" height="200" fill="url(#sky)"/>
+								<circle cx="470" cy="215" r="34" fill="#ffd38a" opacity="0.9"/>
+								<path d="M220 280 L300 190 L345 230 L410 160 L480 240 L520 205 L580 255 L580 280 Z" fill="#241a33"/>
+								<line x1="220" y1="120" x2="580" y2="175" stroke="#1a1426" stroke-width="2"/>
+								<g fill="#1a1426"><rect x="318" y="135" width="3" height="16"/><rect x="308" y="150" width="24" height="9" rx="2"/><rect x="448" y="155" width="3" height="16"/><rect x="438" y="170" width="24" height="9" rx="2"/></g>
+								<text x="400" y="272" text-anchor="middle" fill="#fff" font-family="Inter, sans-serif" font-size="11" opacity="0.85">NOW PLAYING · Chairlift at Dusk (2026)</text>
+							</g>
+							<g id="scr-game" opacity="0">
+								<rect x="220" y="80" width="360" height="200" fill="#1d1b4a"/>
+								<g fill="#5c94fc"><rect x="220" y="80" width="360" height="200"/></g>
+								<g fill="#c84c0c"><rect x="220" y="256" width="360" height="24"/><rect x="300" y="200" width="16" height="16"/><rect x="316" y="200" width="16" height="16"/><rect x="348" y="200" width="16" height="16"/></g>
+								<rect x="332" y="200" width="16" height="16" fill="#fbd000"/>
+								<text x="340" y="212" text-anchor="middle" fill="#7a4a00" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700">?</text>
+								<g fill="#00a800"><path d="M480 256 v-40 h44 v40 z"/><rect x="474" y="208" width="56" height="12"/></g>
+								<g id="hero-sprite"><rect x="262" y="232" width="14" height="24" fill="#d82800"/><rect x="262" y="226" width="14" height="8" fill="#fcb8a0"/></g>
+								<text x="228" y="98" fill="#fff" font-family="JetBrains Mono, monospace" font-size="11">BATOCERA · 1-UP 003250</text>
+							</g>
+							<g id="scr-music" opacity="0">
+								<rect x="220" y="80" width="360" height="200" fill="#121018"/>
+								<g class="eq" fill="#1db954"></g>
+								<text x="400" y="110" text-anchor="middle" fill="#1db954" font-family="JetBrains Mono, monospace" font-size="12">♪ 7ch Stereo · every speaker</text>
+							</g>
+							<g id="scr-sports" opacity="0">
+								<rect x="220" y="80" width="360" height="200" fill="#2e7d32"/>
+								<g stroke="#fff" stroke-width="2" opacity="0.7"><line x1="280" y1="80" x2="250" y2="280"/><line x1="340" y1="80" x2="330" y2="280"/><line x1="400" y1="80" x2="400" y2="280"/><line x1="460" y1="80" x2="470" y2="280"/><line x1="520" y1="80" x2="550" y2="280"/></g>
+								<rect x="330" y="88" width="140" height="28" rx="4" fill="#0b0b10"/>
+								<text id="score" x="400" y="107" text-anchor="middle" fill="#fff" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600">PHI 0 · NYG 0</text>
+								<ellipse cx="400" cy="210" rx="12" ry="7" fill="#7b3f00"/>
+							</g>
+							<g id="scr-paused" opacity="0">
+								<rect x="220" y="80" width="360" height="200" fill="#000" opacity="0.55"/>
+								<rect x="384" y="160" width="10" height="40" rx="2" fill="#fff"/><rect x="406" y="160" width="10" height="40" rx="2" fill="#fff"/>
+							</g>
+							<g id="scr-flash" opacity="0">
+								<rect x="220" y="80" width="360" height="200" fill="#004c54" opacity="0.85"/>
+								<text id="flash-text" x="400" y="195" text-anchor="middle" fill="#fff" font-family="Space Grotesk, sans-serif" font-size="44" font-weight="800">TOUCHDOWN</text>
+							</g>
+						</g>
+
+						<!-- media console + receiver -->
+						<rect x="290" y="300" width="220" height="44" rx="4" fill="#3a3140"/>
+						<rect x="312" y="310" width="176" height="22" rx="3" fill="#0b0a10"/>
+						<text id="rx-text" x="400" y="325" text-anchor="middle" fill="#4fc3f7" font-family="JetBrains Mono, monospace" font-size="11" opacity="0.15">STANDBY</text>
+
+						<!-- couch (seen from behind) -->
+						<path d="M200 440 V392 Q200 372 222 372 H578 Q600 372 600 392 V440 Z" fill="#2a2231"/>
+						<path d="M232 440 V404 Q232 392 246 392 H554 Q568 392 568 404 V440 Z" fill="#352b3e"/>
+					</svg>
+				</div>
+
+				<div class="controls">
+					<div class="control-group">
+						<h3>Watch something</h3>
+						<div class="btn-row" id="mode-buttons">
+							<button class="btn" type="button" data-mode="movie" aria-pressed="false">🎬 Movie</button>
+							<button class="btn" type="button" data-mode="game" aria-pressed="false">🕹️ Retro game</button>
+							<button class="btn" type="button" data-mode="music" aria-pressed="false">🎵 Music</button>
+							<button class="btn" type="button" data-mode="sports" aria-pressed="false">🏈 Eagles game</button>
+						</div>
+					</div>
+					<div class="control-group">
+						<h3>While it's on</h3>
+						<div class="btn-row">
+							<button class="btn" type="button" id="btn-pause" disabled>⏸ Pause</button>
+							<button class="btn" type="button" id="btn-td" disabled>Touchdown!</button>
+							<button class="btn" type="button" id="btn-fg" disabled>Field goal</button>
+							<button class="btn" type="button" id="btn-stairs">Someone comes downstairs</button>
+							<button class="btn" type="button" id="btn-social" aria-pressed="false">Social mode</button>
+						</div>
+					</div>
+					<div class="control-group">
+						<h3>Make it hard</h3>
+						<label class="check"><input type="checkbox" id="opt-tuners"> Both TV tuners are busy (someone's streaming remotely)</label>
+						<label class="check"><input type="checkbox" id="opt-sensor"> Unplug the projector's current sensor</label>
+					</div>
+					<div class="control-group">
+						<div class="btn-row">
+							<button class="btn danger" type="button" id="btn-end" disabled>⏻ End session</button>
+							<span class="mono" style="align-self:center;color:var(--muted)" id="speed-note">Waits run at 10x speed.</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<aside class="card panel" aria-labelledby="ha-title">
+				<h3 id="ha-title"><span class="dot" aria-hidden="true"></span>Home Assistant</h3>
+				<dl class="status">
+					<dt>Theater</dt><dd id="st-mode">off</dd>
+					<dt>Lighting</dt><dd id="st-lighting">Daily Driver</dd>
+					<dt>Receiver</dt><dd id="st-rx">off</dd>
+					<dt>Projector</dt><dd id="st-proj">off</dd>
+					<dt>Projector current</dt><dd id="st-amps">0.00 A</dd>
+					<dt>Bias lights</dt><dd id="st-bias">off</dd>
+					<dt>Sim clock</dt><dd id="st-clock">20:00:00</dd>
+				</dl>
+				<h3>Logbook</h3>
+				<ol class="log" id="log" aria-live="polite"></ol>
+			</aside>
+		</div>
+
+		<section class="section story">
+			<h2>What's real here</h2>
+			<p>
+				The rules are the real ones from my <a href="https://github.com/MFeret11/home-assistant-config">Home Assistant config</a>,
+				simplified. A playing movie or game blacks out the room and leaves only the bias lights behind the screen. Pausing a movie
+				waits 4 seconds before bringing up a 1% glow, so a menu blip doesn't flicker the lights. Music stays fully dark on purpose.
+				An Eagles game flips the room into Social mode and paints it Kelly green.
+			</p>
+			<p>
+				The receiver's sound program follows what's on: <code>Standard</code> for movies, <code>Straight</code> for retro games,
+				<code>7ch Stereo</code> for music and <code>Sports</code> for football. The touchdown flash pulses brightness between 100% and
+				15% without ever changing color, because changing colors that fast floods the Zigbee mesh.
+			</p>
+			<p>
+				Ending the session runs the same ordered shutdown as the real one. The part I care most about is the projector: its lamp
+				needs the fans after power-off, so the relay opens only after a 90-second cooldown <em>and</em> two consecutive current
+				readings at or below 0.06 A. Unplug the sensor and the system refuses to cut power. <a href="projects.html#projector">The story behind that rule.</a>
+			</p>
+		</section>
+	</main>
+
+	<footer class="site-footer">
+		<div class="wrap">
+			<p>admin [at] mferet [dot] com · <a href="https://github.com/MFeret11">GitHub</a> · <a href="https://www.linkedin.com/in/mferet/">LinkedIn</a> · <a href="https://soundcloud.com/mferet">SoundCloud</a></p>
+			<p class="fine">Hand-written HTML and CSS. The old version of this site used a UI framework until its CDN disappeared, so this one doesn't.</p>
+		</div>
+	</footer>
+</body>
+</html>

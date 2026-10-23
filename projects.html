@@ -1,286 +1,181 @@
-<!DOCTYPE HTML>
+<!doctype html>
 <html lang="en">
-
 <head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="description" content="A portfolio for developer Matthew Feret that uses Material Design.">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-	<title>MFeret</title>
-
-	<!--Only for favicon-->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Stories · Matthew Feret</title>
+	<meta name="description" content="Bugs, fixes and design decisions from Matthew Feret's home automation and commute projects.">
+	<meta property="og:title" content="Stories · Matthew Feret">
+	<meta property="og:description" content="The projector you must not unplug, the TV tuner code that never worked, and other stories from the build.">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://mferet.com/projects.html">
+	<link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png">
 	<link rel="apple-touch-icon" sizes="144x144" href="images/favicon/apple-touch-icon.png">
-	<link rel="icon" type="image/png" href="images/favicon/favicon-32x32.png" sizes="32x32">
-	<link rel="icon" type="image/png" href="images/favicon/favicon-16x16.png" sizes="16x16">
 	<link rel="manifest" href="images/favicon/manifest.json">
-	<link rel="mask-icon" href="images/favicon/safari-pinned-tab.svg" color="#5bbad5">
-	<meta name="theme-color" content="#ffffff">
-	<!---->
-	<!-- Added for material design -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link rel="preload" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" as="style">
-	<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.deep_purple-light_blue.min.css" as="style">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.deep_purple-light_blue.min.css" />
-	<link rel="stylesheet" href="styles.css" />
-	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	<!-- JQuery -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-	<script defer src="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.min.js"></script>
-</head>
-<body class="loading">
-	<!-- Wrapper -->
-	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-		<!-- Header -->
-		<header class="mdl-layout__header mdl-layout__header--waterfall portfolio-header">
-			<div class="mdl-layout__header-row portfolio-logo-row">
-				<span class="mdl-layout__title">
-                    <div class="portfolio-logo"></div>
-				</span>
-			</div>
-			<div class="mdl-layout__header-row portfolio-navigation-row mdl-layout--large-screen-only">
-				<nav class="mdl-navigation mdl-typography--body-1-force-preferred-font">
-					<a class="mdl-navigation__link mdl-js-button mdl-js-ripple-effect c" href="index.html">Home</a>
-					<a class="mdl-navigation__link is-active mdl-js-button mdl-js-ripple-effect c" href="projects.html">Projects</a>
-					<a class="mdl-navigation__link mdl-js-button mdl-js-ripple-effect c" href="about.html">About</a>
-					<a class="mdl-navigation__link mdl-js-button mdl-js-ripple-effect c" href="contact.html">Contact</a>
-				</nav>
-			</div>
-		</header>
-		<div class="mdl-layout__drawer mdl-layout--small-screen-only">
-			<nav class="mdl-navigation mdl-typography--body-1-force-preferred-font">
-				<a class="mdl-navigation__link c" href="index.html">Home</a>
-				<a class="mdl-navigation__link is-active c" href="projects.html" aria-current="page">Projects</a>
-				<a class="mdl-navigation__link c" href="about.html">About</a>
-				<a class="mdl-navigation__link c" href="contact.html">Contact</a>
-			</nav>
-		</div>
-		<!-- Main -->
-		<main class="mdl-layout__content">
-			<div class="mdl-grid portfolio-max-width">
-				<!-- Title & Intro-->
-				<div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp no-padding d">
-					<div class="mdl-card__title">
-						<h2 class="mdl-card__title-text">Projects</h2>
-					</div>
-						<div class="mdl-cell mdl-cell--12-col mdl-card__supporting-text no-padding">
-							<p>Below I have listed many of my projects. To view details click on the titles. These projects are created using Java, PHP, C#, among other languages. My working environment includes these IDEs and text editors: NetBeans, Eclipse, Android Studio,
-								Atom, Visual Studio, and TextWrangler. Many of these projects are on my github page and you can click on the github icon to access each project. And as always, more to come - expect consistent updates!</p>
-						</div>
-				</div>
-				<div class="mdl-cell mdl-cell--12-col mdl-shadow--4dp b hide" style="text-align:center;"><h4>Projects</h4></div>
-				<!-- 1 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-button mdl-js-button mdl-js-ripple-effect b d" >C3 Mobile</div>
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp hide">
-					<div class="mdl-card__title">
-						<i class="material-icons">android</i>
-						<img src="images/logo/c3logo.png" alt="c3logo" style="width:30px; padding:4px" loading="lazy">
-						<h2 class="mdl-card__title-text" style="margin:auto;padding-right:15%;">C3 Mobile </h2>
-					</div>
-					<div class="mdl-card__supporting-text">
-						<p>As part of my internship while in school and as a recent graduate I worked on a native-Android app called  C3 Mobile. I made numerous changes to the existing app such as fixing bugs, framework changes, data verification, error-handling, and enhancing
-							code to work with latest versions of android. This is an intensive project worked on by a small group using git and agile methodologies.</p>
-					</div>
-				</div>
-				<!-- 2 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-button mdl-js-button mdl-js-ripple-effect b d" >Calculator</div>
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp hide">
-					<div class="mdl-card__title">
-						<h2 class="mdl-card__title-text" style="margin:auto;">Simple Java Calculator</h2>
-						<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised b">
-								<a href="https://github.com/MFeret11/SimpleJavaCalc" target="_blank">
-									<img class="icon" src="images/compressed/logo/ghlogo.png" alt="GitHub" style="width:30px;height:30px;" loading="lazy">
-								</a>
-							</button>
-					</div>
-					<div class="mdl-card__supporting-text">
-						<p>As a demonstration and tool for learning Model-View-Controller design principles I created a simple Java calculator using Java swing. This calculator is capable of normal arithmetic and exponentiation as well as clearing data fields. To run simply
-							download download project from Github. You can then run the project from the cmd line by executing the jar file if you wish.</p>
-					</div>
-
-				</div>
-				<!-- 3 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-button mdl-js-button mdl-js-ripple-effect b d" >Racko</div>
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp hide">
-					<div class="mdl-card__title">
-						<i class="material-icons" style="padding-right:7%;">games</i>
-						<h2 class="mdl-card__title-text" style="margin:auto;padding-right:10%;">Racko: the Game of Racks</h2>
-						<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised b">
-								<a href="https://github.com/MFeret11/Racko" target="_blank">
-									<img class="icon" src="images/compressed/logo/ghlogo.png" alt="GitHub" style="width:30px;height:30px;" loading="lazy">
-								</a>
-							</button>
-					</div>
-					<div class="mdl-card__supporting-text">
-						<p> A digital version of Rack-o created by Milton Bradley. Written in C#, this is a fully working text-based 2 player version of the classic game. The best rack-based game ever in my humble opinion.
-							Suitable for ages 2-120 years.
-						</p>
-					</div>
-				</div>
-				<!-- 4 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-button mdl-js-button mdl-js-ripple-effect b d">flowershop</div>
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp hide" >
-					<div class="mdl-card__title">
-						<i class="material-icons" style="padding:4px;">school</i>
-						<h2 class="mdl-card__title-text" style="padding-left:25%;">Flowershop</h2>
-					</div>
-					<div class="mdl-card__supporting-text">
-						<p>An assignment in my User Interfaces class which I am proud of: a virtual flowershop where we individually designed the UI and database structure. Fully implemented using PHP with smarty template in the Fuel framework.</p>
-					</div>
-				</div>
-				<!-- 5 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-button mdl-js-button mdl-js-ripple-effect b d">foxclimber</div>
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp hide" >
-					<div class="mdl-card__title">
-						<i class="material-icons" style="padding:4px;">school</i>
-
-						<img src="images/compressed/logo/unitylogo.png" alt="unity logo" style="width:24px; padding:4px" loading="lazy">
-						<h2 class="mdl-card__title-text" style="margin:auto;padding-right:10%;">FoxClimbers</h2>
-
-						<!-- Icon button -->
-						<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised b">
-								<a href="https://github.com/MFeret11/foxclimbers" target="_blank">
-									<img class="icon" src="images/compressed/logo/ghlogo.png" alt="GitHub" style="width:30px;height:30px;" loading="lazy">
-								</a>
-							</button>
-					</div>
-					<div class="mdl-card__supporting-text">
-						<p>What started out as an open-ended assignment in my large-scale projects class warped into a fun pet-project for me. Written in C# and created in Unity, FoxClimbers was inspired by the old school game IceClimbers. There is plenty to add still, but
-							you can check it out and let me know what you think! to play click on the github link, download, and click game1.app.</p>
-					</div>
-				</div>
-				<!-- 6 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-button mdl-js-button mdl-js-ripple-effect b d">labrynth</div>
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp hide">
-					<div class="mdl-card__title">
-						<i class="material-icons" style="padding:4px;">school</i>
-						<img src="images/compressed/logo/unitylogo.png" alt="unity logo" style="width:24px; height:24px;padding:4px" loading="lazy">
-						<h2 class="mdl-card__title-text" style="margin:auto;padding-right:5%;">LabrythnGame</h2>
-						<!-- Icon button -->
-						<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised b">
-							<a href="https://github.com/MFeret11/LabyrnthGame" target="_blank">
-								<img class="icon" src="images/compressed/logo/ghlogo.png" alt="GitHub" style="width:30px;height:30px;" loading="lazy">
-							</a>
-						</button>
-					</div>
-					<div class="mdl-card__supporting-text">
-						<p>A fun school project about a little marble that could... finish a labrythn. Very difficult! Made by 1 colleague and myself. Avoid the red dots, find the black dots. To play click on the github link, download and click on game2.app in the assets
-							folder.
-						</p>
-					</div>
-				</div>
-				<!-- 7 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-button mdl-js-button mdl-js-ripple-effect b d">RSA encryption</div>
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp hide">
-					<div class="mdl-card__title">
-						<i class="material-icons" style="padding:4px;">school</i>
-						<i class="material-icons" style="padding:4px;">security</i>
-
-						<h2 class="mdl-card__title-text" style="margin:auto;padding-right:7%;"> RSA Encryption</h2>
-
-						<!-- Icon button -->
-						<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised b">
-								<a href="https://github.com/MFeret11/RSA_Example" target="_blank">
-									<img class="icon" src="images/compressed/logo/ghlogo.png" alt="GitHub" style="width:30px;height:30px;" loading="lazy">
-								</a>
-							</button>
-
-					</div>
-
-					<div class="mdl-card__supporting-text">
-						<p>A Java implementation of the famous asymmetric cryptographic algorithm created by Rivest, Shamir, and Adleman in 1978. Can be used to encrypt and decrypt messages. Uses BigInteger.</p>
-					</div>
-				</div>
-				<!-- 8 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-button mdl-js-button mdl-js-ripple-effect b d">Project euler</div>
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp hide">
-					<div class="mdl-card__title">
-						<h2 class="mdl-card__title-text" style="margin:auto;"> Project Euler Problems</h2>
-						<!-- Icon button -->
-						<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised b">
-								<a href="https://github.com/MFeret11/ProjectEulerJava" target="_blank">
-									<img class="icon" src="images/compressed/logo/ghlogo.png" alt="GitHub" style="width:30px;height:30px;" loading="lazy">
-								</a>
-							</button>
-					</div>
-					<div class="mdl-card__supporting-text">
-						<p>I have completed numerous Project Euler problems using Java. Currently the first 7 problems are up. Through this process I have learned to think about and create algorithms to solve open-ended problems. This process also keeps
-							my programming skills sharp.</p>
-					</div>
-				</div>
-				<!-- 9 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-button mdl-js-button mdl-js-ripple-effect b d">war: card game</div>
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp hide" >
-					<div class=" mdl-card__title">
-						<i class="material-icons" style="padding:0">games</i>
-						<h2 class="mdl-card__title-text" style="margin:auto;padding-right:5%;">War: The Card Game</h2>
-						<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised b">
-								<a href="https://github.com/MFeret11/WarCardGame" target="_blank">
-									<img class="icon" src="images/compressed/logo/ghlogo.png" alt="GitHub" style="width:30px;height:30px;" loading="lazy">
-								</a>
-							</button>
-					</div>
-					<div class="mdl-card__supporting-text">
-						<p>A text-based C# implementation of War the card game. Demonstrates the OOP paradigm. Sometimes the simple classics are the most fun!</p>
-					</div>
-				</div>
-				<!-- 10 -->
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-button mdl-js-button mdl-js-ripple-effect b d">slime arcade</div>
-				<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-card mdl-shadow--4dp hide">
-					<div class="mdl-card__title">
-						<i class="material-icons" style="padding:4px;">school</i>
-						<img src="images/compressed/logo/unitylogo.png" alt="unity logo" style="width:24px; padding:4px" loading="lazy">
-						<h2 class="mdl-card__title-text" style="margin:auto;padding-right:7%;">Slime Arcade</h2>
-						<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--raised b">
-								<a href="https://github.com/MFeret11/SlimeArcade" target="_blank">
-									<img class="icon" src="images/compressed/logo/ghlogo.png" alt="GitHub" style="width:30px;height:30px;" loading="lazy">
-								</a>
-							</button>
-					</div>
-
-					<div class="mdl-card__supporting-text">
-						<p>Slime Arcade is a remake of the classic Slime Volleyball internet game plus two more slime games: dodgeball and soccer. Written in C# and created in Unity, Slime Arcade was created as a school project with two other students. Though simple, this
-							is probably the most fun game I've created and is made for two players. to play click on the github link, download, and click game1.app.</p>
-					</div>
-				</div>
-			</div>
-		</main>
-		<!--<footer class="footer">
-			<div class="icons" align="center">
-				<a class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab
-					mdl-button--accent mdl-js-ripple-effect a" href="https://github.com/MFeret11/">
-					<img src="images/logo/ghlogo.png" alt="GitHub" style="width:40px;height:40px;"></a>
-
-				<a class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab
-					mdl-button--accent mdl-js-ripple-effect a" href="https://soundcloud.com/mferet">
-					<img src="images/logo/sclogo2.png" alt="SoundCloud" style="width:40px;height:40px;"></a>
-
-				<a class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab
-					mdl-button--accent mdl-js-ripple-effect a" href="https://www.linkedin.com/in/mferet/">
-					<img src="images/logo/lilogo.png" alt="LinkedIn" style="width:40px;height:40px;"></a>
-				</div>
-    </footer>-->
-	</div>
-<!-- jquery function-->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+	<link rel="stylesheet" href="styles.css">
 	<script>
-	$(document).ready(function(){
-		// Hide image on load
-		$('.hide').hide();
-		// Provide context for each click event
-		$('.d').click(function(){
-			$(this).hide();
-			$(this).next().fadeToggle(1000);})
-		$('.hide').click(function(){
-			$(this).hide();
-			$(this).prev().fadeToggle(500);})
-	});
-	setTimeout(function() { document.body.classList.remove('loading'); }, 3000);
-		window.addEventListener('load', function() {
-		document.body.classList.remove('loading');
-	});
-</script>
+		(function () {
+			var t;
+			try { t = localStorage.getItem("theme"); } catch (e) {}
+			if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+			document.documentElement.dataset.theme = t;
+		})();
+	</script>
+	<script defer src="site.js"></script>
+</head>
+<body>
+	<a class="skip" href="#main">Skip to content</a>
+	<header class="site-header">
+		<div class="wrap header-inner">
+			<a class="brand" href="index.html"><img src="images/compressed/favicon/mf-logo2.png" alt="" width="24" height="32">Matthew Feret</a>
+			<nav class="site-nav" aria-label="Main">
+				<a href="index.html">Home</a>
+				<a href="basement.html">The Basement</a>
+				<a href="projects.html" aria-current="page">Stories</a>
+				<a href="about.html">About</a>
+			</nav>
+			<button class="lights" type="button" aria-pressed="false"><span class="lights-track" aria-hidden="true"></span><span class="lights-label">Movie mode</span></button>
+		</div>
+	</header>
 
+	<main id="main" class="wrap">
+		<p class="eyebrow">Stories</p>
+		<h1>Bugs, fixes and design decisions</h1>
+		<p class="lede">
+			Two projects run in production at my house. Both are public on GitHub. These are the parts I'd tell you about over an NA beer.
+		</p>
+
+		<section class="section grid" aria-label="The projects">
+			<div class="card">
+				<p class="eyebrow">Project</p>
+				<h2>Basement Theater &amp; Home Automation</h2>
+				<ul class="tags"><li>Python</li><li>Home Assistant</li><li>pyscript</li><li>Docker</li><li>GitHub Actions</li></ul>
+				<p>One button picks a mode (movie, game, sports, music), and the house sets the receiver, launches the app, sets the lights and puts matching artwork on a wall dashboard. About 140 tests, run in CI on every commit, because every commit is a deploy.</p>
+				<div class="actions"><a class="btn" href="https://github.com/MFeret11/home-assistant-config">GitHub</a><a class="btn" href="basement.html">Try the simulator</a></div>
+			</div>
+			<div class="card">
+				<p class="eyebrow">Project</p>
+				<h2>Good Morning Dashboard</h2>
+				<ul class="tags"><li>Python</li><li>FastAPI</li><li>APScheduler</li><li>Docker</li><li>pytest</li></ul>
+				<p>A FastAPI service that says when to leave for the train. It plans SEPTA Regional Rail trips with transfers, tracks live delays, and sends a weekday push with the best train home.</p>
+				<div class="actions"><a class="btn" href="https://github.com/MFeret11/Good_Morning_Dashboard">GitHub</a></div>
+			</div>
+		</section>
+
+		<section class="section">
+			<article class="story card" id="projector">
+				<p class="meta">home-assistant-config · safety interlocks</p>
+				<h2>The projector you must not unplug</h2>
+				<p>
+					My projector's lamp needs its fans after you switch it off, and cutting power during the cooldown shortens the lamp's life.
+					The projector sits on a smart plug that measures current, so the automation can tell "lamp on" from "fans only" from "actually off".
+				</p>
+				<p>
+					The rule: when a session ends, wait 90 seconds no matter what. Then check the current every 10 seconds, up to 15 times, and open
+					the relay only after <strong>two readings in a row</strong> at or below 0.06 A. One low reading could be a glitch; two in a row is the fans stopping.
+				</p>
+				<p class="callout">
+					My favorite part is what happens when it can't tell. If the sensor goes unavailable, the code doesn't guess: it leaves the power on.
+					A projector plugged in overnight costs a few cents. One cut mid-cooldown costs a lamp. When you can't verify, fail toward the cheap mistake.
+				</p>
+				<p>It's one of five hardware interlocks in the repo, all covered by tests. <a href="basement.html">Try to break it in the simulator.</a></p>
+			</article>
+
+			<article class="story card" id="zigbee">
+				<p class="meta">home-assistant-config · sports.py</p>
+				<h2>Touchdown flashes vs. the Zigbee mesh</h2>
+				<p>
+					When the Eagles score, the nine Zigbee bulbs in the basement celebrate. The obvious version flashes green and white. The trouble is that
+					every color change is a command to every bulb, and a fast chant of them can congest a Zigbee mesh: bulbs drop commands, fall out of sync,
+					and the room looks like a broken string of Christmas lights.
+				</p>
+				<p>
+					So the color never changes mid-flash. The bulbs hold solid Kelly green, <code>rgb(0, 170, 35)</code>, and only the brightness moves, between
+					100% and 15%. A touchdown gets six stadium-cadence surges, a short breath, then two big ones for E-A-G-L-E-S. It ends holding solid green
+					instead of restoring the old scene, because the game's still on.
+				</p>
+				<p>And yes, Kelly green, not midnight green. I will not be taking questions.</p>
+			</article>
+
+			<article class="story card" id="tuner">
+				<p class="meta">home-assistant-config · theater.py</p>
+				<h2>The tuner code that never worked</h2>
+				<p>
+					Family members watch my antenna TV remotely, through an HDHomeRun with two tuners shared over Tailscale. If both tuners are busy when the
+					Eagles kick off, the basement wins: the automation frees one up and sends a notification.
+				</p>
+				<p>
+					Except it turned out it never had. The old code called HTTP endpoints that returned <code>404</code> and a proxy endpoint that returned
+					<code>423 Locked</code>. Nobody had hit that exact situation, so nobody noticed. I rewrote it to use the tuner's own TCP control protocol
+					(<code>lockkey force</code>, then <code>channel none</code>), and the notification now says "preemption failed" when the device refuses,
+					instead of claiming success.
+				</p>
+				<p class="callout">
+					Status: it's only been tested against an idle tuner. The real test is the next game day when both tuners are busy. I'll update this when it happens.
+				</p>
+			</article>
+
+			<article class="story card" id="stairs">
+				<p class="meta">home-assistant-config · basement.py</p>
+				<h2>My slowest trip up the stairs took 18.76 seconds</h2>
+				<p>
+					The basement lights know which way you're going on the stairs. The door opens, then the motion sensor at the bottom trips within
+					18 seconds: someone's coming down. Motion at the bottom, then the door: someone's leaving, so the lights can turn off behind them.
+				</p>
+				<p>
+					The "leaving" window was 18 seconds too, until the sensor history showed a real, slow, deliberate climb of 18.76 seconds that didn't
+					count. The window is 25 seconds now. Leaving also gets a 20-second grace period that any new motion cancels, so nobody gets blacked out
+					while they're still downstairs. And if someone leaves the door open, closing it soon after motion counts as leaving too.
+				</p>
+				<p>Calibrating against real sensor data beats guessing, even when the test subject is me.</p>
+			</article>
+
+			<article class="story card" id="commute">
+				<p class="meta">Good_Morning_Dashboard · FastAPI</p>
+				<h2>A missing notification reads as "all good"</h2>
+				<p>
+					Good Morning Dashboard tells my household when to leave for the train. SEPTA's API has character. The parameter for how many results you
+					want is <code>req3</code>; the one that looks right, <code>top</code>, is silently ignored. Delay text is free-form ("On time", "5 min",
+					"Cancelled", "Suspended", or something else entirely), and the code never treats text it can't parse as on time.
+				</p>
+				<p class="callout">
+					The design rule I'm proudest of: a push that doesn't arrive looks exactly like a push saying everything's fine. So every upstream has a
+					cache, stale data is served but flagged in the message, and if the check crashes outright, it still sends a "check failed" push. Silence is never the answer.
+				</p>
+				<p>
+					Transfers were the other fun part. When there's no direct train, it plans each leg separately and pairs them, picking the earliest
+					connection you can still make once live delays are counted.
+				</p>
+			</article>
+		</section>
+
+		<section class="section">
+			<h2>Earlier work</h2>
+			<p>School and early-career projects, kept for nostalgia.</p>
+			<div class="earlier">
+				<details><summary>C3 Mobile</summary><p>A native Android app I worked on as an intern and new grad: bug fixes, framework upgrades, data validation and error handling, on a small team using git and Agile.</p></details>
+				<details><summary>Slime Arcade</summary><p>A Unity/C# remake of Slime Volleyball plus slime dodgeball and soccer, built with two classmates. Probably the most fun game I've made. <a href="https://github.com/MFeret11/SlimeArcade">GitHub</a></p></details>
+				<details><summary>FoxClimbers</summary><p>A Unity/C# platformer inspired by Ice Climber that grew out of a large-scale projects class. <a href="https://github.com/MFeret11/foxclimbers">GitHub</a></p></details>
+				<details><summary>Labyrinth</summary><p>A marble-maze game in Unity, built with a classmate. Avoid the red dots, find the black ones. Very hard. <a href="https://github.com/MFeret11/LabyrnthGame">GitHub</a></p></details>
+				<details><summary>RSA Encryption</summary><p>A Java implementation of RSA using BigInteger that encrypts and decrypts messages. <a href="https://github.com/MFeret11/RSA_Example">GitHub</a></p></details>
+				<details><summary>Rack-O</summary><p>A text-based, two-player C# version of the Milton Bradley card game. <a href="https://github.com/MFeret11/Racko">GitHub</a></p></details>
+				<details><summary>War: The Card Game</summary><p>A text-based C# version of War, written to practice object-oriented design. <a href="https://github.com/MFeret11/WarCardGame">GitHub</a></p></details>
+				<details><summary>Simple Java Calculator</summary><p>A Swing calculator built to learn Model-View-Controller. <a href="https://github.com/MFeret11/SimpleJavaCalc">GitHub</a></p></details>
+				<details><summary>Project Euler</summary><p>Project Euler solutions in Java. <a href="https://github.com/MFeret11/ProjectEulerJava">GitHub</a></p></details>
+				<details><summary>Flowershop</summary><p>A virtual flower shop for a user interfaces class, in PHP with the Fuel framework and Smarty templates.</p></details>
+			</div>
+		</section>
+	</main>
+
+	<footer class="site-footer">
+		<div class="wrap">
+			<p>admin [at] mferet [dot] com · <a href="https://github.com/MFeret11">GitHub</a> · <a href="https://www.linkedin.com/in/mferet/">LinkedIn</a> · <a href="https://soundcloud.com/mferet">SoundCloud</a></p>
+			<p class="fine">Hand-written HTML and CSS. The old version of this site used a UI framework until its CDN disappeared, so this one doesn't.</p>
+		</div>
+	</footer>
 </body>
-
 </html>

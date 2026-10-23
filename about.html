@@ -1,152 +1,120 @@
 <!doctype html>
-<!--
-  Material Design Lite
-  Copyright 2015 Google Inc. All rights reserved.
-
--->
 <html lang="en">
-
 <head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="description" content="A portfolio for developer Matthew Feret that uses Material Design.">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-	<title>MFeret</title>
-	<!--Only for favicon-->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>About · Matthew Feret</title>
+	<meta name="description" content="About Matthew Feret: senior software engineer, home-recording musician and skier in the Philadelphia area.">
+	<meta property="og:title" content="About · Matthew Feret">
+	<meta property="og:description" content="Senior software engineer, home-recording musician and skier in the Philadelphia area.">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://mferet.com/about.html">
+	<link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png">
 	<link rel="apple-touch-icon" sizes="144x144" href="images/favicon/apple-touch-icon.png">
-	<link rel="icon" type="image/png" href="images/favicon/favicon-32x32.png" sizes="32x32">
-	<link rel="icon" type="image/png" href="images/favicon/favicon-16x16.png" sizes="16x16">
 	<link rel="manifest" href="images/favicon/manifest.json">
-	<link rel="mask-icon" href="images/favicon/safari-pinned-tab.svg" color="#5bbad5">
-	<meta name="theme-color" content="#ffffff">
-	<!-- Performance Meta Tags -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-	<link rel="preload" href="styles.css" as="style">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link rel="preload" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" as="style">
-	<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.deep_purple-light_blue.min.css" as="style">
-
-	<!-- Added for material design -->
-	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" >
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.deep_purple-light_blue.min.css" />
-	<link rel="stylesheet" href="styles.css" />
-</head>
-
-<body class="loading">
-	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-		<header class="mdl-layout__header mdl-layout__header--waterfall portfolio-header">
-			<div class="mdl-layout__header-row portfolio-logo-row">
-				<span class="mdl-layout__title">
-                    <div class="portfolio-logo"></div>
-                </span>
-			</div>
-			<div class="mdl-layout__header-row portfolio-navigation-row mdl-layout--large-screen-only">
-				<nav class="mdl-navigation mdl-typography--body-1-force-preferred-font">
-					<a class="mdl-navigation__link mdl-js-button mdl-js-ripple-effect c" href="index.html">Home</a>
-					<a class="mdl-navigation__link mdl-js-button mdl-js-ripple-effect c" href="projects.html">Projects</a>
-					<a class="mdl-navigation__link is-active mdl-js-button mdl-js-ripple-effect c" href="about.html">About</a>
-					<a class="mdl-navigation__link mdl-js-button mdl-js-ripple-effect c" href="contact.html">Contact</a>
-				</nav>
-			</div>
-		</header>
-		<div class="mdl-layout__drawer mdl-layout--small-screen-only">
-			<nav class="mdl-navigation mdl-typography--body-1-force-preferred-font">
-				<a class="mdl-navigation__link c" href="index.html">Home</a>
-				<a class="mdl-navigation__link c" href="projects.html">Projects</a>
-				<a class="mdl-navigation__link is-active c" href="about.html" aria-current="page">About</a>
-				<a class="mdl-navigation__link c" href="contact.html">Contact</a>
-			</nav>
-		</div>
-		<main class="mdl-layout__content">
-			<div class="mdl-grid portfolio-max-width">
-
-				<div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp">
-					<div class="mdl-card__title">
-						<h2 class="mdl-card__title-text">About</h2>
-					</div>
-					<div class="mdl-grid portfolio-copy">
-						<h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">Introduction</h3>
-						<div class="mdl-cell mdl-cell--8-col mdl-card__supporting-text no-padding ">
-							<p>
-								Hello, I am a professional software developer with experience in numerous programming languages and paradigms.
-								Some of my past or current experience includes:
-								writing RESTful Web Service applications in Spring Boot,
-								developing in .NET in the ERP industry,
-								and working as an android developer on a geotagging app for the HOA industry.
-								I also have a bachelor's degree in Computer Science and a certificate in Cyber Security.
-								I am passionate technologist, musician, and friend. I am currently residing in the Philadelphia area.
-								<b>Check out my songs on Soundcloud, I release a new track every few weeks!</b>
-							</p>
-						</div>
-
-						<h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline" id="interests">Interests</h3>
-
-						<div class="mdl-cell mdl-cell--8-col mdl-card__supporting-text no-padding ">
-							<p>
-								I have many interests both in and outside of technology.
-								The line between the tech and physical world is often blurred and this
-								fascinates and drives my passion for computer science. Some of my interests in tech include:
-								<ul>
-									<li>novel data management solutions</li>
-									<li>cyber security</li>
-									<li>web development</li>
-									<li>Android development</li>
-									<li>big data analysis</li>
-									<li>video game development in Unity</li>
-									<li>novel uses for Raspberry Pi</li>
-								</ul>
-
-								Some of my interests outside of the technology world include:
-								<ul>
-									<li>playing classical guitar</li>
-									<li>playing synthesizers</li>
-									<li>playing bass guitar</li>
-									<li>seeing live music acts</li>
-									<li>recording music</li>
-									<li>skiing</li>
-								</ul>
-								There is plenty of overlap with my interests both in and outside of tech. For example, I enjoy both playing and making video games.
-								I also use technologic means to home-record original music and covers in a multitude of genres. I feel there is a similiar creation process
-								in making improvisational music and agile software development in that it is usually collaboratively and the goal
-								isn't entirely set out before the work starts. I enjoy the free flow of ideas in both these creation processes.
-								<br></br>If you'd like to hear some music I've recorded, my soundcloud profile is linked at the bottom of the page.
-								I also update my projects page regularly so be sure to keep an eye out for new content.
-							</p>
-						</div>
-						<h3 class="mdl-cell mdl-cell--12-col mdl-typography--headline">Resume</h3>
-						<div class="mdl-cell mdl-cell--8-col mdl-card__supporting-text no-padding ">
-							<p>If you're interested in my experience you can email me [posted on my contact page] and ask for my resume.
-								<!-- Updated on 01/15/2017</p>
-							<a class="mdl-button mdl-js-button mdl-button--accent mdl-js-ripple-effect mdl-button--raised readmore mdl-shadow--8dp " href="ResumeV23.pdf" target="_blank">Resume</a> -->
-						</div>
-					</div>
-					<!--social media links-->
-					<div class="icons">
-						<a class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab
-					mdl-button--accent mdl-js-ripple-effect a" href="https://github.com/MFeret11/">
-							<img src="images/compressed/logo/ghlogo.png" alt="GitHub" style="width:40px;height:40px;" loading="lazy"></a>
-
-						<a class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab
-					mdl-button--accent mdl-js-ripple-effect a" href="https://soundcloud.com/mferet">
-							<img src="images/compressed/logo/sclogo2.png" alt="SoundCloud" style="width:40px;height:40px;" loading="lazy"></a>
-
-						<a class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab
-					mdl-button--accent mdl-js-ripple-effect a" href="https://www.linkedin.com/in/mferet/">
-							<img src="images/compressed/logo/lilogo.png" alt="LinkedIn" style="width:40px;height:40px;" loading="lazy"></a>
-					</div>
-				</div>
-			</div>
-		</main>
-	</div>
-	<script defer src="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.min.js"></script>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+	<link rel="stylesheet" href="styles.css">
 	<script>
-		setTimeout(function() { document.body.classList.remove('loading'); }, 3000);
-		window.addEventListener('load', function() {
-			document.body.classList.remove('loading');
-		});
+		(function () {
+			var t;
+			try { t = localStorage.getItem("theme"); } catch (e) {}
+			if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+			document.documentElement.dataset.theme = t;
+		})();
 	</script>
-</body>
+	<script defer src="site.js"></script>
+</head>
+<body>
+	<a class="skip" href="#main">Skip to content</a>
+	<header class="site-header">
+		<div class="wrap header-inner">
+			<a class="brand" href="index.html"><img src="images/compressed/favicon/mf-logo2.png" alt="" width="24" height="32">Matthew Feret</a>
+			<nav class="site-nav" aria-label="Main">
+				<a href="index.html">Home</a>
+				<a href="basement.html">The Basement</a>
+				<a href="projects.html">Stories</a>
+				<a href="about.html" aria-current="page">About</a>
+			</nav>
+			<button class="lights" type="button" aria-pressed="false"><span class="lights-track" aria-hidden="true"></span><span class="lights-label">Movie mode</span></button>
+		</div>
+	</header>
 
+	<main id="main" class="wrap">
+		<p class="eyebrow">About</p>
+		<h1>Hi, I'm Matt.</h1>
+		<p class="lede">
+			I'm a software engineer in the Philadelphia area, a home-recording musician, and someone who will absolutely automate a thing that didn't need automating.
+		</p>
+
+		<section class="section about-grid">
+			<div class="card">
+				<p class="eyebrow">Day job</p>
+				<h2>Backend, cloud, and AI agents</h2>
+				<p>
+					I'm a Senior Software Engineer at JPMorgan Chase, where I'm a technical lead on a high-volume home-loan platform. Most of my work is
+					Java/Spring Boot microservices and Python services on AWS, with the infrastructure written in Terraform. Before that I built
+					e-commerce systems at Qurate Retail Group and ERP software at Deacom.
+				</p>
+				<p>
+					I use agentic AI development every day: writing specs, handing pieces to coding agents, and reviewing what comes back like any other
+					pull request. This site was rebuilt that way.
+				</p>
+				<p>AWS Certified Developer – Associate. B.S. in Computer Science from West Chester University.</p>
+				<p><a href="https://www.linkedin.com/in/mferet/">The full résumé version is on LinkedIn →</a></p>
+			</div>
+			<div class="card">
+				<p class="eyebrow">Off the clock</p>
+				<h2>Music</h2>
+				<p>
+					I play classical guitar, bass and synthesizers, and record originals and covers at home across a bunch of genres. Improvising music
+					and building software feel similar to me: you start without the whole thing planned out, and the good parts come from the back-and-forth.
+				</p>
+				<iframe class="embed" title="Matthew Feret on SoundCloud" height="300" loading="lazy" allow="autoplay"
+					src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/mferet&amp;color=%237c4dff&amp;auto_play=false&amp;hide_related=true&amp;show_comments=false&amp;show_user=true&amp;show_reposts=false&amp;visual=false"></iframe>
+			</div>
+		</section>
+
+		<section class="section about-grid">
+			<figure class="photo">
+				<img src="images/compressed/skiLift.jpg" alt="Chairlift chairs heading up into the fog" loading="lazy" width="1499" height="415">
+			</figure>
+			<div class="card">
+				<p class="eyebrow">Also</p>
+				<h2>Snow, shows, and a Raspberry Pi</h2>
+				<p>
+					I ski whenever there's snow, see a lot of live music, and spend more evenings than I'd like to admit tuning the basement.
+					If you've ever wanted to argue about Kelly green versus midnight green, I'm your guy.
+				</p>
+				<p>
+					This site has been around since 2017. In 2026 the CDN behind its old UI framework went dark and took the whole layout with it,
+					so I rebuilt it as plain HTML, CSS and a little JavaScript. No build step, no dependencies to vanish.
+				</p>
+			</div>
+		</section>
+
+		<section class="section card" id="contact">
+			<p class="eyebrow">Contact</p>
+			<h2>Say hi</h2>
+			<p>
+				Email is best: <strong>admin [at] mferet [dot] com</strong>. I'm happy to hear from people hiring, people building something
+				interesting, or anyone with opinions about receiver DSP modes.
+			</p>
+			<div class="actions">
+				<a class="btn" href="https://www.linkedin.com/in/mferet/">LinkedIn</a>
+				<a class="btn" href="https://github.com/MFeret11">GitHub</a>
+				<a class="btn" href="https://soundcloud.com/mferet">SoundCloud</a>
+			</div>
+		</section>
+	</main>
+
+	<footer class="site-footer">
+		<div class="wrap">
+			<p>admin [at] mferet [dot] com · <a href="https://github.com/MFeret11">GitHub</a> · <a href="https://www.linkedin.com/in/mferet/">LinkedIn</a> · <a href="https://soundcloud.com/mferet">SoundCloud</a></p>
+			<p class="fine">Hand-written HTML and CSS. The old version of this site used a UI framework until its CDN disappeared, so this one doesn't.</p>
+		</div>
+	</footer>
+</body>
 </html>

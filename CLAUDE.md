@@ -4,30 +4,44 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-Personal portfolio site for a software engineer who is job hunting, served by GitHub Pages from `master` at the custom domain in `CNAME` (mferet.com). It's plain static HTML and CSS: there's no build step, package manager, linter or tests. A push to `master` deploys, and the repo is public. Commits use the repo-local noreply identity (`MFeret11 <MFeret11@users.noreply.github.com>`).
+Personal site for a software engineer who is job hunting, served by GitHub Pages from `master` at the custom domain in `CNAME` (mferet.com). A push to `master` deploys within about a minute, and the repo is public. Commits use the repo-local noreply identity (`MFeret11 <MFeret11@users.noreply.github.com>`).
 
-Preview locally, and check visually with headless Chromium (installed on the Pi):
+The site is meant to be **fun, not a résumé**: recruiters get work history from LinkedIn or a résumé PDF. The site leads with an interactive simulator of the author's basement theater and stories from his two public projects, [home-assistant-config](https://github.com/MFeret11/home-assistant-config) and [Good_Morning_Dashboard](https://github.com/MFeret11/Good_Morning_Dashboard).
+
+It's plain HTML, CSS and vanilla JS: no framework, build step, package manager or tests, and no CDN scripts. (The 2016 version used Material Design Lite from `code.getmdl.io`; that CDN died in 2026 and took the whole layout with it, which is why there are no runtime dependencies now.) The only external resources are Google Fonts and a SoundCloud embed on the About page.
+
+## Preview and check
 
 ```bash
 python3 -m http.server 8080   # then open http://localhost:8080 (or http://<pi-ip>:8080 from another machine)
 chromium --headless=new --no-sandbox --hide-scrollbars --virtual-time-budget=8000 \
-  --window-size=1280,900 --screenshot=out.png http://127.0.0.1:8080/index.html   # use 390,844 for phone width
+  --window-size=1280,900 --screenshot=out.png http://127.0.0.1:8080/index.html   # 390,844 for phone; add --force-dark-mode for Movie mode
 ```
 
-After changing links or assets, check that every local `src`/`href`/`url()` still points at an existing file, and that CDN URLs return 200.
+Headless screenshots catch CSS transitions mid-fade, so the simulator can look wrong in a screenshot when it isn't. To check simulator state, load `basement.html` in an iframe from a same-origin harness page, inject `*{transition:none!important}`, click buttons, and read the `#log` entries and `#st-*` status fields (`--dump-dom` works for this). The Pi's Chromium has no emoji font, so emoji render as boxes there but are fine in normal browsers.
 
 ## Structure
 
-- Four standalone pages: `index.html`, `projects.html`, `about.html`, `contact.html`. There are no templates or includes, so the `<head>`, header, nav drawer and footer are copy-pasted into each page. A change to the shared chrome has to be made in all four files, and the active nav link (`is-active`) differs per page.
-- UI is **Material Design Lite (MDL) 1.3.0** (`mdl-layout`, `mdl-card`, `mdl-grid`, `mdl-js-*` ripple classes), plus Roboto and Material Icons from Google Fonts. MDL is unmaintained, so expect to work around it rather than upgrade it. Load MDL and jQuery from **cdnjs**: the official `code.getmdl.io` CDN started returning 403 in 2026, which left the whole site unstyled.
-- `styles.css` is the only local stylesheet and overrides MDL. Its utility classes have terse names: `.a` (social icons), `.b` (GitHub project links), `.c` (nav link hover gradient), `.readmore` (card buttons).
-- `projects.html` also loads jQuery for show/hide toggles: clicking a `.d` element hides it and fades in the next sibling `.hide`.
-- Images: `images/` holds originals and `images/compressed/` holds the optimized copies used for photos and logos. Favicons and the web manifest exist only in `images/favicon/`; `images/compressed/favicon/` holds just the `mf-logo` PNGs used by the header logo.
-- Every page starts with `<body class="loading">` (`visibility: hidden` in CSS) so MDL can finish upgrading the DOM before anything shows. An inline script removes the class on `window.load`, with a 3-second fallback so a stalled CDN can't leave the page blank.
-- Each page's drawer nav (the mobile menu) marks its own link with `is-active` and `aria-current="page"`.
-- Avoid `will-change`/`translateZ(0)` on MDL's header elements: transforms there interfere with its waterfall/compact header. They were removed in 2026-10.
-- `ResumeV23.pdf` is in the repo, but its link on the About page is commented out.
+- Pages: `index.html` (home), `basement.html` (simulator), `projects.html` (Stories, the URL kept from the old site), `about.html` (day job in one card, music, skiing, and the `#contact` section). `contact.html` only redirects to `about.html#contact` so old links work.
+- There are no templates or includes. Each page has its own copy of the `<head>`, header, nav and footer. Changes to shared chrome go in all four pages, and each page sets `aria-current="page"` on its own nav link.
+- `styles.css` holds everything, organized by section (tokens, base, header, home, stories, about, footer, simulator).
+- **Theming:** light is "Daily Driver" and dark is "Movie mode". The tokens live on `:root`; dark overrides sit under `:root[data-theme="dark"]`, plus a `prefers-color-scheme` fallback for no-JS. An inline script in every `<head>` sets `data-theme` before first paint (from `localStorage` or the OS setting), and `site.js` wires the header switch, saves the choice, and fires a `themechange` event.
+- **`basement.js`** is the simulator: a single state object `S`, `applyLights()` (lighting rules), `render()` (pushes state into the inline SVG, the status panel and the button states), and async action functions (`play`, `togglePause`, `stairs`, `flash`, `endSession`, `pollProjector`). Long waits run `SPEED` (10x) faster through `sleep()`, which also speeds up the sim clock. Flash timings use real time, because they're visual.
 
-## Repo notes
+## Keep the simulator and stories accurate
 
-The README's TODO list holds wanted features: a ripple on mobile nav links, a social-button footer on Home and Projects, and Read-more buttons that widen on hover.
+The simulator and the Stories page describe real behavior from the two repos: lighting modes, receiver DSP per mode, the 4.0 s pause debounce, the 2% 2000 K stair light, Kelly green `rgb(0,170,35)` brightness-only flashes (100%/15%, touchdown and field-goal cadences), the tuner preemption, the Batocera < 0.05 A for 12 s check, and the projector's 90 s cooldown plus two consecutive readings ≤ 0.06 A (mains stay on if the sensor is unavailable). When changing them, check the source docs instead of inventing details: `~/ha_config/docs/` (`safety-interlocks.md`, `lighting.md`, `theater-audio.md`) and `~/Good_Morning_Dashboard/CLAUDE.md` on this Pi.
+
+The tuner story says preemption has only been tested against an idle tuner. Update it once it has worked during a real game.
+
+## Privacy
+
+Keep these off the site:
+- the author's phone number, personal email and town ("Philadelphia area" is fine)
+- anything live from the house: presence, what's playing, location
+- the commuter's real stations, times or coordinates (call them "partner" or "my household")
+- LAN or Tailscale IPs
+
+The contact address is shown obfuscated, as `admin [at] mferet [dot] com`. The simulator must never call the real Home Assistant.
+
+`ResumeV23.pdf` is an old résumé; nothing links to it. A newer PDF hasn't been added yet.
