@@ -44,4 +44,4 @@ Keep these off the site:
 
 The contact address is shown obfuscated, as `admin [at] mferet [dot] com`. The simulator must never call the real Home Assistant.
 
-`ResumeV23.pdf` is an old résumé; nothing links to it. A newer PDF hasn't been added yet.
+`Matthew_Feret_Resume.pdf` is the current résumé, linked from the home day-job card and About. It shows only the obfuscated contact address.
