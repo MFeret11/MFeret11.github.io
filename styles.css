@@ -466,22 +466,6 @@ a.card {
   }
 }
 
-.now {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 24px;
-  font-size: 0.95rem;
-  color: var(--muted);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.now strong {
-  color: var(--text);
-  font-weight: 600;
-}
-
 /* ---------- Stories ---------- */
 .story {
   max-width: 44em;
@@ -531,6 +515,19 @@ a.card {
 }
 
 /* ---------- About ---------- */
+.principles {
+  margin: 0 0 12px;
+  padding-left: 1.2em;
+}
+
+.principles li + li {
+  margin-top: 6px;
+}
+
+.principles strong {
+  font-weight: 600;
+}
+
 .about-grid {
   display: grid;
   gap: 20px;
