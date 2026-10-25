@@ -4,9 +4,9 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>The Basement · Matthew Feret</title>
-	<meta name="description" content="A playable simulation of Matthew Feret's automated basement theater: lights, receiver, projector cooldown interlock and Eagles touchdown flashes.">
+	<meta name="description" content="A playable simulation of Matthew Feret's automated basement: lights that follow you down the stairs, the theater, the projector cooldown interlock and Eagles touchdown flashes.">
 	<meta property="og:title" content="The Basement · Matthew Feret">
-	<meta property="og:description" content="Press play, score a touchdown, then try to break the projector's safety interlock.">
+	<meta property="og:description" content="Walk downstairs, start a movie, score a touchdown, then try to break the projector's safety interlock.">
 	<meta property="og:type" content="website">
 	<meta property="og:url" content="https://mferet.com/basement.html">
 	<link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
@@ -28,11 +28,11 @@
 	<script defer src="site.js"></script>
 	<script defer src="basement.js"></script>
 </head>
-<body>
+<body class="basement-page">
 	<a class="skip" href="#main">Skip to content</a>
 	<header class="site-header">
 		<div class="wrap header-inner">
-			<a class="brand" href="index.html"><img src="images/compressed/favicon/mf-logo2.png" alt="" width="24" height="32">Matthew Feret</a>
+			<a class="brand" href="index.html"><img src="images/compressed/favicon/mf-logo2.png" alt="Home" width="24" height="32"></a>
 			<nav class="site-nav" aria-label="Main">
 				<a href="index.html">Home</a>
 				<a href="basement.html" aria-current="page">The Basement</a>
@@ -48,186 +48,315 @@
 		<p class="eyebrow">Interactive</p>
 		<h1>The Basement</h1>
 		<p class="lede">
-			My basement theater runs on Home Assistant and a Raspberry Pi. This is a toy version of the same
-			rules, running in your browser. Press play, pause, score a touchdown, then end the session and
-			watch the projector cooldown. Nothing here talks to my actual house.
+			My basement theater runs on Home Assistant and a Raspberry Pi. Here are three problems it had to solve, played out on a
+			copy of the real rules. Nothing here talks to my actual house.
 		</p>
 
-		<div class="sim">
-			<div>
-				<div class="card room" id="room">
-					<svg viewBox="0 0 800 440" role="img" aria-labelledby="room-title" id="room-svg">
-						<title id="room-title">Cartoon of the basement theater: ceiling lights, projector, screen with bias lighting, receiver, couch and staircase</title>
-						<defs>
-							<filter id="blur-sm" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4"/></filter>
-							<filter id="blur-lg" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="28"/></filter>
-							<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-								<stop offset="0" stop-color="#1f2b55"/>
-								<stop offset="0.6" stop-color="#b05f6d"/>
-								<stop offset="1" stop-color="#f2a65a"/>
-							</linearGradient>
-							<clipPath id="screen-clip"><rect x="220" y="80" width="360" height="200" rx="3"/></clipPath>
-						</defs>
+		<div class="sim explainer" id="sim">
+			<div class="stage-col">
+				<div class="stage-sticky">
+						<div class="card room" id="room">
+						<div class="stage">
+							<div class="tour-badge" id="tour-badge" hidden><span class="tour-dot" aria-hidden="true"></span><span><span id="tour-label">Playing</span><span class="tour-more"> · tap any control to take over</span></span></div>
+						<svg viewBox="0 0 800 450" role="img" aria-labelledby="room-title" id="room-svg">
+							<title id="room-title">Cartoon of the basement: ceiling lights, projector and screen, receiver, a bar, a couch, and a staircase with a door at the top</title>
+							<defs>
+								<filter id="blur-sm" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4"/></filter>
+								<filter id="blur-lg" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="26"/></filter>
+								<linearGradient id="g-wall" x1="0" y1="0" x2="0" y2="1">
+									<stop offset="0" stop-color="#d9ccbb"/>
+									<stop offset="1" stop-color="#c2b19d"/>
+								</linearGradient>
+								<linearGradient id="g-floor" x1="0" y1="0" x2="0" y2="1">
+									<stop offset="0" stop-color="#5d4c40"/>
+									<stop offset="1" stop-color="#7a6553"/>
+								</linearGradient>
+								<linearGradient id="g-sky" x1="0" y1="0" x2="0" y2="1">
+									<stop offset="0" stop-color="#1f2b55"/>
+									<stop offset="0.6" stop-color="#b05f6d"/>
+									<stop offset="1" stop-color="#f2a65a"/>
+								</linearGradient>
+								<radialGradient id="g-vignette" cx="0.5" cy="0.45" r="0.75">
+									<stop offset="0.6" stop-color="#000" stop-opacity="0"/>
+									<stop offset="1" stop-color="#000" stop-opacity="0.45"/>
+								</radialGradient>
+								<radialGradient id="g-spill">
+									<stop id="spill-stop" offset="0" stop-color="#ffb070" stop-opacity="0.9"/>
+									<stop offset="1" stop-color="#ffb070" stop-opacity="0"/>
+								</radialGradient>
+								<radialGradient id="g-door" cx="1" cy="0.5" r="1">
+									<stop offset="0" stop-color="#ffe2b0" stop-opacity="0.9"/>
+									<stop offset="1" stop-color="#ffe2b0" stop-opacity="0"/>
+								</radialGradient>
+								<clipPath id="screen-clip"><rect x="230" y="70" width="340" height="192" rx="3"/></clipPath>
+								<clipPath id="floor-clip"><rect x="0" y="340" width="800" height="110"/></clipPath>
+							</defs>
 
-						<!-- room -->
-						<rect x="0" y="0" width="800" height="340" fill="#cdbfae"/>
-						<rect x="0" y="340" width="800" height="100" fill="#7a6656"/>
-						<rect x="0" y="0" width="800" height="12" fill="#b9ab9a"/>
+							<!-- ===== the room, darkened by #dark ===== -->
+							<g id="scene">
+								<rect x="0" y="0" width="800" height="340" fill="url(#g-wall)"/>
+								<rect x="0" y="340" width="800" height="110" fill="url(#g-floor)"/>
+								<g clip-path="url(#floor-clip)" stroke="#4d3f35" stroke-width="1.5" opacity="0.55">
+									<line x1="400" y1="250" x2="-300" y2="450"/><line x1="400" y1="250" x2="-60" y2="450"/>
+									<line x1="400" y1="250" x2="170" y2="450"/><line x1="400" y1="250" x2="400" y2="450"/>
+									<line x1="400" y1="250" x2="630" y2="450"/><line x1="400" y1="250" x2="860" y2="450"/>
+									<line x1="400" y1="250" x2="1100" y2="450"/>
+									<line x1="0" y1="362" x2="800" y2="362"/><line x1="0" y1="392" x2="800" y2="392"/>
+								</g>
+								<rect x="0" y="334" width="800" height="7" fill="#a8977f"/>
+								<rect x="0" y="0" width="800" height="18" fill="#a99a87"/>
+								<rect x="0" y="18" width="800" height="4" fill="#9a8b78" opacity="0.6"/>
 
-						<!-- stairs -->
-						<g id="stairs">
-							<path d="M650 340 V310 H680 V280 H710 V250 H740 V220 H770 V190 H800 V340 Z" fill="#9c8a77"/>
-							<path class="stairlight" id="stairlight" d="M650 336 H680 M680 306 H710 M710 276 H740 M740 246 H770 M770 216 H800" stroke="#ffd9a8" stroke-width="5" stroke-linecap="round" opacity="0"/>
-							<path id="stairglow" class="stairlight" d="M650 336 H680 M680 306 H710 M710 276 H740 M740 246 H770 M770 216 H800" stroke="#ffd9a8" stroke-width="22" filter="url(#blur-sm)" opacity="0"/>
+								<!-- bar on the north wall (left) -->
+								<rect x="18" y="150" width="120" height="8" rx="2" fill="#5a4636"/>
+								<g fill="#7aa0b8" opacity="0.8"><rect x="34" y="128" width="8" height="22" rx="2"/><rect x="50" y="122" width="8" height="28" rx="2"/><rect x="66" y="132" width="8" height="18" rx="2"/><rect x="104" y="126" width="8" height="24" rx="2"/></g>
+								<rect x="10" y="262" width="150" height="76" rx="4" fill="#4a3a2e"/>
+								<rect x="6" y="254" width="158" height="12" rx="3" fill="#6b5442"/>
+								<g fill="#2e2620"><rect x="44" y="300" width="22" height="7" rx="3"/><rect x="53" y="307" width="4" height="40"/><rect x="112" y="300" width="22" height="7" rx="3"/><rect x="121" y="307" width="4" height="40"/></g>
+
+								<!-- stairs and the door at the top -->
+								<g id="stairs">
+									<path d="M650 340 V310 H680 V280 H710 V250 H740 V220 H770 V190 H800 V340 Z" fill="#9c8a77"/>
+									<path d="M650 310 H680 V280 H710 V250 H740 V220 H770 V190 H800" fill="none" stroke="#b9a68f" stroke-width="3"/>
+									<line x1="640" y1="276" x2="790" y2="128" stroke="#6b5a4a" stroke-width="4" stroke-linecap="round"/>
+								</g>
+								<rect x="764" y="108" width="40" height="84" fill="#3d3229"/>
+								<rect id="doorway" x="768" y="112" width="32" height="78" fill="#2a221c"/>
+								<rect id="door-panel" x="768" y="112" width="32" height="78" fill="#8a7460"/>
+								<circle id="door-knob" cx="774" cy="152" r="2.5" fill="#d4b483"/>
+
+								<!-- media console and receiver -->
+								<rect x="290" y="298" width="220" height="44" rx="4" fill="#3a3140"/>
+								<rect x="312" y="308" width="176" height="22" rx="3" fill="#0b0a10"/>
+
+								<!-- people (added by the script) go behind the couch -->
+								<g id="people"></g>
+
+								<!-- couch, seen from behind -->
+								<ellipse cx="400" cy="440" rx="260" ry="26" fill="#000" opacity="0.25"/>
+								<path d="M196 450 V392 Q196 370 220 370 H580 Q604 370 604 392 V450 Z" fill="#2f2637"/>
+								<path d="M228 450 V402 Q228 390 242 390 H558 Q572 390 572 402 V450 Z" fill="#3b3046"/>
+								<path d="M220 370 H580" stroke="#4a3d57" stroke-width="3" stroke-linecap="round"/>
+							</g>
+
+							<!-- darkness: opacity set by how much light is on -->
+							<rect id="dark" x="0" y="0" width="800" height="450" fill="#05040a" opacity="0.88"/>
+
+							<!-- ===== light, added on top of the dark ===== -->
+							<g id="lightfx" class="lightfx">
+								<g id="pools"></g>
+								<path id="stairglow" class="fx" d="M650 336 H680 M680 306 H710 M710 276 H740 M740 246 H770 M770 216 H800" stroke="#ffd9a8" stroke-width="26" filter="url(#blur-sm)" opacity="0"/>
+								<polygon id="door-spill" class="fx" points="768,112 800,112 800,192 640,340 600,340" fill="url(#g-door)" opacity="0"/>
+								<g id="spill-wrap"><ellipse id="spill" class="fx" cx="400" cy="300" rx="430" ry="230" fill="url(#g-spill)" opacity="0"/></g>
+								<rect id="bias" class="fx" x="206" y="50" width="388" height="232" rx="20" fill="#bcd4ff" filter="url(#blur-lg)" opacity="0"/>
+							</g>
+							<path id="stairlight" class="fx" d="M650 336 H680 M680 306 H710 M710 276 H740 M740 246 H770 M770 216 H800" stroke="#ffd9a8" stroke-width="4" stroke-linecap="round" opacity="0"/>
+							<rect id="door-lit" class="fx" x="768" y="112" width="32" height="78" fill="#ffe2b0" opacity="0"/>
+
+							<!-- projector and beam -->
+							<polygon id="beam" class="fx" points="393,48 232,72 568,72 407,48" fill="#fff8e1" opacity="0"/>
+							<line x1="400" y1="18" x2="400" y2="28" stroke="#2b2733" stroke-width="4"/>
+							<rect x="372" y="26" width="56" height="22" rx="5" fill="#2b2733"/>
+							<circle id="lens" cx="400" cy="42" r="5" fill="#444"/>
+
+							<!-- ceiling bulbs and dimmer cans (added by the script) -->
+							<g id="bulbs"></g>
+
+							<!-- screen -->
+							<rect x="224" y="64" width="352" height="204" rx="6" fill="#16141b"/>
+							<g clip-path="url(#screen-clip)">
+								<rect x="230" y="70" width="340" height="192" fill="#1c1a22"/>
+								<g id="scr-loading" class="scr" opacity="0">
+									<rect x="230" y="70" width="340" height="192" fill="#15131f"/>
+									<g fill="#2c2840"><rect x="252" y="140" width="64" height="40" rx="4"/><rect x="326" y="140" width="64" height="40" rx="4"/><rect x="400" y="140" width="64" height="40" rx="4"/><rect x="474" y="140" width="64" height="40" rx="4"/></g>
+									<rect x="326" y="140" width="64" height="40" rx="4" fill="none" stroke="#9fa8ff" stroke-width="2"/>
+									<text id="loading-text" x="400" y="215" text-anchor="middle" fill="#c9c6dc" font-family="Inter, sans-serif" font-size="12">Launching…</text>
+								</g>
+								<g id="scr-movie" class="scr" opacity="0">
+									<rect x="230" y="70" width="340" height="192" fill="url(#g-sky)"/>
+									<circle cx="470" cy="205" r="32" fill="#ffd38a" opacity="0.9"/>
+									<path d="M230 262 L305 178 L348 216 L410 150 L478 228 L516 194 L570 240 L570 262 Z" fill="#241a33"/>
+									<line x1="230" y1="112" x2="570" y2="165" stroke="#1a1426" stroke-width="2"/>
+									<g fill="#1a1426"><rect x="320" y="126" width="3" height="16"/><rect x="310" y="141" width="24" height="9" rx="2"/><rect x="446" y="146" width="3" height="16"/><rect x="436" y="161" width="24" height="9" rx="2"/></g>
+									<text x="400" y="254" text-anchor="middle" fill="#fff" font-family="Inter, sans-serif" font-size="11" opacity="0.85">NOW PLAYING · Chairlift at Dusk (2026)</text>
+								</g>
+								<g id="scr-game" class="scr" opacity="0">
+									<rect x="230" y="70" width="340" height="192" fill="#5c94fc"/>
+									<g fill="#c84c0c"><rect x="230" y="238" width="340" height="24"/><rect x="304" y="186" width="16" height="16"/><rect x="320" y="186" width="16" height="16"/><rect x="352" y="186" width="16" height="16"/></g>
+									<rect x="336" y="186" width="16" height="16" fill="#fbd000"/>
+									<text x="344" y="198" text-anchor="middle" fill="#7a4a00" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700">?</text>
+									<g fill="#00a800"><path d="M480 238 v-40 h44 v40 z"/><rect x="474" y="190" width="56" height="12"/></g>
+									<g id="hero-sprite"><rect x="266" y="214" width="14" height="24" fill="#d82800"/><rect x="266" y="208" width="14" height="8" fill="#fcb8a0"/></g>
+									<text x="238" y="88" fill="#fff" font-family="JetBrains Mono, monospace" font-size="11">BATOCERA · 1-UP 003250</text>
+								</g>
+								<g id="scr-music" class="scr" opacity="0">
+									<rect x="230" y="70" width="340" height="192" fill="#121018"/>
+									<g class="eq" fill="#1db954"></g>
+									<text x="400" y="100" text-anchor="middle" fill="#1db954" font-family="JetBrains Mono, monospace" font-size="12">♪ Spotify · 7ch Stereo</text>
+								</g>
+								<g id="scr-sports" class="scr" opacity="0">
+									<rect x="230" y="70" width="340" height="192" fill="#2e7d32"/>
+									<g stroke="#fff" stroke-width="2" opacity="0.7"><line x1="286" y1="70" x2="258" y2="262"/><line x1="343" y1="70" x2="334" y2="262"/><line x1="400" y1="70" x2="400" y2="262"/><line x1="457" y1="70" x2="466" y2="262"/><line x1="514" y1="70" x2="542" y2="262"/></g>
+									<rect x="330" y="78" width="140" height="28" rx="4" fill="#0b0b10"/>
+									<text id="score" x="400" y="97" text-anchor="middle" fill="#fff" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600">PHI 0 · NYG 0</text>
+									<ellipse id="football" cx="400" cy="196" rx="12" ry="7" fill="#7b3f00"/>
+								</g>
+								<g id="scr-paused" class="scr" opacity="0">
+									<rect x="230" y="70" width="340" height="192" fill="#000" opacity="0.55"/>
+									<rect x="384" y="146" width="10" height="40" rx="2" fill="#fff"/><rect x="406" y="146" width="10" height="40" rx="2" fill="#fff"/>
+								</g>
+								<g id="scr-flash" class="scr" opacity="0">
+									<rect x="230" y="70" width="340" height="192" fill="#004c54" opacity="0.85"/>
+									<text id="flash-text" x="400" y="182" text-anchor="middle" fill="#fff" font-family="Space Grotesk, sans-serif" font-size="44" font-weight="800">TOUCHDOWN</text>
+								</g>
+							</g>
+							<text id="rx-text" x="400" y="323" text-anchor="middle" fill="#4fc3f7" font-family="JetBrains Mono, monospace" font-size="11" opacity="0.15">STANDBY</text>
+
+							<!-- sensors: they ping when they fire -->
+							<g id="sensor-door" class="sensor">
+								<rect x="756" y="102" width="10" height="6" rx="1.5" fill="#eee"/>
+								<circle class="ping" cx="761" cy="105" r="6"/>
+								<text class="sensor-label" x="752" y="98" text-anchor="end">DOOR</text>
+							</g>
+							<g id="sensor-motion" class="sensor">
+								<circle cx="632" cy="246" r="6" fill="#eee"/><circle cx="632" cy="246" r="2.5" fill="#bbb"/>
+								<circle class="ping" cx="632" cy="246" r="6"/>
+								<text class="sensor-label" x="620" y="232" text-anchor="end">MOTION</text>
+							</g>
+
+							<!-- shown over whoever the lights turned off on -->
+						<g id="bubble" class="fx" opacity="0">
+							<path d="M-34 -30 H34 Q42 -30 42 -22 V-6 Q42 2 34 2 H6 L0 10 L-6 2 H-34 Q-42 2 -42 -6 V-22 Q-42 -30 -34 -30 Z" fill="#fff"/>
+							<text x="0" y="-9" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#1c1a24">hello?</text>
 						</g>
 
-						<!-- darkness: opacity set by how much light is on -->
-						<rect id="dark" x="0" y="0" width="800" height="440" fill="#05040a" opacity="0.2"/>
-
-						<!-- light pools from ceiling bulbs and dimmer cans -->
-						<g id="pools"></g>
-
-						<!-- bias light behind the screen -->
-						<rect id="bias" x="196" y="58" width="408" height="244" rx="20" fill="#bcd4ff" filter="url(#blur-lg)" opacity="0"/>
-
-						<!-- projector and beam -->
-						<polygon id="beam" points="392,52 222,82 578,82 408,52" fill="#fff8e1" opacity="0"/>
-						<rect x="370" y="28" width="60" height="24" rx="5" fill="#2b2733"/>
-						<circle id="lens" cx="400" cy="46" r="5" fill="#444"/>
-						<line x1="400" y1="12" x2="400" y2="28" stroke="#2b2733" stroke-width="4"/>
-
-						<!-- ceiling bulbs and dimmer cans -->
-						<g id="bulbs"></g>
-
-						<!-- screen -->
-						<rect x="214" y="74" width="372" height="212" rx="6" fill="#16141b"/>
-						<g clip-path="url(#screen-clip)">
-							<rect x="220" y="80" width="360" height="200" fill="#1c1a22"/>
-							<g id="scr-movie" opacity="0">
-								<rect x="220" y="80" width="360" height="200" fill="url(#sky)"/>
-								<circle cx="470" cy="215" r="34" fill="#ffd38a" opacity="0.9"/>
-								<path d="M220 280 L300 190 L345 230 L410 160 L480 240 L520 205 L580 255 L580 280 Z" fill="#241a33"/>
-								<line x1="220" y1="120" x2="580" y2="175" stroke="#1a1426" stroke-width="2"/>
-								<g fill="#1a1426"><rect x="318" y="135" width="3" height="16"/><rect x="308" y="150" width="24" height="9" rx="2"/><rect x="448" y="155" width="3" height="16"/><rect x="438" y="170" width="24" height="9" rx="2"/></g>
-								<text x="400" y="272" text-anchor="middle" fill="#fff" font-family="Inter, sans-serif" font-size="11" opacity="0.85">NOW PLAYING · Chairlift at Dusk (2026)</text>
-							</g>
-							<g id="scr-game" opacity="0">
-								<rect x="220" y="80" width="360" height="200" fill="#1d1b4a"/>
-								<g fill="#5c94fc"><rect x="220" y="80" width="360" height="200"/></g>
-								<g fill="#c84c0c"><rect x="220" y="256" width="360" height="24"/><rect x="300" y="200" width="16" height="16"/><rect x="316" y="200" width="16" height="16"/><rect x="348" y="200" width="16" height="16"/></g>
-								<rect x="332" y="200" width="16" height="16" fill="#fbd000"/>
-								<text x="340" y="212" text-anchor="middle" fill="#7a4a00" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700">?</text>
-								<g fill="#00a800"><path d="M480 256 v-40 h44 v40 z"/><rect x="474" y="208" width="56" height="12"/></g>
-								<g id="hero-sprite"><rect x="262" y="232" width="14" height="24" fill="#d82800"/><rect x="262" y="226" width="14" height="8" fill="#fcb8a0"/></g>
-								<text x="228" y="98" fill="#fff" font-family="JetBrains Mono, monospace" font-size="11">BATOCERA · 1-UP 003250</text>
-							</g>
-							<g id="scr-music" opacity="0">
-								<rect x="220" y="80" width="360" height="200" fill="#121018"/>
-								<g class="eq" fill="#1db954"></g>
-								<text x="400" y="110" text-anchor="middle" fill="#1db954" font-family="JetBrains Mono, monospace" font-size="12">♪ 7ch Stereo · every speaker</text>
-							</g>
-							<g id="scr-sports" opacity="0">
-								<rect x="220" y="80" width="360" height="200" fill="#2e7d32"/>
-								<g stroke="#fff" stroke-width="2" opacity="0.7"><line x1="280" y1="80" x2="250" y2="280"/><line x1="340" y1="80" x2="330" y2="280"/><line x1="400" y1="80" x2="400" y2="280"/><line x1="460" y1="80" x2="470" y2="280"/><line x1="520" y1="80" x2="550" y2="280"/></g>
-								<rect x="330" y="88" width="140" height="28" rx="4" fill="#0b0b10"/>
-								<text id="score" x="400" y="107" text-anchor="middle" fill="#fff" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600">PHI 0 · NYG 0</text>
-								<ellipse cx="400" cy="210" rx="12" ry="7" fill="#7b3f00"/>
-							</g>
-							<g id="scr-paused" opacity="0">
-								<rect x="220" y="80" width="360" height="200" fill="#000" opacity="0.55"/>
-								<rect x="384" y="160" width="10" height="40" rx="2" fill="#fff"/><rect x="406" y="160" width="10" height="40" rx="2" fill="#fff"/>
-							</g>
-							<g id="scr-flash" opacity="0">
-								<rect x="220" y="80" width="360" height="200" fill="#004c54" opacity="0.85"/>
-								<text id="flash-text" x="400" y="195" text-anchor="middle" fill="#fff" font-family="Space Grotesk, sans-serif" font-size="44" font-weight="800">TOUCHDOWN</text>
-							</g>
-						</g>
-
-						<!-- media console + receiver -->
-						<rect x="290" y="300" width="220" height="44" rx="4" fill="#3a3140"/>
-						<rect x="312" y="310" width="176" height="22" rx="3" fill="#0b0a10"/>
-						<text id="rx-text" x="400" y="325" text-anchor="middle" fill="#4fc3f7" font-family="JetBrains Mono, monospace" font-size="11" opacity="0.15">STANDBY</text>
-
-						<!-- couch (seen from behind) -->
-						<path d="M200 440 V392 Q200 372 222 372 H578 Q600 372 600 392 V440 Z" fill="#2a2231"/>
-						<path d="M232 440 V404 Q232 392 246 392 H554 Q568 392 568 404 V440 Z" fill="#352b3e"/>
-					</svg>
-				</div>
-
-				<div class="controls">
-					<div class="control-group">
-						<h3>Watch something</h3>
-						<div class="btn-row" id="mode-buttons">
-							<button class="btn" type="button" data-mode="movie" aria-pressed="false">🎬 Movie</button>
-							<button class="btn" type="button" data-mode="game" aria-pressed="false">🕹️ Retro game</button>
-							<button class="btn" type="button" data-mode="music" aria-pressed="false">🎵 Music</button>
-							<button class="btn" type="button" data-mode="sports" aria-pressed="false">🏈 Eagles game</button>
+						<rect x="0" y="0" width="800" height="450" fill="url(#g-vignette)" pointer-events="none"/>
+						</svg>
 						</div>
-					</div>
-					<div class="control-group">
-						<h3>While it's on</h3>
-						<div class="btn-row">
-							<button class="btn" type="button" id="btn-pause" disabled>⏸ Pause</button>
-							<button class="btn" type="button" id="btn-td" disabled>Touchdown!</button>
-							<button class="btn" type="button" id="btn-fg" disabled>Field goal</button>
-							<button class="btn" type="button" id="btn-stairs">Someone comes downstairs</button>
-							<button class="btn" type="button" id="btn-social" aria-pressed="false">Social mode</button>
-						</div>
-					</div>
-					<div class="control-group">
-						<h3>Make it hard</h3>
-						<label class="check"><input type="checkbox" id="opt-tuners"> Both TV tuners are busy (someone's streaming remotely)</label>
-						<label class="check"><input type="checkbox" id="opt-sensor"> Unplug the projector's current sensor</label>
-					</div>
-					<div class="control-group">
-						<div class="btn-row">
-							<button class="btn danger" type="button" id="btn-end" disabled>⏻ End session</button>
-							<span class="mono" style="align-self:center;color:var(--muted)" id="speed-note">Waits run at 10x speed.</span>
+						<div class="rule" id="rule" aria-live="polite">
+							<span class="rule-tag">Rule</span>
+							<strong id="rule-name">Empty basement</strong>
+							<span id="rule-text">Nobody's downstairs, so every light is off.</span>
+							<a id="rule-link" href="https://github.com/MFeret11/home-assistant-config" target="_blank" rel="noopener">See the code</a>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<aside class="card panel" aria-labelledby="ha-title">
-				<h3 id="ha-title"><span class="dot" aria-hidden="true"></span>Home Assistant</h3>
-				<dl class="status">
-					<dt>Theater</dt><dd id="st-mode">off</dd>
-					<dt>Lighting</dt><dd id="st-lighting">Daily Driver</dd>
-					<dt>Receiver</dt><dd id="st-rx">off</dd>
-					<dt>Projector</dt><dd id="st-proj">off</dd>
-					<dt>Projector current</dt><dd id="st-amps">0.00 A</dd>
-					<dt>Bias lights</dt><dd id="st-bias">off</dd>
-					<dt>Sim clock</dt><dd id="st-clock">20:00:00</dd>
-				</dl>
-				<h3>Logbook</h3>
-				<ol class="log" id="log" aria-live="polite"></ol>
-			</aside>
+			<div class="chapters">
+				<section class="chapter" id="ch-1" data-ch="1">
+					<p class="ch-num">01</p>
+					<h2>Coming or going?</h2>
+					<p>Motion sensors see movement, not people. With a door sensor at the top of the stairs and one motion sensor at the bottom, the order they fire says who's coming and who's going: a version of the "wasp in a box" problem.</p>
+					<p>The case it can't see is someone sitting still. I'm adding mmWave presence sensors to fix that.</p>
+					<button class="btn ghost replay" type="button" data-play="1">↻ Replay</button>
+				</section>
+
+				<section class="chapter" id="ch-2" data-ch="2">
+					<p class="ch-num">02</p>
+					<h2>Don't flicker the lights</h2>
+					<p>Pausing a movie waits 4 seconds before the lights come up, so flipping through a menu doesn't strobe the room.</p>
+					<p>Touchdown flashes change brightness, never color. Fast color changes flood the bulbs' Zigbee network.</p>
+					<button class="btn ghost replay" type="button" data-play="2">↻ Replay</button>
+				</section>
+
+				<section class="chapter" id="ch-3" data-ch="3">
+					<p class="ch-num">03</p>
+					<h2>When in doubt, leave it on</h2>
+					<p>The projector's lamp needs its fans after shutdown. Power gets cut only after a 90-second cooldown and two near-zero current readings in a row.</p>
+					<p>No reading, no cut: a plug left on costs cents, a cut mid-cooldown costs a lamp.</p>
+					<div class="amps">
+						<div class="amps-head"><span>Projector current</span><span class="mono" id="st-amps">0.00 A</span></div>
+						<svg viewBox="0 0 260 96" id="amps-chart" role="img" aria-label="Projector current during the cooldown">
+							<rect id="amps-cool" x="0" y="0" width="0" height="84" class="amps-cool"/>
+							<text id="amps-cool-label" x="4" y="12" class="amps-note" opacity="0">90 s cooldown</text>
+							<line id="amps-thresh" x1="0" x2="260" class="amps-thresh"/>
+							<text id="amps-thresh-label" x="256" text-anchor="end" class="amps-note">0.06 A</text>
+							<line x1="0" y1="84" x2="260" y2="84" class="amps-axis"/>
+							<polyline id="amps-line" points="" class="amps-line"/>
+							<g id="amps-dots"></g>
+							<text id="amps-empty" x="130" y="50" text-anchor="middle" class="amps-note">End a session to watch the cooldown</text>
+						</svg>
+					</div>
+					<div class="btn-row">
+						<button class="btn ghost replay" type="button" data-play="3">↻ Replay</button>
+						<button class="btn" type="button" id="btn-unplug" data-play="3u">Now unplug the sensor</button>
+					</div>
+				</section>
+
+				<section class="freeplay" id="free">
+					<p class="ch-num">Free play</p>
+					<h2>Your turn</h2>
+					<p>Every control, no script. <a href="projects.html#projector">The story behind the projector rule.</a></p>
+					<div class="controls" id="controls">
+						<div class="control-group">
+							<h3>People</h3>
+							<div class="btn-row">
+								<button class="btn" type="button" id="btn-down">🚶 Someone comes downstairs</button>
+								<button class="btn" type="button" id="btn-one" disabled>One person leaves</button>
+							<button class="btn" type="button" id="btn-up" disabled>Everyone heads upstairs</button>
+							</div>
+						</div>
+						<div class="control-group">
+							<h3>Watch something</h3>
+							<div class="btn-row" id="mode-buttons">
+								<button class="btn" type="button" data-mode="movie" aria-pressed="false">🎬 Movie</button>
+								<button class="btn" type="button" data-mode="game" aria-pressed="false">🕹️ Retro game</button>
+								<button class="btn" type="button" data-mode="music" aria-pressed="false">🎵 Music</button>
+								<button class="btn" type="button" data-mode="sports" aria-pressed="false">🏈 Eagles game</button>
+							</div>
+						</div>
+						<div class="control-group">
+							<h3>While it's on</h3>
+							<div class="btn-row">
+								<button class="btn" type="button" id="btn-pause" disabled>⏸ Pause</button>
+								<button class="btn" type="button" id="btn-td" disabled>Touchdown!</button>
+								<button class="btn" type="button" id="btn-fg" disabled>Field goal</button>
+								<button class="btn" type="button" id="btn-social" aria-pressed="false">Party lights (Social mode)</button>
+							</div>
+						</div>
+						<div class="control-group">
+							<h3>Try to break it</h3>
+							<label class="check"><input type="checkbox" id="opt-tuners"> Both TV tuners are busy (someone's streaming remotely)</label>
+							<label class="check"><input type="checkbox" id="opt-sensor"> Unplug the projector's current sensor</label>
+							<div class="btn-row">
+								<button class="btn danger" type="button" id="btn-end" disabled>⏻ End session</button>
+							</div>
+							<p class="hint">Long waits run at 10x speed. Try starting a show during the projector cooldown.</p>
+						</div>
+					</div>
+				<aside class="card panel" aria-labelledby="ha-title">
+					<h3 id="ha-title"><span class="dot" aria-hidden="true"></span>Home Assistant</h3>
+					<dl class="status">
+						<dt>Theater</dt><dd id="st-mode">off</dd>
+						<dt>Lighting</dt><dd id="st-lighting">Daily Driver</dd>
+						<dt>Stair door</dt><dd id="st-door">closed</dd>
+						<dt>Bottom-stairs motion</dt><dd id="st-motion">clear</dd>
+						<dt>Receiver</dt><dd id="st-rx">off</dd>
+						<dt>Projector</dt><dd id="st-proj">off</dd>
+						<dt>Bias lights</dt><dd id="st-bias">off</dd>
+						<dt>Sim clock</dt><dd id="st-clock">20:00:00</dd>
+					</dl>
+					<h3>Logbook</h3>
+					<ol class="log" id="log" aria-live="polite"></ol>
+				</aside>
+				</section>
+			</div>
 		</div>
 
 		<section class="section story">
-			<h2>What's real here</h2>
-			<p>
-				The rules are the real ones from my <a href="https://github.com/MFeret11/home-assistant-config">Home Assistant config</a>,
-				simplified. A playing movie or game blacks out the room and leaves only the bias lights behind the screen. Pausing a movie
-				waits 4 seconds before bringing up a 1% glow, so a menu blip doesn't flicker the lights. Music stays fully dark on purpose.
-				An Eagles game flips the room into Social mode and paints it Kelly green.
-			</p>
-			<p>
-				The receiver's sound program follows what's on: <code>Standard</code> for movies, <code>Straight</code> for retro games,
-				<code>7ch Stereo</code> for music and <code>Sports</code> for football. The touchdown flash pulses brightness between 100% and
-				15% without ever changing color, because changing colors that fast floods the Zigbee mesh.
-			</p>
-			<p>
-				Ending the session runs the same ordered shutdown as the real one. The part I care most about is the projector: its lamp
-				needs the fans after power-off, so the relay opens only after a 90-second cooldown <em>and</em> two consecutive current
-				readings at or below 0.06 A. Unplug the sensor and the system refuses to cut power. <a href="projects.html#projector">The story behind that rule.</a>
+			<p class="fine-print">
+				These are the real rules from my <a href="https://github.com/MFeret11/home-assistant-config">Home Assistant config</a>, simplified.
+				Each caption under the room links to the code that runs it.
 			</p>
 		</section>
+		<div class="house" id="house" aria-hidden="true"></div>
+		<div class="edge" id="edge" aria-hidden="true"></div>
 	</main>
 
 	<footer class="site-footer">
 		<div class="wrap">
-			<p>admin [at] mferet [dot] com · <a href="https://github.com/MFeret11">GitHub</a> · <a href="https://www.linkedin.com/in/mferet/">LinkedIn</a> · <a href="https://soundcloud.com/mferet">SoundCloud</a></p>
+			<p>admin [at] mferet [dot] com · <a href="Matthew_Feret_Resume.pdf">Résumé</a> · <a href="https://github.com/MFeret11">GitHub</a> · <a href="https://www.linkedin.com/in/mferet/">LinkedIn</a> · <a href="https://soundcloud.com/mferet">SoundCloud</a></p>
 			<p class="fine">Hand-written HTML and CSS. The old version of this site used a UI framework until its CDN disappeared, so this one doesn't.</p>
 		</div>
 	</footer>
