@@ -180,11 +180,14 @@ code {
   font-size: 1.1rem;
 }
 
-.brand img {
-  height: 32px;
+.brand .logo {
+  height: 24px;
   width: auto;
-  border-radius: 3px;
+  display: block;
 }
+
+.logo .m { fill: var(--text); }
+.logo .f { fill: var(--accent); }
 
 .site-nav {
   display: flex;
@@ -664,19 +667,6 @@ a.card {
   transition-duration: 0.12s;
 }
 
-/* The screen's light on the room flickers a little while something plays. */
-.room.movie-on #spill-wrap {
-  animation: flicker 2.6s ease-in-out infinite alternate;
-}
-
-@keyframes flicker {
-  0% { opacity: 1; }
-  30% { opacity: 0.8; }
-  55% { opacity: 1; }
-  80% { opacity: 0.72; }
-  100% { opacity: 0.95; }
-}
-
 /* Sensors ping when they fire. */
 .sensor .ping {
   fill: none;
@@ -770,78 +760,7 @@ a.card {
   position: relative;
 }
 
-.tour-badge {
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 5px 12px 5px 10px;
-  border-radius: 999px;
-  background: rgba(12, 10, 18, 0.72);
-  color: #fff;
-  font-size: 0.78rem;
-  cursor: pointer;
-  backdrop-filter: blur(4px);
-}
-
-@media (max-width: 600px) {
-  .tour-badge {
-    bottom: 6px;
-    left: 6px;
-    font-size: 0.7rem;
-    padding: 3px 9px 3px 8px;
-  }
-  .tour-more {
-    display: none;
-  }
-}
-
-.tour-badge[hidden] {
-  display: none;
-}
-
-.tour-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #ff5252;
-  animation: blink 1.4s ease-in-out infinite;
-}
-
-@keyframes blink {
-  50% { opacity: 0.25; }
-}
-
-.eq rect {
-  transform-box: fill-box;
-  transform-origin: bottom;
-  animation: eq 0.9s ease-in-out infinite alternate;
-}
-
-.eq rect:nth-child(3n) {
-  animation-duration: 0.6s;
-}
-
-.eq rect:nth-child(3n + 1) {
-  animation-duration: 1.2s;
-}
-
-@keyframes eq {
-  from { transform: scaleY(0.25); }
-  to { transform: scaleY(1); }
-}
-
-.paused .eq rect {
-  animation-play-state: paused;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .eq rect,
-  .room.movie-on #spill-wrap,
-  .tour-dot,
   .rule.fresh {
     animation: none;
   }
@@ -1063,10 +982,10 @@ a.card {
   color: var(--green);
 }
 
-/* Explainer layout: chapters scroll beside a sticky room. */
+/* Guide layout: one step at a time beside a sticky room. */
 .sim.explainer {
-  grid-template-columns: 290px minmax(0, 1fr);
-  grid-template-areas: "chapters stage";
+  grid-template-columns: 320px minmax(0, 1fr);
+  grid-template-areas: "guide stage";
   gap: 28px;
   align-items: start;
 }
@@ -1081,25 +1000,52 @@ a.card {
   top: 84px;
 }
 
-.chapters {
-  grid-area: chapters;
+.guide {
+  grid-area: guide;
   min-width: 0;
 }
 
-.chapter,
-.freeplay {
-  opacity: 0.4;
-  transition: opacity 0.4s ease;
+.step-nav {
+  list-style: none;
+  margin: 0 0 18px;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
 }
 
-.chapter {
-  min-height: 70vh;
-  padding: 4px 0 48px;
+.step-nav button {
+  min-width: 32px;
+  padding: 4px 9px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font: 600 0.78rem var(--font-mono);
+  cursor: pointer;
 }
 
-.chapter.active,
-.freeplay.active {
-  opacity: 1;
+.step-nav button:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+.step-nav button[aria-current="step"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+:root[data-theme="dark"] .step-nav button[aria-current="step"] {
+  color: #120c24;
+}
+
+.step[hidden] {
+  display: none;
+}
+
+.step h2:focus {
+  outline: none;
 }
 
 .ch-num {
@@ -1110,23 +1056,118 @@ a.card {
   color: var(--accent);
 }
 
-.chapter h2,
-.freeplay h2 {
+.step h2 {
   margin: 0 0 10px;
   font-size: 1.55rem;
   line-height: 1.2;
 }
 
-.chapter p {
+.step p {
   margin: 0 0 10px;
 }
 
-.chapter .btn-row,
-.chapter > .replay {
-  margin-top: 14px;
+.overview {
+  margin: 4px 0 0;
+  padding-left: 1.4em;
 }
 
-.chapter .amps {
+.overview li {
+  margin-bottom: 4px;
+}
+
+.step .try {
+  margin: 18px 0 8px;
+  font: 600 0.8rem var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.tasks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.tasks li[hidden] {
+  display: none;
+}
+
+.tasks li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  gap: 4px 10px;
+}
+
+.tasks .btn {
+  justify-self: start;
+  text-align: left;
+}
+
+.task-hint {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.btn.task.done::after {
+  content: " ✓";
+  color: var(--green);
+}
+
+.btn.task.done:disabled {
+  opacity: 0.7;
+}
+
+.remote {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  max-width: 280px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  background: var(--surface-2);
+}
+
+.remote .btn {
+  justify-content: center;
+}
+
+.readout {
+  margin: 14px 0 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2px 12px;
+  font-size: 0.9rem;
+}
+
+.readout dt {
+  color: var(--muted);
+}
+
+.readout dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+}
+
+.step .note {
+  margin: 14px 0 0;
+  padding: 10px 14px;
+  border-left: 3px solid var(--accent);
+  border-radius: 0 10px 10px 0;
+  background: var(--accent-soft);
+  font-size: 0.93rem;
+}
+
+.step .note[hidden] {
+  display: none;
+}
+
+.step .amps {
   margin: 16px 0 0;
   padding: 12px 14px 8px;
   border: 1px solid var(--border);
@@ -1134,12 +1175,96 @@ a.card {
   background: var(--surface);
 }
 
-.freeplay {
-  padding-bottom: 8px;
+.step-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.step-foot [data-next],
+.step-foot .next-link {
+  margin-left: auto;
+}
+
+.step-foot .btn {
+  padding: 8px 14px;
+}
+
+.step-foot.top {
+  margin: 12px 0 0;
+  padding: 0;
+  border: 0;
 }
 
 .freeplay .panel {
   margin-top: 20px;
+}
+
+/* The mmWave sensor's coverage: faint until someone's in it. */
+.mm-zone {
+  fill: #7cf3a0;
+  opacity: 0;
+}
+
+.sensor.fire .mm-zone {
+  animation: mm-sweep 2.8s ease-out;
+}
+
+@keyframes mm-sweep {
+  0% { opacity: 0; }
+  20% { opacity: 0.1; }
+  100% { opacity: 0; }
+}
+
+#rule-link[hidden] {
+  display: none;
+}
+
+.step details.more {
+  margin: 14px 0 0;
+  font-size: 0.93rem;
+}
+
+.step details.more summary {
+  width: fit-content;
+  cursor: pointer;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.step details.more p {
+  margin: 8px 0 0;
+}
+
+.connect {
+  margin: 14px 0 16px;
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 8px 14px;
+  font-size: 0.93rem;
+}
+
+.connect dt {
+  font: 600 0.8rem var(--font-mono);
+  color: var(--accent);
+  padding-top: 2px;
+}
+
+.connect dd {
+  margin: 0;
+}
+
+@media (max-width: 480px) {
+  .connect {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+  .connect dd {
+    margin-bottom: 8px;
+  }
 }
 
 .fine-print {
@@ -1148,13 +1273,13 @@ a.card {
 }
 
 @media (max-width: 900px) {
-  /* On phones the room sticks to the top and the chapters scroll under it. */
+  /* On phones the room sticks to the top and the steps scroll under it. */
   .basement-page .site-header {
     position: static;
   }
   .sim.explainer {
     grid-template-columns: 1fr;
-    grid-template-areas: "stage" "chapters";
+    grid-template-areas: "stage" "guide";
     gap: 8px;
   }
   .stage-col {
@@ -1169,9 +1294,8 @@ a.card {
     padding: 8px 16px 10px;
     background: var(--bg);
   }
-  .chapter {
-    min-height: 62vh;
-    padding-top: 16px;
+  .guide {
+    padding-top: 8px;
   }
   .rule {
     padding: 8px 12px 10px;

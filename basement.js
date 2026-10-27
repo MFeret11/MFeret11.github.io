@@ -15,23 +15,28 @@
   var REDUCED = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // Permalinks into the public repo, pinned to a commit so the line numbers stay right.
-  var REPO = "https://github.com/MFeret11/home-assistant-config/blob/c1f5e84ce9be0d1441bb63ce18d28d74e4ba2d4a/pyscript/";
+  // A rule can pin its own commit (5th field), e.g. the mmWave rules that came later.
+  var REPO = "https://github.com/MFeret11/home-assistant-config/blob/";
+  var OLD = "c1f5e84ce9be0d1441bb63ce18d28d74e4ba2d4a"; // before the mmWave sensor
+  var NEW = "8cab0de"; // mmWave presence added to basement.py
   var RULES = {
+    doorOnly: ["First version: door only", "The door opened, so the lights came on. A door can't tell someone arriving from someone leaving, so nothing ever turns them off.", null],
     empty: ["Empty basement", "Nobody's downstairs, so every light is off.", "basement.py", 597],
     doorDown: ["Someone's coming down", "The stair door opened with no recent motion at the bottom, so it's an arrival. Stairs on at the Adaptive Lighting level; they time out after 3 minutes if nobody arrives.", "basement.py", 413],
     arrive: ["Made it down", "Motion at the foot of the stairs while the stairs are lit: the room lights come on at the evening circadian level, and the stairs go off 30 s later.", "basement.py", 480],
     heading: ["Heading up?", "Motion at the bottom with the stairs dark: light them for 45 s in case someone's about to climb.", "basement.py", 480],
     doorUp: ["Someone's leaving?", "The door opened within 25 s of motion at the bottom of the stairs. That order usually means someone walked up and out. If it was really someone arriving, the walk-out check catches it.", "basement.py", 420],
     walkWait: ["Walk-out check", "The door closed behind someone leaving. Wait 20 s: new motion at the bottom or the door reopening cancels the shutoff.", "basement.py", 575],
-    stillGap: ["The wasp got lost", "Nothing moved near the stairs for 20 s after the door closed, so the lights went off, with someone still on the couch. A motion sensor can't see a person sitting still. mmWave presence sensors are next.", "basement.py", 575],
+    stillGap: ["The wasp got lost", "Nothing moved near the stairs for 20 s after the door closed, so the lights went off, with someone still on the couch. A motion sensor can't see a person sitting still. (This is the code before the mmWave sensor.)", "basement.py", 575],
+    mmwaveHold: ["Still someone here", "The door closed behind someone leaving, but the mmWave sensor still sees a person on the couch, so the walk-out is cancelled. If the sensor goes offline, the door and stairs rules take over.", "basement.py", 602, NEW],
     walkCancel: ["Still someone here", "Motion at the bottom of the stairs after the door closed: someone's down here, so the lights stay on.", "basement.py", 575],
     group: ["A group coming down", "The door opened, motion at the bottom, then the door closed: that's the last person shutting it behind the first. Not a walk-out.", "basement.py", 565],
     stealth: ["Stealth stairs", "A show is on: stairs fade to 2% candlelight (2000 K) for 60 s. Enough to see the steps without washing out the screen. The room lights stay off.", "basement.py", 372],
     preshow: ["Pre-show", "The theater is on but nothing's playing yet: the dimmer holds a 3% glow, the rest of the basement is dark, bias lights on.", "basement.py", 701],
     showtime: ["Showtime", "Something is playing: full blackout. Only the bias lights behind the screen stay on.", "basement.py", 686],
-    pauseWait: ["Pause debounce", "Paused. Wait 4 s before touching the lights, so a menu blip doesn't flicker them.", "basement.py", 692],
-    intermission: ["Intermission", "Still paused after 4 s: the dimmer comes up to a 3% glow. The lounge and bar stay off.", "basement.py", 692],
+    intermission: ["Intermission", "Paused: the dimmer comes up to a 3% glow (after 4 s in the real room). The lounge and bar stay off.", "basement.py", 692],
     music: ["Music", "Music stays fully dark, playing or paused. No glow state, by design.", "basement.py", 667],
+    warmMusic: ["Music, projector still warm", "The projector is already on, so music leaves it running. Cutting its power now would stop the fans cooling the lamp. It shuts down properly when the session ends.", "theater.py", 2005, NEW],
     sports: ["Game day", "An Eagles game switches on Social mode and paints the room and stairs solid Kelly green at 100%.", "basement.py", 641],
     social: ["Social mode", "In Social mode the theater never touches the lights, and nothing times out. Good for cards night during a movie.", "basement.py", 661],
     socialStairs: ["Social stairs", "Social mode: opening the door turns the stairs on in the current palette and leaves them on. No timeouts.", "basement.py", 441],
@@ -52,11 +57,16 @@
     music: { label: "Music", input: "HDMI1", dsp: "7ch Stereo", app: "Spotify", spill: "#1db954" },
     sports: { label: "Eagles game", input: "HDMI1", dsp: "Sports", app: "the HDHomeRun app", spill: "#58c25e" }
   };
+  var OPT = { tuners: false, sensor: false }; // "try to break it" switches
   var ACTIVE = { movie: 1, game: 1, sports: 1 }; // modes that cancel a projector cooldown
 
   var $ = function (id) {
     return document.getElementById(id);
   };
+  function setText(id, text) {
+    var e = $(id);
+    if (e) e.textContent = text;
+  }
   var roomEl = $("room");
 
   // ---------- state ----------
@@ -93,15 +103,14 @@
     };
   }
   S = freshState();
+  var FULL = { motion: true, mmwave: true };
+  var GEAR = FULL; // sensors installed right now; chapters 1 and 2 start with fewer
   var T = { door: -1e9, motionStart: -1e9, motionClear: -1e9 }; // sim seconds
   var direction = "none";
-  var tourOn = false;
 
   // ---------- time ----------
   // epoch: bumping it cancels every running action (their waits never resolve).
-  // tourEpoch: bumping it stops only the tour script.
   var epoch = 0;
-  var tourEpoch = 0;
   var simMs = 20 * 3600 * 1000;
   var fastWaits = 0;
   var lastTick = performance.now();
@@ -124,17 +133,17 @@
     // Walking runs the clock 5x too, so a trip down the stairs takes about as long as the real one.
     simMs += (t - lastTick) * (fastWaits > 0 ? SPEED : S.walking > 0 ? 5 : 1);
     lastTick = t;
-    $("st-clock").textContent = clockText();
+    setText("st-clock", clockText());
   }, 200);
 
-  function wait(ms, fast, which) {
-    var e = which === "tour" ? tourEpoch : epoch;
+  function wait(ms, fast) {
+    var e = epoch;
     if (fast) fastWaits++;
     return new Promise(function (resolve) {
       setTimeout(
         function () {
           if (fast) fastWaits--;
-          if ((which === "tour" ? tourEpoch : epoch) === e) resolve();
+          if (epoch === e) resolve();
         },
         fast ? ms / SPEED : ms
       );
@@ -145,9 +154,6 @@
   }
   function realSleep(ms) {
     return wait(ms, false);
-  }
-  function tourSleep(ms) {
-    return wait(ms, false, "tour");
   }
 
   // Named background timers in sim time. Setting one replaces the old one (like task.unique).
@@ -184,6 +190,7 @@
     li.appendChild(time);
     li.appendChild(document.createTextNode(msg));
     var list = $("log");
+    if (!list) return;
     list.insertBefore(li, list.firstChild);
     while (list.children.length > 60) list.removeChild(list.lastChild);
   }
@@ -191,11 +198,15 @@
   function rule(id) {
     S.rule = id;
     var r = RULES[id];
+    if (!$("rule")) return; // no caption on the page
     $("rule-name").textContent = r[0];
     $("rule-text").textContent = r[1];
     var link = $("rule-link");
-    link.href = REPO + r[2] + "#L" + r[3];
-    link.textContent = r[2] + ":" + r[3];
+    link.hidden = !r[2];
+    if (r[2]) {
+      link.href = REPO + (r[4] || OLD) + "/pyscript/" + r[2] + "#L" + r[3];
+      link.textContent = r[2] + ":" + r[3];
+    }
     var box = $("rule");
     box.classList.remove("fresh");
     void box.offsetWidth; // restart the highlight animation
@@ -416,7 +427,12 @@
     var since = T.door - T.motionStart;
     direction = since > 0 && since < 25 ? "up" : "down";
     ping("sensor-door");
-    if (theaterActive() && !S.social) {
+    if (!GEAR.motion && !theaterActive() && !S.social) {
+      setRoom(CIRCADIAN, WARM);
+      S.dimmer = CIRCADIAN;
+      log("Stair door opened: lights on");
+      rule("doorOnly");
+    } else if (theaterActive() && !S.social) {
       log("Stair door opened during a show");
       stealthStairs();
     } else if (!S.social) {
@@ -451,6 +467,10 @@
 
   function doorClosed() {
     S.door = false;
+    if (!GEAR.motion) {
+      render(); // the first version only knew about the door opening
+      return;
+    }
     var closeTs = now();
     if (S.curtain) {
       direction = "none";
@@ -493,6 +513,13 @@
         render();
         return;
       }
+      if (GEAR.mmwave && S.people.length) {
+        ping("sensor-mmwave");
+        log("mmWave still sees someone on the couch, so the walk-out is cancelled", "good");
+        rule("mmwaveHold");
+        render();
+        return;
+      }
       if (!S.social && !S.inUse) {
         allOff();
         if (S.people.length) {
@@ -510,6 +537,7 @@
   }
 
   function motionSeen() {
+    if (!GEAR.motion) return; // not installed yet
     S.motion = true;
     T.motionStart = now();
     ping("sensor-motion");
@@ -598,15 +626,9 @@
       S.dimmer = 0;
       rule("showtime");
     } else if (S.mode === "movie" && S.media === "paused") {
-      rule("pauseWait");
-      realTimer("intermission", 4000, function () {
-        if (S.media === "paused" && !S.social) {
-          S.dimmer = GLOW;
-          log("Still paused after 4 s: dimmer to a 3% glow");
-          rule("intermission");
-          render();
-        }
-      });
+      // The real room waits 4 s first (so menu blips don't flicker the lights); the demo skips the wait.
+      S.dimmer = GLOW;
+      rule("intermission");
     } else {
       S.dimmer = GLOW;
       rule("preshow");
@@ -644,6 +666,9 @@
     $("stairlight").setAttribute("stroke", S.stairs.color);
     $("stairglow").setAttribute("opacity", (stairV * 0.9).toFixed(3));
     $("stairglow").setAttribute("stroke", S.stairs.color);
+
+    $("sensor-motion").style.display = GEAR.motion ? "" : "none";
+    $("sensor-mmwave").style.display = GEAR.mmwave ? "" : "none";
 
     $("door-panel").setAttribute("width", S.door ? "6" : "32");
     $("door-knob").setAttribute("opacity", S.door ? "0" : "1");
@@ -702,46 +727,21 @@
       : S.inUse
         ? "on"
         : "off";
-    $("st-mode").textContent = modeText;
-    $("st-lighting").textContent = S.curtain
+    setText("st-mode", modeText);
+    setText("st-lighting", S.curtain
       ? "Curtain call"
       : S.social
         ? "Social" + (S.socialSource === "sports" ? " (game day)" : S.palette ? " · Synthwave" : "")
-        : "Daily Driver";
-    $("st-door").textContent = S.door ? "open" : "closed";
-    $("st-motion").textContent = S.motion ? "detected" : "clear";
-    $("st-rx").textContent = S.rx ? S.rx.input + " · " + S.rx.dsp : "off";
-    $("st-proj").textContent = { off: "off", on: "on", cooling: "cooling down", polling: "checking current", fans: "ON (fans protected)" }[S.projector];
-    $("st-amps").textContent = S.amps === null ? "unavailable" : S.amps.toFixed(2) + " A";
-    $("st-bias").textContent = S.bias ? "on" : "off";
+        : "Daily Driver");
+    setText("st-door", S.door ? "open" : "closed");
+    setText("st-motion", S.motion ? "detected" : "clear");
+    setText("st-rx", S.rx ? S.rx.input + " · " + S.rx.dsp : "off");
+    setText("st-proj", { off: "off", on: "on", cooling: "cooling down", polling: "checking current", fans: "ON (fans protected)" }[S.projector]);
+    setText("st-amps", S.amps === null ? "unavailable" : S.amps.toFixed(2) + " A");
+    setText("st-bias", S.bias ? "on" : "off");
 
-    // controls (during the tour every control stays clickable, so any press can take over)
-    if (tourOn) {
-      document.querySelectorAll("#controls .btn").forEach(function (b) {
-        b.disabled = false;
-      });
-      document.querySelectorAll("#mode-buttons .btn").forEach(function (b) {
-        b.setAttribute("aria-pressed", String(S.mode === b.dataset.mode));
-      });
-      $("btn-social").setAttribute("aria-pressed", String(S.social));
-      $("btn-pause").textContent = S.mode && S.media !== "playing" && S.media !== "loading" ? "▶ Play" : "⏸ Pause";
-      return;
-    }
-    var locked = S.busy || S.flashing || S.walking > 0;
-    document.querySelectorAll("#mode-buttons .btn").forEach(function (b) {
-      b.setAttribute("aria-pressed", String(S.mode === b.dataset.mode));
-      b.disabled = locked;
-    });
-    $("btn-down").disabled = locked || freeSeat() < 0;
-    $("btn-up").disabled = locked || !S.people.length || S.inUse;
-    $("btn-one").disabled = locked || S.people.length < 2 || S.inUse;
-    $("btn-pause").disabled = !S.mode || locked || S.media === "loading";
-    $("btn-pause").textContent = S.mode && S.media !== "playing" && S.media !== "loading" ? "▶ Play" : "⏸ Pause";
-    $("btn-td").disabled = S.mode !== "sports" || locked;
-    $("btn-fg").disabled = S.mode !== "sports" || locked;
-    $("btn-social").disabled = locked;
-    $("btn-social").setAttribute("aria-pressed", String(S.social));
-    $("btn-end").disabled = !S.inUse || locked;
+    renderGuide();
+
   }
 
   // ---------- projector current chart ----------
@@ -847,7 +847,7 @@
     sync();
     render();
 
-    if (mode === "sports" && $("opt-tuners").checked) {
+    if (mode === "sports" && OPT.tuners) {
       log("Both HDHomeRun tuners are busy", "warn");
       rule("tuner");
       render();
@@ -866,6 +866,10 @@
       log(mode === "music" ? "Music playing: room stays fully dark" : "Now playing: blackout, bias lights on");
     }
     sync();
+    if (mode === "music" && projectorUp) {
+      log("Projector already warm: music leaves it running, so the lamp's fans keep their power");
+      rule("warmMusic");
+    }
     S.busy = false;
     render();
   }
@@ -877,11 +881,10 @@
     if (playing) {
       if (S.social) log("Paused. Social mode is on, so the lights don't move");
       else if (S.mode === "music") log("Paused. Music stays fully dark by design");
-      else if (S.mode === "movie") log("Paused. Waiting 4 s before changing the lights");
+      else if (S.mode === "movie") log("Paused: dimmer to a 3% glow");
       else log("Game idle: dimmer to a 3% glow");
     } else {
-      if (S.mode === "movie" && !S.social && S.dimmer === 0) log("Resumed within 4 s, so the lights never moved");
-      else if (!S.social && S.mode !== "music") log("Playing: back to blackout");
+      if (!S.social && S.mode !== "music") log("Playing: back to blackout");
       else log("Playing");
     }
     sync();
@@ -1006,7 +1009,7 @@
     var failShown = false;
     for (var n = 1; n <= 25; n++, t += 10) {
       if (S.mode && ACTIVE[S.mode]) return;
-      if ($("opt-sensor").checked) {
+      if (OPT.sensor) {
         low = 0;
         S.amps = null;
         chartPoint(t, null);
@@ -1104,10 +1107,12 @@
     }
   }
 
-  // ---------- reset, tour and takeover ----------
+  // ---------- reset and instant setups ----------
+  // Steps start from a still picture, set up with no animation. Nothing moves until a button is pressed.
 
-  function reset() {
+  function reset(gear) {
     epoch++;
+    GEAR = gear || FULL;
     Object.keys(timers).forEach(cancel);
     peopleG.textContent = "";
     S = freshState();
@@ -1115,20 +1120,14 @@
     direction = "none";
     roomEl.classList.remove("flashing");
     $("scr-flash").setAttribute("opacity", "0");
-    $("opt-tuners").checked = false;
-    $("opt-sensor").checked = false;
-    $("log").textContent = "";
+    OPT.tuners = false;
+    OPT.sensor = false;
+    if ($("log")) $("log").textContent = "";
     chartReset();
     rule("empty");
     log("Basement empty. Daily Driver, every light off");
-    render();
-  }
-
-  function setTour(on, label) {
-    tourOn = on;
-    $("tour-badge").hidden = !on;
-    if (label) $("tour-label").textContent = "Playing: " + label;
-    roomEl.classList.toggle("touring", on);
+    if (!GEAR.motion) log("First version: only the door sensor is installed");
+    else if (!GEAR.mmwave) log("Door and stairs motion sensors installed, no mmWave yet");
     render();
   }
 
@@ -1143,179 +1142,284 @@
     S.people.push(p);
     setRoom(CIRCADIAN, WARM);
     S.dimmer = CIRCADIAN;
+    rule("arrive");
     log("Someone's on the couch, room lights on");
     render();
   }
 
-  async function waitForProjector() {
-    while (S.projector === "on" || S.projector === "cooling" || S.projector === "polling") await tourSleep(400);
-  }
-
-  // One short scripted scenario per chapter.
-  var SCENES = {
-    1: [
-      "Coming or going?",
-      async function () {
-        await tourSleep(700);
-        await walkDown(); // door, then motion: an arrival
-        await tourSleep(400);
-        await walkDown(); // a second arrival right behind looks like a departure at first
-        await tourSleep(3500);
-        await oneLeaves(); // motion, then door: a walk-out. The one still sitting is invisible to it
-        await tourSleep(4000);
-      }
-    ],
-    2: [
-      "Don't flicker the lights",
-      async function () {
-        seatNow();
-        await play("movie");
-        await tourSleep(2500);
-        togglePause(); // a quick blip: the lights never move
-        await tourSleep(1500);
-        togglePause();
-        await tourSleep(2500);
-        togglePause(); // a real pause: 4 s later, the glow
-        await tourSleep(6500);
-        togglePause();
-        await tourSleep(2500);
-        await play("sports");
-        await tourSleep(2000);
-        await flash("td");
-        await tourSleep(1500);
-      }
-    ],
-    3: [
-      "When in doubt, leave it on",
-      async function () {
-        seatNow();
-        await play("movie");
-        await tourSleep(2000);
-        await endSession();
-        await waitForProjector();
-        await tourSleep(1500);
-      }
-    ]
-  };
-
-  var current = null; // chapter on screen: 1, 2, 3 or "free"
-
-  async function runScene(id) {
-    var n = parseInt(id, 10);
-    var scene = SCENES[n];
-    reset();
-    var e = ++tourEpoch;
-    setTour(true, scene[0]);
-    if (id === "3u") {
-      $("opt-sensor").checked = true;
-      log("Current sensor unplugged");
-    }
-    await scene[1]();
-    if (e === tourEpoch) setTour(false);
-  }
-
-  // Any control press ends a running scene. If an action is mid-flight, start clean.
-  function takeOver() {
-    if (!tourOn) return;
-    tourEpoch++;
-    setTour(false);
-    if (S.busy || S.flashing || S.walking) reset();
-    log("You're in control");
+  // Someone on the couch with a movie already playing.
+  function showNow() {
+    seatNow();
+    var m = MODES.movie;
+    S.inUse = true;
+    S.mode = "movie";
+    S.media = "playing";
+    S.projector = "on";
+    S.amps = 1.92;
+    S.rx = { input: m.input, dsp: m.dsp };
+    log("A movie is playing: blackout, bias lights on");
+    sync();
     render();
   }
 
-  function on(id, fn) {
-    $(id).addEventListener("click", function () {
-      takeOver();
-      fn();
-    });
+  // ---------- the guide ----------
+  var running = 0; // "Try it" steps still playing, including the pauses between their moves
+  function idle() {
+    return !running && !S.busy && !S.flashing && !S.walking;
   }
 
-  document.querySelectorAll("#mode-buttons .btn").forEach(function (b) {
-    b.addEventListener("click", function () {
-      takeOver();
-      play(b.dataset.mode);
-    });
-  });
-  on("btn-down", someoneDown);
-  on("btn-up", everyoneUp);
-  on("btn-one", oneLeaves);
-  on("btn-pause", togglePause);
-  on("btn-td", function () {
-    flash("td");
-  });
-  on("btn-fg", function () {
-    flash("fg");
-  });
-  on("btn-social", toggleSocial);
-  on("btn-end", endSession);
-  ["opt-tuners", "opt-sensor"].forEach(function (id) {
-    $(id).addEventListener("change", function () {
-      var v = this.checked;
-      takeOver();
-      this.checked = v;
-    });
-  });
-  $("tour-badge").addEventListener("click", takeOver);
-  document.querySelectorAll("[data-play]").forEach(function (b) {
-    b.addEventListener("click", function () {
-      current = parseInt(b.dataset.play, 10);
-      markActive();
-      runScene(b.dataset.play);
-    });
-  });
-
-  // ---------- chapters follow the scroll ----------
-  var sections = [].slice.call(document.querySelectorAll(".chapter, .freeplay"));
-
-  function markActive() {
-    sections.forEach(function (sec) {
-      var id = sec.dataset.ch ? parseInt(sec.dataset.ch, 10) : "free";
-      sec.classList.toggle("active", id === current);
-    });
-  }
-
-  function activate(id) {
-    if (id === current) return;
-    current = id;
-    markActive();
-    if (id === "free") takeOver();
-    else runScene(String(id));
-  }
-
-  reset();
-  current = 1;
-  markActive();
-  setTimeout(function () {
-    if (current === 1 && !tourOn && !S.people.length) runScene("1");
-  }, 600);
-
-  // The section crossing a line just below the middle of the screen is the active one.
-  function pick() {
-    var line = window.innerHeight * 0.55;
-    for (var i = sections.length - 1; i >= 0; i--) {
-      var r = sections[i].getBoundingClientRect();
-      if (r.top <= line) {
-        if (r.bottom > line || i === sections.length - 1) {
-          var sec = sections[i];
-          activate(sec.dataset.ch ? parseInt(sec.dataset.ch, 10) : "free");
-        }
-        return;
+  function mode(m) {
+    return {
+      ok: idle,
+      run: function () {
+        return play(m);
+      },
+      pressed: function () {
+        return S.mode === m;
       }
-    }
+    };
   }
-  var pickQueued = false;
-  window.addEventListener(
-    "scroll",
-    function () {
-      if (pickQueued) return;
-      pickQueued = true;
-      setTimeout(function () {
-        pickQueued = false;
-        pick();
-      }, 150);
+
+  // Each "Try it" button: when it can be pressed, and what it does.
+  var done = {};
+  var TASKS = {
+    // 1. Coming and going: see the problem, then add the fix and try again
+    tryDoor: {
+      ok: function () { return idle() && !GEAR.motion && S.people.length === 0 && !done.tryDoor; },
+      run: async function () {
+        await walkDown();
+        await realSleep(1000);
+        await walkUp(S.people[0]);
+      }
     },
-    { passive: true }
-  );
-  setInterval(pick, 1000);
+    addMotion: {
+      resets: true,
+      ok: function () { return idle() && !!done.tryDoor && !done.addMotion; },
+      run: async function () {
+        reset({ motion: true, mmwave: false });
+        ping("sensor-motion");
+        log("Motion sensor added at the bottom of the stairs", "good");
+        await realSleep(900);
+        await walkDown();
+        await realSleep(1000);
+        await walkUp(S.people[0]);
+        await sleep(21000); // the walk-out check
+      }
+    },
+    // 2. More than one person
+    friendVisit: {
+      ok: function () { return idle() && !GEAR.mmwave && S.people.length === 1 && !done.friendVisit; },
+      run: async function () {
+        await walkDown();
+        await realSleep(1200);
+        await oneLeaves();
+        await sleep(21000);
+      }
+    },
+    addMmwave: {
+      resets: true,
+      ok: function () { return idle() && !!done.friendVisit && !done.addMmwave; },
+      run: async function () {
+        reset(FULL);
+        seatNow();
+        ping("sensor-mmwave");
+        log("mmWave presence sensor added. It covers the couch", "good");
+        await realSleep(900);
+        await walkDown();
+        await realSleep(1200);
+        await oneLeaves();
+        await sleep(21000);
+      }
+    },
+    // 3. During the show (and 5)
+    startMovie: { ok: function () { return idle() && !S.mode; }, run: function () { return play("movie"); } },
+    snack: {
+      ok: function () { return idle() && S.mode === "movie" && S.media === "playing" && S.people.length === 1; },
+      run: async function () {
+        togglePause(); // pause first: pause icon on screen, dim glow
+        await realSleep(1400);
+        await walkUp(S.people[0]);
+        await realSleep(1500);
+        await walkDown();
+        await realSleep(900);
+        togglePause(); // back on the couch: resume, lights down
+      }
+    },
+    // 4. One button per mode
+    movie: mode("movie"),
+    game: mode("game"),
+    music: mode("music"),
+    sports: mode("sports"),
+    // 5. Music without the projector
+    movieToMusic: {
+      ok: function () { return idle() && !S.mode && !done.movieToMusic; },
+      run: async function () {
+        await play("movie");
+        await realSleep(1500);
+        await play("music");
+      }
+    },
+    end: { ok: function () { return idle() && S.inUse && !!done.movieToMusic && !done.end; }, run: endSession },
+    unplug: {
+      resets: true,
+      ok: function () { return idle() && !!done.end && !S.inUse; },
+      run: async function () {
+        reset();
+        showNow();
+        OPT.sensor = true;
+        log("Current sensor unplugged", "warn");
+        await realSleep(900);
+        await endSession();
+      }
+    },
+    // 6. Game day
+    gameday: { ok: function () { return idle() && S.mode !== "sports"; }, run: function () { return play("sports"); } },
+    td: { ok: function () { return idle() && S.mode === "sports"; }, run: function () { return flash("td"); } }
+  };
+
+  // Notes that appear once their moment has happened, and stay until the step restarts.
+  var NOTES = {
+    tryDoor: function () { return !!done.tryDoor; },
+    addMotion: function () { return !!done.addMotion && S.rule === "empty"; },
+    friendVisit: function () { return S.rule === "stillGap"; },
+    addMmwave: function () { return S.rule === "mmwaveHold"; },
+    movieToMusic: function () { return !!done.movieToMusic; },
+    td: function () { return !!done.td; },
+    unplug: function () { return S.rule === "sensorFail"; }
+  };
+  var shown = {};
+
+  function renderGuide() {
+    document.querySelectorAll("[data-task]").forEach(function (b) {
+      var id = b.dataset.task;
+      var t = TASKS[id];
+      b.disabled = !t.ok();
+      if (t.pressed) b.setAttribute("aria-pressed", String(t.pressed()));
+      else b.classList.toggle("done", !!done[id]);
+    });
+    // Show one "Try it" button at a time: the first one not done yet.
+    document.querySelectorAll(".tasks").forEach(function (list) {
+      var items = [].slice.call(list.children);
+      var cur = items.filter(function (li) {
+        return !li.querySelector("[data-task]").classList.contains("done");
+      })[0] || items[items.length - 1];
+      items.forEach(function (li) {
+        li.hidden = li !== cur;
+      });
+      var label = list.previousElementSibling;
+      if (label && label.classList.contains("try") && items.length > 1) {
+        label.textContent = "Try it · " + (items.indexOf(cur) + 1) + " of " + items.length;
+      }
+    });
+    var pb = document.querySelector('[data-task="pause"]');
+    if (pb) pb.textContent = S.mode === "movie" && S.media === "paused" ? "▶ Play" : "⏸ Pause";
+    document.querySelectorAll("[data-after]").forEach(function (n) {
+      var id = n.dataset.after;
+      if (NOTES[id]()) shown[id] = true;
+      n.hidden = !shown[id];
+    });
+    $("rd-proj").textContent = { off: "off", on: "on", cooling: "cooling down", polling: "checking current", fans: "on (fans protected)" }[S.projector];
+    $("rd-rx").textContent = S.rx ? S.rx.input + " · " + S.rx.dsp : "off";
+    $("rd-app").textContent = !S.mode
+      ? "none"
+      : S.mode === "music" && S.projector !== "on"
+        ? "none (phone streams to the receiver)"
+        : MODES[S.mode].app;
+  }
+
+  document.querySelectorAll("[data-task]").forEach(function (b) {
+    b.addEventListener("click", async function () {
+      var id = b.dataset.task;
+      var t = TASKS[id];
+      if (!t.ok()) return;
+      var e = epoch;
+      running++;
+      var job = t.run();
+      render();
+      try {
+        await job;
+      } finally {
+        running--;
+      }
+      if (e === epoch || t.resets) done[id] = t.finished ? t.finished() : true; // tasks that start with their own reset still count
+      render();
+    });
+  });
+
+  var steps = [].slice.call(document.querySelectorAll(".step"));
+  var HASH = ["", "step-1", "step-2", "step-3", "step-4", "step-5", "step-6", "step-7"];
+  function seated() {
+    reset();
+    seatNow();
+  }
+  var SETUP = [
+    reset,
+    function () {
+      reset({ motion: false, mmwave: false });
+    },
+    function () {
+      reset({ motion: true, mmwave: false });
+      seatNow();
+    },
+    seated,
+    seated,
+    seated,
+    seated,
+    seated
+  ];
+  var step = 0;
+
+  function goTo(n, fromClick) {
+    step = n;
+    running = 0; // a step cut off mid-play never finishes, so don't wait for it
+    steps.forEach(function (s) {
+      s.hidden = parseInt(s.dataset.step, 10) !== n;
+    });
+    document.querySelectorAll(".step-nav [data-go]").forEach(function (b) {
+      if (parseInt(b.dataset.go, 10) === n) b.setAttribute("aria-current", "step");
+      else b.removeAttribute("aria-current");
+    });
+    steps[n].querySelectorAll("[data-task]").forEach(function (b) {
+      delete done[b.dataset.task];
+    });
+    steps[n].querySelectorAll("[data-after]").forEach(function (b) {
+      delete shown[b.dataset.after];
+    });
+    SETUP[n]();
+    try {
+      history.replaceState(null, "", HASH[n] ? "#" + HASH[n] : location.pathname + location.search);
+    } catch (e) {}
+    if (!fromClick) return;
+    steps[n].querySelector("h2").focus({ preventScroll: true });
+    // Bring the top of the new step into view, below the room on phones.
+    var phone = matchMedia("(max-width: 900px)").matches;
+    var limit = phone ? document.querySelector(".stage-sticky").offsetHeight + 8 : 90;
+    var top = $("guide").getBoundingClientRect().top;
+    if (top < limit) window.scrollBy({ top: top - limit, behavior: REDUCED ? "auto" : "smooth" });
+  }
+
+  document.querySelectorAll("[data-go]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      goTo(parseInt(b.dataset.go, 10), true);
+    });
+  });
+  document.querySelectorAll("[data-next]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      goTo(Math.min(step + 1, steps.length - 1), true);
+    });
+  });
+  document.querySelectorAll("[data-back]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      goTo(Math.max(step - 1, 0), true);
+    });
+  });
+  document.querySelectorAll("[data-redo]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      goTo(step, false);
+    });
+  });
+
+
+  var start = HASH.indexOf(location.hash.slice(1));
+  goTo(start > 0 ? start : 0, false);
 })();

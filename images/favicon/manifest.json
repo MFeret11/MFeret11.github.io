@@ -1,13 +1,11 @@
 {
-    "name": "MFeret",
+    "name": "Matthew Feret",
+    "short_name": "MFeret",
     "icons": [
-        {
-            "src": "android-chrome-144x144.png",
-            "sizes": "144x144",
-            "type": "image/png"
-        }
+        { "src": "android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
+        { "src": "android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
     ],
-    "theme_color": "#ffffff",
-    "background_color": "#ffffff",
+    "theme_color": "#0c0a12",
+    "background_color": "#0c0a12",
     "display": "standalone"
 }

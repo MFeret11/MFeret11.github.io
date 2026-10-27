@@ -4,19 +4,19 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>The Basement · Matthew Feret</title>
-	<meta name="description" content="A playable simulation of Matthew Feret's automated basement: lights that follow you down the stairs, the theater, the projector cooldown interlock and Eagles touchdown flashes.">
+	<meta name="description" content="A playable story of Matthew Feret's automated basement theater: lights that know who's there, one button per mode, a projector that cools down safely and Eagles touchdown flashes, one problem at a time.">
 	<meta property="og:title" content="The Basement · Matthew Feret">
-	<meta property="og:description" content="Walk downstairs, start a movie, score a touchdown, then try to break the projector's safety interlock.">
+	<meta property="og:description" content="It started with not wanting to get up for the lights, and kept growing one problem at a time. A playable copy of my basement theater's real rules.">
 	<meta property="og:type" content="website">
 	<meta property="og:url" content="https://mferet.com/basement.html">
-	<link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png">
-	<link rel="apple-touch-icon" sizes="144x144" href="images/favicon/apple-touch-icon.png">
+	<link rel="icon" href="favicon.ico" sizes="32x32">
+	<link rel="icon" href="images/favicon/favicon.svg" type="image/svg+xml">
+	<link rel="apple-touch-icon" href="images/favicon/apple-touch-icon.png">
 	<link rel="manifest" href="images/favicon/manifest.json">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
-	<link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="styles.css?v=20261027">
 	<script>
 		(function () {
 			var t;
@@ -25,14 +25,14 @@
 			document.documentElement.dataset.theme = t;
 		})();
 	</script>
-	<script defer src="site.js"></script>
-	<script defer src="basement.js"></script>
+	<script defer src="site.js?v=20261027"></script>
+	<script defer src="basement.js?v=20261027"></script>
 </head>
 <body class="basement-page">
 	<a class="skip" href="#main">Skip to content</a>
 	<header class="site-header">
 		<div class="wrap header-inner">
-			<a class="brand" href="index.html"><img src="images/compressed/favicon/mf-logo2.png" alt="Home" width="24" height="32"></a>
+			<a class="brand" href="index.html"><svg class="logo" viewBox="0 0 39 24" aria-hidden="true"><rect class="m" x="0" y="0" width="4" height="4" rx="0.8"/><rect class="f" x="20" y="0" width="4" height="4" rx="0.8"/><rect class="f" x="25" y="0" width="4" height="4" rx="0.8"/><rect class="f" x="30" y="0" width="4" height="4" rx="0.8"/><rect class="f" x="35" y="0" width="4" height="4" rx="0.8"/><rect class="m" x="0" y="5" width="4" height="4" rx="0.8"/><rect class="m" x="5" y="5" width="4" height="4" rx="0.8"/><rect class="m" x="15" y="5" width="4" height="4" rx="0.8"/><rect class="m" x="20" y="5" width="4" height="4" rx="0.8"/><rect class="m" x="0" y="10" width="4" height="4" rx="0.8"/><rect class="m" x="10" y="10" width="4" height="4" rx="0.8"/><rect class="m" x="20" y="10" width="4" height="4" rx="0.8"/><rect class="f" x="25" y="10" width="4" height="4" rx="0.8"/><rect class="f" x="30" y="10" width="4" height="4" rx="0.8"/><rect class="m" x="0" y="15" width="4" height="4" rx="0.8"/><rect class="m" x="20" y="15" width="4" height="4" rx="0.8"/><rect class="m" x="0" y="20" width="4" height="4" rx="0.8"/><rect class="m" x="20" y="20" width="4" height="4" rx="0.8"/></svg><span>Matt Feret</span></a>
 			<nav class="site-nav" aria-label="Main">
 				<a href="index.html">Home</a>
 				<a href="basement.html" aria-current="page">The Basement</a>
@@ -45,11 +45,11 @@
 	</header>
 
 	<main id="main" class="wrap">
-		<p class="eyebrow">Interactive</p>
+		<p class="eyebrow">An interactive story</p>
 		<h1>The Basement</h1>
 		<p class="lede">
-			My basement theater runs on Home Assistant and a Raspberry Pi. Here are three problems it had to solve, played out on a
-			copy of the real rules. Nothing here talks to my actual house.
+			I wanted a place to relax without juggling three remotes or getting up to turn off the lights. My solution: Home Assistant on a Raspberry Pi.
+			Here's how it grew, one problem and one fix at a time.
 		</p>
 
 		<div class="sim explainer" id="sim">
@@ -57,7 +57,6 @@
 				<div class="stage-sticky">
 						<div class="card room" id="room">
 						<div class="stage">
-							<div class="tour-badge" id="tour-badge" hidden><span class="tour-dot" aria-hidden="true"></span><span><span id="tour-label">Playing</span><span class="tour-more"> · tap any control to take over</span></span></div>
 						<svg viewBox="0 0 800 450" role="img" aria-labelledby="room-title" id="room-svg">
 							<title id="room-title">Cartoon of the basement: ceiling lights, projector and screen, receiver, a bar, a couch, and a staircase with a door at the top</title>
 							<defs>
@@ -224,6 +223,15 @@
 								<text class="sensor-label" x="620" y="232" text-anchor="end">MOTION</text>
 							</g>
 
+							<!-- mmWave presence sensor and the area it covers (chapter 2 adds it) -->
+							<g id="sensor-mmwave" class="sensor">
+								<path id="mm-zone" class="mm-zone" d="M610 116 L190 450 L612 450 Z"/>
+								<rect x="603" y="104" width="14" height="10" rx="2" fill="#eee"/>
+								<circle cx="610" cy="109" r="2.5" fill="#7cf3a0"/>
+								<circle class="ping" cx="610" cy="109" r="6"/>
+								<text class="sensor-label" x="600" y="98" text-anchor="end">mmWAVE</text>
+							</g>
+
 							<!-- shown over whoever the lights turned off on -->
 						<g id="bubble" class="fx" opacity="0">
 							<path d="M-34 -30 H34 Q42 -30 42 -22 V-6 Q42 2 34 2 H6 L0 10 L-6 2 H-34 Q-42 2 -42 -6 V-22 Q-42 -30 -34 -30 Z" fill="#fff"/>
@@ -233,38 +241,112 @@
 						<rect x="0" y="0" width="800" height="450" fill="url(#g-vignette)" pointer-events="none"/>
 						</svg>
 						</div>
-						<div class="rule" id="rule" aria-live="polite">
-							<span class="rule-tag">Rule</span>
-							<strong id="rule-name">Empty basement</strong>
-							<span id="rule-text">Nobody's downstairs, so every light is off.</span>
-							<a id="rule-link" href="https://github.com/MFeret11/home-assistant-config" target="_blank" rel="noopener">See the code</a>
-						</div>
 					</div>
 				</div>
 			</div>
 
-			<div class="chapters">
-				<section class="chapter" id="ch-1" data-ch="1">
-					<p class="ch-num">01</p>
-					<h2>Coming or going?</h2>
-					<p>Motion sensors see movement, not people. With a door sensor at the top of the stairs and one motion sensor at the bottom, the order they fire says who's coming and who's going: a version of the "wasp in a box" problem.</p>
-					<p>The case it can't see is someone sitting still. I'm adding mmWave presence sensors to fix that.</p>
-					<button class="btn ghost replay" type="button" data-play="1">↻ Replay</button>
+			<div class="guide" id="guide">
+				<ol class="step-nav" aria-label="Chapters">
+					<li><button type="button" data-go="0">Why</button></li>
+					<li><button type="button" data-go="1">1</button></li>
+					<li><button type="button" data-go="2">2</button></li>
+					<li><button type="button" data-go="3">3</button></li>
+					<li><button type="button" data-go="4">4</button></li>
+					<li><button type="button" data-go="5">5</button></li>
+					<li><button type="button" data-go="6">6</button></li>
+					<li><button type="button" data-go="7">What I learned</button></li>
+				</ol>
+
+				<section class="step" data-step="0" aria-labelledby="s0-title">
+					<p class="ch-num">Why I started</p>
+					<h2 id="s0-title" tabindex="-1">No getting up for the lights</h2>
+					<p>We'd get comfortable for a movie, and then someone had to get up and walk to the light switch by the stairs. That's where this started.</p>
+					<details class="more"><summary>More</summary>
+						<p>Three devices meant three remotes, and the projector takes a while to warm up, so it's nice to start it before I even head downstairs. Mostly, I wanted a great place to unwind.</p>
+					</details>
+					<div class="step-foot"><button class="btn" type="button" data-next>Start →</button></div>
 				</section>
 
-				<section class="chapter" id="ch-2" data-ch="2">
-					<p class="ch-num">02</p>
-					<h2>Don't flicker the lights</h2>
-					<p>Pausing a movie waits 4 seconds before the lights come up, so flipping through a menu doesn't strobe the room.</p>
-					<p>Touchdown flashes change brightness, never color. Fast color changes flood the bulbs' Zigbee network.</p>
-					<button class="btn ghost replay" type="button" data-play="2">↻ Replay</button>
+				<section class="step" data-step="1" aria-labelledby="s1-title" hidden>
+					<p class="ch-num">Chapter 1 of 6</p>
+					<h2 id="s1-title" tabindex="-1">Coming and going</h2>
+					<p>The first version turned the lights on when the stair door opened. But a door can't tell coming from going.</p>
+					<p class="try">Try it</p>
+					<ol class="tasks">
+						<li><button class="btn task" type="button" data-task="tryDoor">🚶 Walk someone down and back up</button></li>
+						<li><button class="btn task" type="button" data-task="addMotion">➕ Add a motion sensor and try again</button></li>
+					</ol>
+					<p class="note" data-after="tryDoor" hidden>Nobody's there, and the lights are still on.</p>
+					<p class="note" data-after="addMotion" hidden>Door, then motion: coming down. Motion, then door: leaving, so the lights go off.</p>
+					<details class="more"><summary>More</summary>
+						<p>The sensors are a Third Reality Zigbee door sensor and motion sensor. "Leaving" means the door opens within 25 seconds of motion at the bottom. It was 18 seconds until the sensor history showed a slow climb that took 18.76. <a href="projects.html#stairs">The full story</a> · <a href="https://github.com/MFeret11/home-assistant-config/blob/8cab0de/pyscript/basement.py#L422">See the code</a></p>
+					</details>
+					<div class="step-foot"><button class="btn ghost" type="button" data-back>← Back</button><button class="btn ghost" type="button" data-redo>↻ Start over</button><button class="btn" type="button" data-next>Next →</button></div>
 				</section>
 
-				<section class="chapter" id="ch-3" data-ch="3">
-					<p class="ch-num">03</p>
-					<h2>When in doubt, leave it on</h2>
-					<p>The projector's lamp needs its fans after shutdown. Power gets cut only after a 90-second cooldown and two near-zero current readings in a row.</p>
-					<p>No reading, no cut: a plug left on costs cents, a cut mid-cooldown costs a lamp.</p>
+				<section class="step" data-step="2" aria-labelledby="s2-title" hidden>
+					<p class="ch-num">Chapter 2 of 6</p>
+					<h2 id="s2-title" tabindex="-1">More than one person</h2>
+					<p>Then two people came down. When one left, the room decided everyone had.</p>
+					<p class="try">Try it</p>
+					<ol class="tasks">
+						<li><button class="btn task" type="button" data-task="friendVisit">🚶 A friend visits, then heads home</button></li>
+						<li><button class="btn task" type="button" data-task="addMmwave">➕ Add an mmWave sensor and try again</button></li>
+					</ol>
+					<p class="note" data-after="friendVisit" hidden>The lights went out on the person still on the couch. Motion sensors can't see someone sitting still.</p>
+					<p class="note" data-after="addMmwave" hidden>The mmWave sensor can, so the lights stay on.</p>
+					<details class="more"><summary>More</summary>
+						<p>The sensor is a Sonoff SNZB-06P, also Zigbee. Once the room has been quiet for 30 minutes, the lights go off. If the sensor goes offline, the door and motion rules take over again. <a href="https://github.com/MFeret11/home-assistant-config/blob/8cab0de/pyscript/basement.py#L602">See the code</a></p>
+					</details>
+					<div class="step-foot"><button class="btn ghost" type="button" data-back>← Back</button><button class="btn ghost" type="button" data-redo>↻ Start over</button><button class="btn" type="button" data-next>Next →</button></div>
+				</section>
+
+				<section class="step" data-step="3" aria-labelledby="s3-title" hidden>
+					<p class="ch-num">Chapter 3 of 6</p>
+					<h2 id="s3-title" tabindex="-1">During the show</h2>
+					<p>Movie on, lights down. Pause to grab a snack, and a dim glow comes up, with only the stairs lit on the way.</p>
+					<p class="try">Try it</p>
+					<ol class="tasks">
+						<li><button class="btn task" type="button" data-task="startMovie">🎬 Start a movie</button></li>
+						<li><button class="btn task" type="button" data-task="snack">🍿 Get up for a snack</button></li>
+					</ol>
+					<details class="more"><summary>More</summary>
+						<p>The glow comes from a Leviton Matter dimmer at 3%. In the real room it waits 4 seconds after a pause, so tapping through a menu doesn't flicker the lights. The stairs fade to 2% candlelight for a minute. <a href="https://github.com/MFeret11/home-assistant-config/blob/8cab0de/pyscript/basement.py#L676">See the code</a></p>
+					</details>
+					<div class="step-foot"><button class="btn ghost" type="button" data-back>← Back</button><button class="btn ghost" type="button" data-redo>↻ Start over</button><button class="btn" type="button" data-next>Next →</button></div>
+				</section>
+
+				<section class="step" data-step="4" aria-labelledby="s4-title" hidden>
+					<p class="ch-num">Chapter 4 of 6</p>
+					<h2 id="s4-title" tabindex="-1">One button per mode</h2>
+					<p>Movies, games, sports and music each need different settings. One button on the remote sets up the whole room.</p>
+					<div class="remote" role="group" aria-label="Remote buttons">
+						<button class="btn task" type="button" data-task="movie" aria-pressed="false">🎬 Movie</button>
+						<button class="btn task" type="button" data-task="game" aria-pressed="false">🕹️ Retro game</button>
+						<button class="btn task" type="button" data-task="music" aria-pressed="false">🎵 Music</button>
+						<button class="btn task" type="button" data-task="sports" aria-pressed="false">🏈 Eagles game</button>
+					</div>
+					<dl class="readout">
+						<dt>Projector</dt><dd id="rd-proj">off</dd>
+						<dt>Receiver</dt><dd id="rd-rx">off</dd>
+						<dt>App</dt><dd id="rd-app">none</dd>
+					</dl>
+					<details class="more"><summary>More</summary>
+						<p>The remote belongs to an Onn 4K Pro streaming box, which Home Assistant controls over ADB; the Yamaha receiver is controlled over the network. Retro games run on a Linux laptop with Batocera, which also streams modern games from my gaming PC with Moonlight. I learned 3D printing to mount the laptop, the Pi and the cables out of sight. <a href="https://github.com/MFeret11/home-assistant-config/blob/8cab0de/pyscript/theater.py#L1931">See the code</a></p>
+					</details>
+					<div class="step-foot"><button class="btn ghost" type="button" data-back>← Back</button><button class="btn" type="button" data-next>Next →</button></div>
+				</section>
+
+				<section class="step" data-step="5" aria-labelledby="s5-title" hidden>
+					<p class="ch-num">Chapter 5 of 6</p>
+					<h2 id="s5-title" tabindex="-1">Music without the projector</h2>
+					<p>Music doesn't need the projector. But cutting its power while the lamp cools down can ruin it.</p>
+					<p class="try">Try it</p>
+					<ol class="tasks">
+						<li><button class="btn task" type="button" data-task="movieToMusic">🎬 Start a movie, then switch to music</button></li>
+						<li><button class="btn task" type="button" data-task="end">⏻ End the session</button></li>
+						<li><button class="btn task" type="button" data-task="unplug">🔌 Again, with the current sensor unplugged</button></li>
+					</ol>
 					<div class="amps">
 						<div class="amps-head"><span>Projector current</span><span class="mono" id="st-amps">0.00 A</span></div>
 						<svg viewBox="0 0 260 96" id="amps-chart" role="img" aria-label="Projector current during the cooldown">
@@ -275,71 +357,48 @@
 							<line x1="0" y1="84" x2="260" y2="84" class="amps-axis"/>
 							<polyline id="amps-line" points="" class="amps-line"/>
 							<g id="amps-dots"></g>
-							<text id="amps-empty" x="130" y="50" text-anchor="middle" class="amps-note">End a session to watch the cooldown</text>
+							<text id="amps-empty" x="130" y="50" text-anchor="middle" class="amps-note">End the session to watch the cooldown</text>
 						</svg>
 					</div>
-					<div class="btn-row">
-						<button class="btn ghost replay" type="button" data-play="3">↻ Replay</button>
-						<button class="btn" type="button" id="btn-unplug" data-play="3u">Now unplug the sensor</button>
-					</div>
+					<p class="note" data-after="movieToMusic" hidden>The lamp is warm, so the projector stays on.</p>
+					<p class="note" data-after="unplug" hidden>No reading, no cut. A plug left on costs cents. A cut mid-cooldown costs a lamp.</p>
+					<details class="more"><summary>More</summary>
+						<p>The projector plugs into a Third Reality Zigbee smart plug that measures current, so Home Assistant can tell "lamp on" from "fans only." Music mode cuts the projector's power before anything turns on, so HDMI-CEC can't wake it, unless the lamp is still warm. At the end, Home Assistant waits 90 seconds, then cuts power only after two near-zero readings in a row. <a href="projects.html#projector">The full story</a> · <a href="https://github.com/MFeret11/home-assistant-config/blob/8cab0de/pyscript/theater.py#L1815">See the code</a></p>
+					</details>
+					<div class="step-foot"><button class="btn ghost" type="button" data-back>← Back</button><button class="btn ghost" type="button" data-redo>↻ Start over</button><button class="btn" type="button" data-next>Next →</button></div>
 				</section>
 
-				<section class="freeplay" id="free">
-					<p class="ch-num">Free play</p>
-					<h2>Your turn</h2>
-					<p>Every control, no script. <a href="projects.html#projector">The story behind the projector rule.</a></p>
-					<div class="controls" id="controls">
-						<div class="control-group">
-							<h3>People</h3>
-							<div class="btn-row">
-								<button class="btn" type="button" id="btn-down">🚶 Someone comes downstairs</button>
-								<button class="btn" type="button" id="btn-one" disabled>One person leaves</button>
-							<button class="btn" type="button" id="btn-up" disabled>Everyone heads upstairs</button>
-							</div>
-						</div>
-						<div class="control-group">
-							<h3>Watch something</h3>
-							<div class="btn-row" id="mode-buttons">
-								<button class="btn" type="button" data-mode="movie" aria-pressed="false">🎬 Movie</button>
-								<button class="btn" type="button" data-mode="game" aria-pressed="false">🕹️ Retro game</button>
-								<button class="btn" type="button" data-mode="music" aria-pressed="false">🎵 Music</button>
-								<button class="btn" type="button" data-mode="sports" aria-pressed="false">🏈 Eagles game</button>
-							</div>
-						</div>
-						<div class="control-group">
-							<h3>While it's on</h3>
-							<div class="btn-row">
-								<button class="btn" type="button" id="btn-pause" disabled>⏸ Pause</button>
-								<button class="btn" type="button" id="btn-td" disabled>Touchdown!</button>
-								<button class="btn" type="button" id="btn-fg" disabled>Field goal</button>
-								<button class="btn" type="button" id="btn-social" aria-pressed="false">Party lights (Social mode)</button>
-							</div>
-						</div>
-						<div class="control-group">
-							<h3>Try to break it</h3>
-							<label class="check"><input type="checkbox" id="opt-tuners"> Both TV tuners are busy (someone's streaming remotely)</label>
-							<label class="check"><input type="checkbox" id="opt-sensor"> Unplug the projector's current sensor</label>
-							<div class="btn-row">
-								<button class="btn danger" type="button" id="btn-end" disabled>⏻ End session</button>
-							</div>
-							<p class="hint">Long waits run at 10x speed. Try starting a show during the projector cooldown.</p>
-						</div>
-					</div>
-				<aside class="card panel" aria-labelledby="ha-title">
-					<h3 id="ha-title"><span class="dot" aria-hidden="true"></span>Home Assistant</h3>
-					<dl class="status">
-						<dt>Theater</dt><dd id="st-mode">off</dd>
-						<dt>Lighting</dt><dd id="st-lighting">Daily Driver</dd>
-						<dt>Stair door</dt><dd id="st-door">closed</dd>
-						<dt>Bottom-stairs motion</dt><dd id="st-motion">clear</dd>
-						<dt>Receiver</dt><dd id="st-rx">off</dd>
-						<dt>Projector</dt><dd id="st-proj">off</dd>
-						<dt>Bias lights</dt><dd id="st-bias">off</dd>
-						<dt>Sim clock</dt><dd id="st-clock">20:00:00</dd>
+				<section class="step" data-step="6" aria-labelledby="s6-title" hidden>
+					<p class="ch-num">Chapter 6 of 6</p>
+					<h2 id="s6-title" tabindex="-1">Game day</h2>
+					<p>Live sports come from an antenna in the attic and an HDHomeRun tuner, not a subscription. With Tailscale, family can watch from anywhere, even my dad on a sailboat mid-ocean.</p>
+					<p class="try">Try it</p>
+					<ol class="tasks">
+						<li><button class="btn task" type="button" data-task="gameday">🏈 Put on the Eagles game</button></li>
+						<li><button class="btn task" type="button" data-task="td">Touchdown!</button></li>
+					</ol>
+					<p class="note" data-after="td" hidden>Brightness only, never color: fast color changes flood the Zigbee network.</p>
+					<details class="more"><summary>More</summary>
+						<p>The HDHomeRun turns the antenna signal into a stream on my home network. Nothing in the house is open to the internet: family devices reach it through Tailscale, a private network only invited devices can join. <a href="https://github.com/MFeret11/home-assistant-config/blob/8cab0de/pyscript/sports.py#L113">See the code</a></p>
+					</details>
+					<div class="step-foot"><button class="btn ghost" type="button" data-back>← Back</button><button class="btn ghost" type="button" data-redo>↻ Start over</button><button class="btn" type="button" data-next>What I learned →</button></div>
+				</section>
+
+				<section class="step" data-step="7" aria-labelledby="s7-title" hidden>
+					<p class="ch-num">Summary</p>
+					<h2 id="s7-title" tabindex="-1">What I learned</h2>
+					<p>Mostly, networking: how devices talk to each other.</p>
+					<dl class="connect">
+						<dt>Zigbee</dt><dd>Bulbs, sensors and smart plugs through a Sonoff USB dongle, in a mesh that gets stronger as it grows.</dd>
+						<dt>Matter</dt><dd>The Leviton theater dimmer.</dd>
+						<dt>MoCA</dt><dd>Connects the basement to my router over the coax already in the walls: fast and stable, with no new cables.</dd>
+						<dt>Home network</dt><dd>The Yamaha receiver, Onn streaming box and HDHomeRun tuner.</dd>
+						<dt>MQTT</dt><dd>Status from Batocera and the gaming PC.</dd>
+						<dt>Wake-on-LAN</dt><dd>Turns the gaming PC on.</dd>
+						<dt>Tailscale</dt><dd>Family watching from anywhere.</dd>
 					</dl>
-					<h3>Logbook</h3>
-					<ol class="log" id="log" aria-live="polite"></ol>
-				</aside>
+					<p>I also found the open-source community, and <a href="https://github.com/MFeret11/home-assistant-config">shared my own config</a>. And I got what I set out to build: a room where I can sit down, press one button, and relax.</p>
+					<div class="step-foot"><button class="btn ghost" type="button" data-back>← Back</button><a class="btn next-link" href="projects.html">More stories →</a></div>
 				</section>
 			</div>
 		</div>
@@ -347,7 +406,7 @@
 		<section class="section story">
 			<p class="fine-print">
 				These are the real rules from my <a href="https://github.com/MFeret11/home-assistant-config">Home Assistant config</a>, simplified.
-				Each caption under the room links to the code that runs it.
+				Each chapter's "More" links to the code that runs it.
 			</p>
 		</section>
 		<div class="house" id="house" aria-hidden="true"></div>
