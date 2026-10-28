@@ -55,21 +55,21 @@
 				<p class="eyebrow">Project</p>
 				<h2>Basement Theater &amp; Home Automation</h2>
 				<ul class="tags"><li>Python</li><li>Home Assistant</li><li>pyscript</li><li>Docker</li><li>GitHub Actions</li></ul>
-				<p>One button picks a mode (movie, game, sports, music), and the house sets the receiver, launches the app, sets the lights and puts matching artwork on a wall dashboard. About 140 tests, run in CI on every commit, because every commit is a deploy.</p>
+				<p>One button picks a mode (movie, game, sports, music), and the house sets the receiver, launches the app, sets the lights and puts matching artwork on a wall dashboard. About 160 tests, run in CI on every commit, because every commit is a deploy.</p>
 				<div class="actions"><a class="btn" href="https://github.com/MFeret11/home-assistant-config">GitHub</a><a class="btn" href="basement.html">Try the simulator</a></div>
 			</div>
 			<div class="card">
 				<p class="eyebrow">Project</p>
 				<h2>Good Morning Dashboard</h2>
 				<ul class="tags"><li>Python</li><li>FastAPI</li><li>APScheduler</li><li>Docker</li><li>pytest</li></ul>
-				<p>A FastAPI service that says when to leave for the train. It plans SEPTA Regional Rail trips with transfers, tracks live delays, and sends a weekday push with the best train home.</p>
+				<p>A FastAPI service that says when to leave for the train. It plans SEPTA Regional Rail trips with transfers, tracks live delays, and sends a weekday push with the best train home, then follows up until the train leaves if anything changes.</p>
 				<div class="actions"><a class="btn" href="https://github.com/MFeret11/Good_Morning_Dashboard">GitHub</a></div>
 			</div>
 			<div class="card">
 				<p class="eyebrow">Project</p>
 				<h2>WeatherTunes</h2>
 				<ul class="tags"><li>JavaScript</li><li>Tone.js</li><li>Web Audio</li><li>Open-Meteo</li></ul>
-				<p>Turns today's forecast into a short piece of music. Each hour is a bar: temperature shapes the melody, cloud and rain pick the scale, wind sets the tempo, and the climate picks the instruments. Music-theory rules keep it in tune, and the same place and day always gives the same song, with liner notes explaining why.</p>
+				<p>Turns today's forecast into a short piece of music. Each hour gets two beats: temperature shapes the melody, cloud and rain pick the scale, air pressure picks the key, wind sets the tempo, and the climate picks the instruments. The sky plays too, from moonrise bells to meteor showers. Music-theory rules keep it in tune, and the same place and day always gives the same song, with liner notes explaining why.</p>
 				<div class="actions"><a class="btn" href="https://mferet.com/WeatherTunes/">Hear your weather</a><a class="btn" href="https://github.com/MFeret11/WeatherTunes">GitHub</a></div>
 			</div>
 		</section>
@@ -90,56 +90,43 @@
 					My favorite part is what happens when it can't tell. If the sensor goes unavailable, the code doesn't guess: it leaves the power on.
 					A projector plugged in overnight costs a few cents. One cut mid-cooldown costs a lamp. When you can't verify, fail toward the cheap mistake.
 				</p>
-				<p>It's one of five hardware interlocks in the repo, all covered by tests. <a href="basement.html">Try to break it in the simulator.</a></p>
+				<p>It's one of five hardware interlocks in the repo, all covered by tests. <a href="basement.html#step-5">Try to break it in the simulator.</a></p>
+			</article>
+
+			<article class="story card" id="weathertunes">
+				<p class="meta">WeatherTunes · audio</p>
+				<h2>The song my phone couldn't play</h2>
+				<p>
+					WeatherTunes sounded fine on my laptop. On my phone it crackled and stuttered. Synthesizers in the browser have to make every
+					sample just before it plays, and when the device falls behind, you hear it.
+				</p>
+				<p>
+					My first two fixes went after symptoms. Bigger audio buffers helped a little. Then I built a "32-bit mode" that plays the same song on
+					simpler, console-style instruments, like an old game sound chip. It rendered 29 to 41% faster, and the phone still crackled.
+					Profiling showed why: a song is hundreds of audio nodes, and just running that graph live was the cost, not any one instrument.
+				</p>
+				<p class="callout">
+					So nothing plays live anymore. The song renders offline as fast as the device allows, and the finished audio streams in blocks to a
+					plain player. Play waits a moment until the render will stay ahead, so a slow phone waits a little longer instead of crackling.
+					Muting a part mid-song renders the rest again and crossfades over.
+				</p>
+				<p>It plays cleanly on my phone now. The fix wasn't a faster instrument; it was not running the instruments live at all. <a href="https://mferet.com/WeatherTunes/">Try it on yours.</a></p>
 			</article>
 
 			<article class="story card" id="zigbee">
 				<p class="meta">home-assistant-config · sports.py</p>
 				<h2>Touchdown flashes vs. the Zigbee mesh</h2>
 				<p>
-					When the Eagles score, the nine Zigbee bulbs in the basement celebrate. The obvious version flashes green and white. The trouble is that
+					When the Eagles score, the nine Zigbee bulbs in the basement and the three on the stairs celebrate. The obvious version flashes green and white. The trouble is that
 					every color change is a command to every bulb, and a fast chant of them can congest a Zigbee mesh: bulbs drop commands, fall out of sync,
 					and the room looks like a broken string of Christmas lights.
 				</p>
 				<p>
 					So the color never changes mid-flash. The bulbs hold solid Kelly green, <code>rgb(0, 170, 35)</code>, and only the brightness moves, between
-					100% and 15%. A touchdown gets six stadium-cadence surges, a short breath, then two big ones for E-A-G-L-E-S. It ends holding solid green
+					100% and 15%. A touchdown gets six stadium-cadence surges, one for each letter of E-A-G-L-E-S, a short breath, then two big ones for the final "EA-GLES!" It ends holding solid green
 					instead of restoring the old scene, because the game's still on.
 				</p>
 				
-			</article>
-
-			<article class="story card" id="tuner">
-				<p class="meta">home-assistant-config · theater.py</p>
-				<h2>The tuner code that never worked</h2>
-				<p>
-					Family members watch my antenna TV remotely, through an HDHomeRun with two tuners shared over Tailscale. If both tuners are busy when the
-					Eagles kick off, the basement wins: the automation frees one up and sends a notification.
-				</p>
-				<p>
-					Except it turned out it never had. The old code called HTTP endpoints that returned <code>404</code> and a proxy endpoint that returned
-					<code>423 Locked</code>. Nobody had hit that exact situation, so nobody noticed. I rewrote it to use the tuner's own TCP control protocol
-					(<code>lockkey force</code>, then <code>channel none</code>), and the notification now says "preemption failed" when the device refuses,
-					instead of claiming success.
-				</p>
-				<p class="callout">
-					Status: it's only been tested against an idle tuner. The real test is the next game day when both tuners are busy. I'll update this when it happens.
-				</p>
-			</article>
-
-			<article class="story card" id="stairs">
-				<p class="meta">home-assistant-config · basement.py</p>
-				<h2>My slowest trip up the stairs took 18.76 seconds</h2>
-				<p>
-					The basement lights know which way you're going on the stairs. The door opens, then the motion sensor at the bottom trips within
-					18 seconds: someone's coming down. Motion at the bottom, then the door: someone's leaving, so the lights can turn off behind them.
-				</p>
-				<p>
-					The "leaving" window was 18 seconds too, until the sensor history showed a real, slow, deliberate climb of 18.76 seconds that didn't
-					count. The window is 25 seconds now. Leaving also gets a 20-second grace period that any new motion cancels, so nobody gets blacked out
-					while they're still downstairs. And if someone leaves the door open, closing it soon after motion counts as leaving too.
-				</p>
-				<p>Calibrating against real sensor data beats guessing, even when the test subject is me.</p>
 			</article>
 
 			<article class="story card" id="commute">
@@ -158,6 +145,26 @@
 					Transfers were the other fun part. When there's no direct train, it plans each leg separately and pairs them, picking the earliest
 					connection you can still make once live delays are counted.
 				</p>
+			</article>
+
+			<article class="story card" id="stairs">
+				<p class="meta">home-assistant-config · basement.py</p>
+				<h2>My slowest trip up the stairs took 18.76 seconds</h2>
+				<p>
+					The basement lights know which way you're going on the stairs. The door opens, then the motion sensor at the bottom trips within
+					18 seconds: someone's coming down. Motion at the bottom, then the door: someone's leaving, so the lights can turn off behind them.
+				</p>
+				<p>
+					The "leaving" window was 18 seconds too, until the sensor history showed a real, slow, deliberate climb of 18.76 seconds that didn't
+					count. The window is 25 seconds now. Leaving also gets a 20-second grace period that any new motion cancels, so nobody gets blacked out
+					while they're still downstairs. And if someone leaves the door open, closing it soon after motion counts as leaving too.
+				</p>
+				<p>
+					That left one gap: someone sitting still. The stairs sensor can't see the couch, so if one person left while another stayed to watch,
+					the lights went out on them. An mmWave presence sensor now watches the room, and a walk-out is cancelled while it still sees someone.
+					If that sensor goes offline, it counts as empty, so the house falls back to the door and stairs logic, and a broken sensor can't keep the lights on.
+				</p>
+				<p>Calibrating against real sensor data beats guessing, even when the test subject is me.</p>
 			</article>
 		</section>
 

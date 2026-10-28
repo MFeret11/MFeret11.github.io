@@ -33,7 +33,7 @@ Headless screenshots catch CSS transitions mid-fade, so the simulator can look w
 
 The simulator and the Stories page describe real behavior from the two repos: the approach lighting (door then motion = arriving, motion then door = leaving, the 20 s walk-out check, the 3-minute stair timeout, the gap that chapter 2 shows: before the mmWave sensor, the walk-out shutoff couldn't see someone sitting still on the couch; since home-assistant-config 8cab0de the mmWave cancels that shutoff, and a 30-minute mmWave vacancy rule turns a quiet room off), lighting modes, the 3% pause glow, receiver DSP per mode, the 4.0 s pause debounce, the curtain call (20% for 10 minutes), the 2% 2000 K stair light, Kelly green `rgb(0,170,35)` brightness-only flashes (100%/15%, touchdown and field-goal cadences), the tuner preemption, the Batocera < 0.05 A for 12 s check, and the projector's 90 s cooldown plus up to 25 polls needing two consecutive readings ≤ 0.06 A (mains stay on if the sensor is unavailable; a new non-music show cancels the cooldown). When changing them, check the source docs instead of inventing details: `~/ha_config/docs/` (`safety-interlocks.md`, `lighting.md`, `theater-audio.md`) and `~/Good_Morning_Dashboard/CLAUDE.md` on this Pi.
 
-The tuner story says preemption has only been tested against an idle tuner. Update it once it has worked during a real game.
+The tuner preemption story was cut from Stories on 2026-10-27 (untested in a real game, and its ntfy alert doesn't send yet). Bring it back only once it has worked during a real game.
 
 ## Privacy
 
