@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Good Morning Dashboard · Matthew Feret</title>
+	<meta name="description" content="A click-through demo of Good Morning Dashboard, Matthew Feret's SEPTA commute service: the kitchen display in the morning, the afternoon push, follow-ups that only buzz when things get worse, and what happens when something breaks.">
+	<meta property="og:title" content="Good Morning Dashboard · Matthew Feret">
+	<meta property="og:description" content="When to leave for the train, at a glance in the morning and on the phone in the afternoon. A click-through demo of a weekday commute.">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://mferet.com/commute.html">
+	<link rel="icon" href="favicon.ico" sizes="32x32">
+	<link rel="icon" href="images/favicon/favicon.svg" type="image/svg+xml">
+	<link rel="apple-touch-icon" href="images/favicon/apple-touch-icon.png">
+	<link rel="manifest" href="images/favicon/manifest.json">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+	<link rel="stylesheet" href="styles.css?v=20261028">
+	<script>
+		(function () {
+			var t;
+			try { t = localStorage.getItem("theme"); } catch (e) {}
+			if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+			document.documentElement.dataset.theme = t;
+		})();
+	</script>
+	<script defer src="site.js?v=20261028"></script>
+	<script defer src="commute.js?v=20261028"></script>
+</head>
+<body class="commute-page">
+	<a class="skip" href="#main">Skip to content</a>
+	<header class="site-header">
+		<div class="wrap header-inner">
+			<a class="brand" href="index.html"><svg class="logo" viewBox="0 0 39 24" aria-hidden="true"><rect class="m" x="0" y="0" width="4" height="4" rx="0.8"/><rect class="f" x="20" y="0" width="4" height="4" rx="0.8"/><rect class="f" x="25" y="0" width="4" height="4" rx="0.8"/><rect class="f" x="30" y="0" width="4" height="4" rx="0.8"/><rect class="f" x="35" y="0" width="4" height="4" rx="0.8"/><rect class="m" x="0" y="5" width="4" height="4" rx="0.8"/><rect class="m" x="5" y="5" width="4" height="4" rx="0.8"/><rect class="m" x="15" y="5" width="4" height="4" rx="0.8"/><rect class="m" x="20" y="5" width="4" height="4" rx="0.8"/><rect class="m" x="0" y="10" width="4" height="4" rx="0.8"/><rect class="m" x="10" y="10" width="4" height="4" rx="0.8"/><rect class="m" x="20" y="10" width="4" height="4" rx="0.8"/><rect class="f" x="25" y="10" width="4" height="4" rx="0.8"/><rect class="f" x="30" y="10" width="4" height="4" rx="0.8"/><rect class="m" x="0" y="15" width="4" height="4" rx="0.8"/><rect class="m" x="20" y="15" width="4" height="4" rx="0.8"/><rect class="m" x="0" y="20" width="4" height="4" rx="0.8"/><rect class="m" x="20" y="20" width="4" height="4" rx="0.8"/></svg><span>Matt Feret</span></a>
+			<nav class="site-nav" aria-label="Main">
+				<a href="index.html">Home</a>
+				<a href="basement.html">Theater Automation</a>
+				<a href="commute.html" aria-current="page">Commute</a>
+				<a href="https://mferet.com/WeatherTunes/">WeatherTunes</a>
+				<a href="projects.html">Stories</a>
+				<a href="about.html">About</a>
+			</nav>
+			<button class="lights" type="button" aria-pressed="false"><span class="lights-track" aria-hidden="true"></span><span class="lights-label">Movie mode</span></button>
+		</div>
+	</header>
+
+	<main id="main" class="wrap">
+		<p class="eyebrow">A weekday, start to finish</p>
+		<h1>Good Morning Dashboard</h1>
+		<p class="lede">
+			My partner rides two Regional Rail lines to work: one into Center City, and a different one back out.
+			This is what the house tells them along the way: a glance at the kitchen display in the morning, and a push on the phone before heading home.
+		</p>
+
+		<div class="sim explainer commute" id="sim">
+			<div class="stage-col">
+				<div class="stage-sticky">
+					<div class="cm-stage">
+						<figure class="kiosk" aria-label="Kitchen display">
+							<div class="k-screen">
+								<p class="k-clock" id="k-clock">6:40 AM</p>
+								<p class="k-date" id="k-date">Tuesday, March 3</p>
+								<div class="k-card" id="k-card" data-level="ok" aria-live="polite"></div>
+							</div>
+							<figcaption>Kitchen display</figcaption>
+						</figure>
+						<figure class="phone" aria-label="Phone notifications">
+							<div class="p-screen">
+								<p class="p-time" id="p-time">6:40</p>
+								<ol class="p-list" id="p-list" aria-live="polite"></ol>
+								<p class="p-empty" id="p-empty">No notifications</p>
+							</div>
+							<figcaption>Phone</figcaption>
+						</figure>
+					</div>
+					<div class="trip-plan">
+						<div class="tp-head">
+							<p class="tp-title" id="tp-title">Morning trip plan</p>
+							<div class="tp-pick" role="group" aria-label="Where to change trains">
+								<span>Change at</span>
+								<button type="button" data-station="Jefferson Station" aria-pressed="false">Jefferson</button>
+								<button type="button" data-station="Suburban Station" aria-pressed="true">Suburban</button>
+								<button type="button" data-station="30th Street Station" aria-pressed="false">30th Street</button>
+							</div>
+						</div>
+						<div class="tp-route" id="tp-route" aria-live="polite"></div>
+					</div>
+					<ol class="cm-log" id="cm-log" aria-label="Commute checks" hidden></ol>
+				</div>
+			</div>
+
+			<div class="guide" id="guide">
+				<ol class="step-nav" aria-label="Chapters">
+					<li><button type="button" data-go="0">Why</button></li>
+					<li><button type="button" data-go="1">1</button></li>
+					<li><button type="button" data-go="2">2</button></li>
+					<li><button type="button" data-go="3">3</button></li>
+					<li><button type="button" data-go="4">4</button></li>
+					<li><button type="button" data-go="5">5</button></li>
+					<li><button type="button" data-go="6">What I learned</button></li>
+				</ol>
+
+				<section class="step" data-step="0" aria-labelledby="s0-title">
+					<p class="ch-num">Why I built it</p>
+					<h2 id="s0-title" tabindex="-1">A trip the SEPTA app can't plan</h2>
+					<p>Every Regional Rail line runs through Center City, so you can ride any line in and a different line back out. The SEPTA app plans one line at a time. My partner's commute needs two, both ways.</p>
+					<details class="more"><summary>More</summary>
+						<p>It's a small FastAPI service on the same Raspberry Pi as the theater. Home Assistant asks it for the latest every 30 seconds and shows the answer on a wall tablet in the kitchen. A scheduler inside the service sends the afternoon pushes through ntfy.</p>
+					</details>
+					<div class="step-foot"><button class="btn" type="button" data-next>Start →</button></div>
+				</section>
+
+				<section class="step" data-step="1" aria-labelledby="s1-title" hidden>
+					<p class="ch-num">Chapter 1 of 5</p>
+					<h2 id="s1-title" tabindex="-1">Two lines, one trip</h2>
+					<p>It plans each leg on its own, then pairs them with the earliest connection you can still make once live delays are counted. You choose where to change trains: try it under the screens.</p>
+					<p class="try">Try it</p>
+					<ol class="tasks">
+						<li><button class="btn task" type="button" data-task="late10">🚆 The first train runs 10 minutes late</button></li>
+						<li><button class="btn task" type="button" data-task="late14">🚆 Make it 14 minutes late</button></li>
+					</ol>
+					<p class="note" data-after="late10" hidden>Now it gets in 3 minutes after the connection is due out. That can still work, so the card warns instead of giving up.</p>
+					<p class="note" data-after="late14" hidden>Seven minutes too late. It moves to the next connection and shows the new arrival time.</p>
+					<details class="more"><summary>More</summary>
+						<p>If SEPTA lists a direct train, it uses that first. The transfer station is a setting, so it works for any two lines that meet in Center City. The display, the push and the follow-ups all read the same plan, so they never disagree. <a href="https://github.com/MFeret11/Good_Morning_Dashboard/blob/main/app/commute.py">See the code</a></p>
+					</details>
+					<div class="step-foot"><button class="btn ghost" type="button" data-back>← Back</button><button class="btn ghost" type="button" data-redo>↻ Start over</button><button class="btn" type="button" data-next>Next →</button></div>
+				</section>
+
+				<section class="step" data-step="2" aria-labelledby="s2-title" hidden>
+					<p class="ch-num">Chapter 2 of 5</p>
+					<h2 id="s2-title" tabindex="-1">Leave by, not departs</h2>
+					<p>The display shows when to walk out the door. Leave-by counts the walk to the station, and it moves when the train does.</p>
+					<p class="try">Try it</p>
+					<ol class="tasks">
+						<li><button class="btn task" type="button" data-task="late5">🚆 The first train runs 5 minutes late</button></li>
+						<li><button class="btn task" type="button" data-task="leaveNow">⏩ Skip ahead to 6:56</button></li>
+					</ol>
+					<p class="note" data-after="late5" hidden>Five more minutes at home. It still makes the same connection, so the arrival time doesn't change.</p>
+					<p class="note" data-after="leaveNow" hidden>Within three minutes of leave-by, the card turns red and says so.</p>
+					<details class="more"><summary>More</summary>
+						<p>The train's live position comes from SEPTA's TrainView feed, so a train sitting at the same stop for too long shows up as stalled before SEPTA's delay number catches up. The card only shows on weekdays during commute hours; the rest of the time it's the weather.</p>
+					</details>
+					<div class="step-foot"><button class="btn ghost" type="button" data-back>← Back</button><button class="btn ghost" type="button" data-redo>↻ Start over</button><button class="btn" type="button" data-next>Next →</button></div>
+				</section>
+
+				<section class="step" data-step="3" aria-labelledby="s3-title" hidden>
+					<p class="ch-num">Chapter 3 of 5</p>
+					<h2 id="s3-title" tabindex="-1">The ride home comes to you</h2>
+					<p>Nobody's in the kitchen at the end of the workday, so the afternoon answer goes to the phone: one push at 4:00 with the train home.</p>
+					<p class="try">Try it</p>
+					<ol class="tasks">
+						<li><button class="btn task" type="button" data-task="pmPush">🔔 Send the 4:00 push</button></li>
+					</ol>
+					<p class="note" data-after="pmPush" hidden>The train to catch, when it gets home, and rain on the way, before anyone has to go looking.</p>
+					<details class="more"><summary>More</summary>
+						<p>The evening trip is the morning one in reverse, on the other line first. <a href="https://github.com/MFeret11/Good_Morning_Dashboard/blob/main/app/afternoon_check.py">See the code</a></p>
+					</details>
+					<div class="step-foot"><button class="btn ghost" type="button" data-back>← Back</button><button class="btn ghost" type="button" data-redo>↻ Start over</button><button class="btn" type="button" data-next>Next →</button></div>
+				</section>
+
+				<section class="step" data-step="4" aria-labelledby="s4-title" hidden>
+					<p class="ch-num">Chapter 4 of 5</p>
+					<h2 id="s4-title" tabindex="-1">Only buzz when it's worse</h2>
+					<p>After the 4:00 push, it checks again every five minutes until the train leaves. It only pushes again if the news got worse.</p>
+					<p class="try">Try it</p>
+					<ol class="tasks">
+						<li><button class="btn task" type="button" data-task="slip3">⏱️ 4:20: the connecting train is 3 minutes late</button></li>
+						<li><button class="btn task" type="button" data-task="slip5">⏱️ 4:30: now it's 5 minutes late</button></li>
+						<li><button class="btn task" type="button" data-task="missed">🚨 4:45: the first train is 20 minutes late</button></li>
+					</ol>
+					<p class="note" data-after="slip3" hidden>Late is worse than "looks good", so it buzzes.</p>
+					<p class="note" data-after="slip5" hidden>Same news, two minutes more: the display updates, and the phone stays quiet.</p>
+					<p class="note" data-after="missed" hidden>Twenty minutes late misses the connection. That's worse, so it buzzes with the next connection and the new arrival time.</p>
+					<details class="more"><summary>More</summary>
+						<p>Every kind of push has a rank, from "looks good" up to cancelled and service alerts. A follow-up goes out when the rank goes up, or when the same kind of delay grows by another 10 minutes. Follow-ups stop when the train leaves the station. <a href="https://github.com/MFeret11/Good_Morning_Dashboard/blob/main/app/afternoon_check.py">See the code</a></p>
+					</details>
+					<div class="step-foot"><button class="btn ghost" type="button" data-back>← Back</button><button class="btn ghost" type="button" data-redo>↻ Start over</button><button class="btn" type="button" data-next>Next →</button></div>
+				</section>
+
+				<section class="step" data-step="5" aria-labelledby="s5-title" hidden>
+					<p class="ch-num">Chapter 5 of 5</p>
+					<h2 id="s5-title" tabindex="-1">Silence is never "all good"</h2>
+					<p>A push that never arrives looks exactly like a push saying everything's fine. So when something breaks, it still says something.</p>
+					<p class="try">Try it</p>
+					<ol class="tasks">
+						<li><button class="btn task" type="button" data-task="stale">🐢 SEPTA doesn't answer at 4:00</button></li>
+						<li><button class="btn task" type="button" data-task="crash">💥 Next day, the check itself crashes</button></li>
+					</ol>
+					<p class="note" data-after="stale" hidden>It uses the last good answer from a few minutes ago, and says so.</p>
+					<p class="note" data-after="crash" hidden>Even a crash ends in a push: "Check SEPTA manually."</p>
+					<details class="more"><summary>More</summary>
+						<p>SEPTA, the live train positions, the service alerts and the weather each keep their last good answer. If a check fails, the old answer is used and flagged, on the display and in the push. And SEPTA's delay text is free-form ("On time", "5 min", "Suspended"), so text it can't read is never treated as on time. <a href="projects.html#commute">The full story</a></p>
+					</details>
+					<div class="step-foot"><button class="btn ghost" type="button" data-back>← Back</button><button class="btn ghost" type="button" data-redo>↻ Start over</button><button class="btn" type="button" data-next>What I learned →</button></div>
+				</section>
+
+				<section class="step" data-step="6" aria-labelledby="s6-title" hidden>
+					<p class="ch-num">Summary</p>
+					<h2 id="s6-title" tabindex="-1">What I learned</h2>
+					<dl class="connect">
+						<dt>Connections</dt><dd>Pairing two lines is the hard part: the right connection depends on the schedule, the station and live delays.</dd>
+						<dt>Real APIs</dt><dd>SEPTA's has quirks you only find by using it: the result count is <code>req3</code>, and the parameter that looks right, <code>top</code>, is ignored.</dd>
+						<dt>Glanceable</dt><dd>One line that answers "when do I leave?" beats a screen of train times.</dd>
+						<dt>Quiet</dt><dd>A push that buzzes for every minute gets ignored, so each one has to be worth it.</dd>
+						<dt>Fail loud</dt><dd>When it can't tell, it says so instead of staying quiet.</dd>
+						<dt>Tests</dt><dd>Over 100 tests run on every commit, including one for each bug that made it to a real commute.</dd>
+					</dl>
+					<p>Most mornings nobody thinks about it, and that's the point. <a href="https://github.com/MFeret11/Good_Morning_Dashboard">The code is on GitHub</a>.</p>
+					<div class="step-foot"><button class="btn ghost" type="button" data-back>← Back</button><a class="btn next-link" href="projects.html#commute">More stories →</a></div>
+				</section>
+			</div>
+		</div>
+
+		<section class="section story">
+			<p class="fine-print">
+				The lines and stations are real SEPTA ones, but not the ones my partner rides. Train numbers and times are made up.
+				The cards, pushes and connection rules follow the real code in <a href="https://github.com/MFeret11/Good_Morning_Dashboard">Good_Morning_Dashboard</a>.
+			</p>
+		</section>
+	</main>
+
+	<footer class="site-footer">
+		<div class="wrap">
+			<p>admin [at] mferet [dot] com · <a href="Matthew_Feret_Resume.pdf">Résumé</a> · <a href="https://github.com/MFeret11">GitHub</a> · <a href="https://www.linkedin.com/in/mferet/">LinkedIn</a> · <a href="https://soundcloud.com/mferet">SoundCloud</a></p>
+			<p class="fine">Hand-written HTML and CSS. The old version of this site used a UI framework until its CDN disappeared, so this one doesn't.</p>
+		</div>
+	</footer>
+</body>
+</html>
