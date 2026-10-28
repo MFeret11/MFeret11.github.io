@@ -16,7 +16,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
-	<link rel="stylesheet" href="styles.css?v=20261028">
+	<link rel="stylesheet" href="styles.css?v=20261028b">
 	<script>
 		(function () {
 			var t;
@@ -25,8 +25,8 @@
 			document.documentElement.dataset.theme = t;
 		})();
 	</script>
-	<script defer src="site.js?v=20261028"></script>
-	<script defer src="commute.js?v=20261028"></script>
+	<script defer src="site.js?v=20261028b"></script>
+	<script defer src="commute.js?v=20261028b"></script>
 </head>
 <body class="commute-page">
 	<a class="skip" href="#main">Skip to content</a>
@@ -123,7 +123,7 @@
 					<p class="note" data-after="late10" hidden>Now it gets in 3 minutes after the connection is due out. That can still work, so the card warns instead of giving up.</p>
 					<p class="note" data-after="late14" hidden>Seven minutes too late. It moves to the next connection and shows the new arrival time.</p>
 					<details class="more"><summary>More</summary>
-						<p>If SEPTA lists a direct train, it uses that first. The transfer station is a setting, so it works for any two lines that meet in Center City. The display, the push and the follow-ups all read the same plan, so they never disagree. <a href="https://github.com/MFeret11/Good_Morning_Dashboard/blob/main/app/commute.py">See the code</a></p>
+						<p>If SEPTA lists a direct train, it uses that first. The transfer station is a setting, so it works for any two lines that meet in Center City. If no connection works there, it tries the other Center City stations and says where to change instead. The display, the push and the follow-ups all read the same plan, so they never disagree. <a href="https://github.com/MFeret11/Good_Morning_Dashboard/blob/main/app/commute.py">See the code</a></p>
 					</details>
 					<div class="step-foot"><button class="btn ghost" type="button" data-back>← Back</button><button class="btn ghost" type="button" data-redo>↻ Start over</button><button class="btn" type="button" data-next>Next →</button></div>
 				</section>
@@ -153,9 +153,9 @@
 					<ol class="tasks">
 						<li><button class="btn task" type="button" data-task="pmPush">🔔 Send the 4:00 push</button></li>
 					</ol>
-					<p class="note" data-after="pmPush" hidden>The train to catch, when it gets home, and rain on the way, before anyone has to go looking.</p>
+					<p class="note" data-after="pmPush" hidden>The train to catch, when it gets home, the next trains that still connect, and rain on the way, before anyone has to go looking.</p>
 					<details class="more"><summary>More</summary>
-						<p>The evening trip is the morning one in reverse, on the other line first. <a href="https://github.com/MFeret11/Good_Morning_Dashboard/blob/main/app/afternoon_check.py">See the code</a></p>
+						<p>The evening trip is the morning one in reverse, on the other line first. Without GPS it can't know which train my partner actually makes it to, so the push lists up to two later trains too, but only ones whose connection clearly works. <a href="https://github.com/MFeret11/Good_Morning_Dashboard/blob/main/app/afternoon_check.py">See the code</a></p>
 					</details>
 					<div class="step-foot"><button class="btn ghost" type="button" data-back>← Back</button><button class="btn ghost" type="button" data-redo>↻ Start over</button><button class="btn" type="button" data-next>Next →</button></div>
 				</section>
@@ -204,8 +204,9 @@
 						<dt>Real APIs</dt><dd>SEPTA's has quirks you only find by using it: the result count is <code>req3</code>, and the parameter that looks right, <code>top</code>, is ignored.</dd>
 						<dt>Glanceable</dt><dd>One line that answers "when do I leave?" beats a screen of train times.</dd>
 						<dt>Quiet</dt><dd>A push that buzzes for every minute gets ignored, so each one has to be worth it.</dd>
+						<dt>Polite</dt><dd>Answers under a minute old are reused, and nothing calls SEPTA outside commute hours: about 1,500 calls a weekday instead of 4,300.</dd>
 						<dt>Fail loud</dt><dd>When it can't tell, it says so instead of staying quiet.</dd>
-						<dt>Tests</dt><dd>Over 100 tests run on every commit, including one for each bug that made it to a real commute.</dd>
+						<dt>Tests</dt><dd>Over 140 tests run on every commit, including one for each bug that made it to a real commute.</dd>
 					</dl>
 					<p>Most mornings nobody thinks about it, and that's the point. <a href="https://github.com/MFeret11/Good_Morning_Dashboard">The code is on GitHub</a>.</p>
 					<div class="step-foot"><button class="btn ghost" type="button" data-back>← Back</button><a class="btn next-link" href="projects.html#commute">More stories →</a></div>

@@ -16,7 +16,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
-	<link rel="stylesheet" href="styles.css?v=20261028">
+	<link rel="stylesheet" href="styles.css?v=20261028b">
 	<script>
 		(function () {
 			var t;
@@ -25,7 +25,7 @@
 			document.documentElement.dataset.theme = t;
 		})();
 	</script>
-	<script defer src="site.js?v=20261028"></script>
+	<script defer src="site.js?v=20261028b"></script>
 </head>
 <body>
 	<a class="skip" href="#main">Skip to content</a>
@@ -63,7 +63,7 @@
 				<p class="eyebrow">Project</p>
 				<h2>Good Morning Dashboard</h2>
 				<ul class="tags"><li>Python</li><li>FastAPI</li><li>APScheduler</li><li>Docker</li><li>pytest</li></ul>
-				<p>A FastAPI service that says when to leave for the train. It plans SEPTA Regional Rail trips with transfers, tracks live delays, and sends a weekday push with the best train home, then keeps following both legs until the connecting train leaves, pushing again only if things get worse.</p>
+				<p>A FastAPI service that says when to leave for the train. It plans SEPTA Regional Rail trips with transfers, tracks live delays, and sends a weekday push with the train home and the next ones that still connect. It keeps following both legs until the connecting train leaves, pushing again only if things get worse.</p>
 				<div class="actions"><a class="btn" href="https://github.com/MFeret11/Good_Morning_Dashboard">GitHub</a><a class="btn" href="commute.html">Try the demo</a></div>
 			</div>
 			<div class="card">
@@ -144,7 +144,18 @@
 				</p>
 				<p>
 					Transfers were the other fun part. When there's no direct train, it plans each leg separately and pairs them, picking the earliest
-					connection you can still make once live delays are counted.
+					connection you can still make once live delays are counted. If no connection works at the usual station, it tries the other
+					Center City stations and says where to change instead.
+				</p>
+				<p>
+					The newest lesson came from a gap in that rule. The follow-up pushes stopped as soon as the first train left, which is exactly when the
+					connection becomes the risky part. SEPTA's trip planner stops listing a train once it leaves your station, so now the follow-ups read
+					its live delay from SEPTA's train positions instead and keep checking the connection until it leaves. Without GPS it can't know which
+					train my partner actually makes it to, so the push also lists the next trains whose connection clearly works.
+				</p>
+				<p>
+					I also wanted it to be a polite API client. Home Assistant asks for an update every 30 seconds, so answers under a minute old are now reused,
+					and nothing calls SEPTA outside commute hours. That took it from about 4,300 calls a weekday to about 1,500.
 				</p>
 			</article>
 

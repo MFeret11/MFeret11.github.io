@@ -47,7 +47,9 @@
       leg2: [
         { train: "2560", line: "Warminster", dep: hm(17, 50), arr: hm(18, 31), track: "3" },
         { train: "2564", line: "Warminster", dep: hm(18, 20), arr: hm(19, 1), track: "3" }
-      ]
+      ],
+      // Later first trains and when they get home, each with a connection that clearly works.
+      later: [{ dep: hm(17, 42), home: hm(19, 1) }, { dep: hm(18, 12), home: hm(19, 31) }]
     }
   };
 
@@ -141,12 +143,18 @@
         body: "Train " + p.T.leg1.train + " reaches " + p.station + " too late for the planned connection. Next connection is train " +
           p.conn.train + " at " + fmt(p.dep2) + ", arriving " + fmt(p.arr2) + " (planned " + fmt(p.planned) + ")."
       };
-    } else if (!p.d1 && !p.total) {
+    } else if (p.d1 && !p.total) {
+      n = { icon: "✅", title: "Late but still connecting", body: head + late(p.d1) + " but still makes the connection, arriving " + fmt(p.arr2) + " as planned." };
+    } else if (!p.total) {
       n = { icon: "✅", title: "Commute looks good", body: head + ", on time, arriving " + fmt(p.arr2) + "." };
     } else {
       n = { icon: "🟡", title: "Minor delay today", body: head + late(p.d1) + ", arriving " + fmt(p.arr2) + late(p.total) + "." };
     }
     var parts = [n.body];
+    // The next trains whose connection clearly works (_other_trains); the same at every Center City station.
+    if (p.T.later) parts.push("If you take a later train: " + p.T.later.map(function (o) {
+      return fmt(o.dep) + " → home " + fmt(o.home);
+    }).join(" · "));
     if (opts.stale) parts.push(STALE_NOTE);
     if (opts.weather) parts.push(RAIN);
     return { icon: n.icon, level: n.level, title: prefix + n.title, body: parts.join("\n\n") };
