@@ -163,7 +163,7 @@
 				<section class="step" data-step="4" aria-labelledby="s4-title" hidden>
 					<p class="ch-num">Chapter 4 of 5</p>
 					<h2 id="s4-title" tabindex="-1">Only buzz when it's worse</h2>
-					<p>After the 4:00 push, it checks again every five minutes until the train leaves. It only pushes again if the news got worse.</p>
+					<p>After the 4:00 push, it checks again every five minutes, even after my partner boards, until the connecting train leaves. It only pushes again if the news got worse.</p>
 					<p class="try">Try it</p>
 					<ol class="tasks">
 						<li><button class="btn task" type="button" data-task="slip3">⏱️ 4:20: the connecting train is 3 minutes late</button></li>
@@ -174,7 +174,7 @@
 					<p class="note" data-after="slip5" hidden>Same news, two minutes more: the display updates, and the phone stays quiet.</p>
 					<p class="note" data-after="missed" hidden>Twenty minutes late misses the connection. That's worse, so it buzzes with the next connection and the new arrival time.</p>
 					<details class="more"><summary>More</summary>
-						<p>Every kind of push has a rank, from "looks good" up to cancelled and service alerts. A follow-up goes out when the rank goes up, or when the same kind of delay grows by another 10 minutes. Follow-ups stop when the train leaves the station. <a href="https://github.com/MFeret11/Good_Morning_Dashboard/blob/main/app/afternoon_check.py">See the code</a></p>
+						<p>Every kind of push has a rank, from "looks good" up to cancelled and service alerts. A follow-up goes out when the rank goes up, or when the same kind of delay grows by another 10 minutes. Once the first train leaves, SEPTA's trip planner stops listing it, so the follow-ups read its live delay from SEPTA's train positions instead. A late first train that still makes its connection doesn't buzz at all. <a href="https://github.com/MFeret11/Good_Morning_Dashboard/blob/main/app/afternoon_check.py">See the code</a></p>
 					</details>
 					<div class="step-foot"><button class="btn ghost" type="button" data-back>← Back</button><button class="btn ghost" type="button" data-redo>↻ Start over</button><button class="btn" type="button" data-next>Next →</button></div>
 				</section>
