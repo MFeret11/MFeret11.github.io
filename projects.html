@@ -16,7 +16,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
-	<link rel="stylesheet" href="styles.css?v=20261028b">
+	<link rel="stylesheet" href="styles.css?v=20261030">
 	<script>
 		(function () {
 			var t;
@@ -25,7 +25,8 @@
 			document.documentElement.dataset.theme = t;
 		})();
 	</script>
-	<script defer src="site.js?v=20261028b"></script>
+	<script defer src="site.js?v=20261030"></script>
+	<link rel="alternate" type="application/atom+xml" title="Matt Feret · Stories" href="feed.xml">
 </head>
 <body>
 	<a class="skip" href="#main">Skip to content</a>
@@ -77,106 +78,45 @@
 
 		<section class="section">
 			<article class="story card" id="projector">
-				<p class="meta">home-assistant-config · safety interlocks</p>
-				<h2>The projector you must not unplug</h2>
-				<p>
-					My projector's lamp needs its fans after you switch it off, and cutting power during the cooldown shortens the lamp's life.
-					The projector sits on a smart plug that measures current, so the automation can tell "lamp on" from "fans only" from "actually off".
-				</p>
-				<p>
-					The rule: when a session ends, wait 90 seconds no matter what. Then check the current every 10 seconds, up to 25 times, and open
-					the relay only after <strong>two readings in a row</strong> at or below 0.06 A. One low reading could be a glitch; two in a row is the fans stopping.
-				</p>
-				<p class="callout">
-					My favorite part is what happens when it can't tell. If the sensor goes unavailable, the code doesn't guess: it leaves the power on.
-					A projector plugged in overnight costs a few cents. One cut mid-cooldown costs a lamp. When you can't verify, fail toward the cheap mistake.
-				</p>
-				<p>It's one of five hardware interlocks in the repo, all covered by tests. <a href="basement.html#step-5">Try to break it in the simulator.</a></p>
+				<p class="meta">home-assistant-config · safety interlocks · <time datetime="2026-10-23">Oct 23, 2026</time></p>
+				<h2><a href="stories/projector-interlock.html">The projector you must not unplug</a></h2>
+				<p>Why my projector now goes to sleep instead of losing power, and the guard that catches it waking up alone.</p>
+				<p><a href="stories/projector-interlock.html">Read the story →</a></p>
+			</article>
+
+			<article class="story card" id="weather-music">
+				<p class="meta">WeatherTunes · compose.js + mapping.js · <time datetime="2026-10-31">Oct 31, 2026</time></p>
+				<h2><a href="stories/forecast-to-song.html">How a forecast becomes a song</a></h2>
+				<p>How WeatherTunes maps an hourly forecast onto scale, key, tempo and instruments, and keeps it all in tune.</p>
+				<p><a href="stories/forecast-to-song.html">Read the story →</a></p>
 			</article>
 
 			<article class="story card" id="weathertunes">
-				<p class="meta">WeatherTunes · audio</p>
-				<h2>The song my phone couldn't play</h2>
-				<p>
-					WeatherTunes sounded fine on my laptop. On my phone it crackled and stuttered. Synthesizers in the browser have to make every
-					sample just before it plays, and when the device falls behind, you hear it.
-				</p>
-				<p>
-					My first two fixes went after symptoms. Bigger audio buffers helped a little. Then I built a "32-bit mode" that plays the same song on
-					simpler, console-style instruments, like an old game sound chip. It rendered 29 to 41% faster, and the phone still crackled.
-					Profiling showed why: a song is hundreds of audio nodes, and just running that graph live was the cost, not any one instrument.
-				</p>
-				<p class="callout">
-					So nothing plays live anymore. The song renders offline as fast as the device allows, and the finished audio streams in blocks to a
-					plain player. Play waits a moment until the render will stay ahead, so a slow phone waits a little longer instead of crackling.
-					Muting a part mid-song renders the rest again and crossfades over.
-				</p>
-				<p>It plays cleanly on my phone now. The fix wasn't a faster instrument; it was not running the instruments live at all. <a href="https://mferet.com/WeatherTunes/">Try it on yours.</a></p>
+				<p class="meta">WeatherTunes · audio · <time datetime="2026-10-27">Oct 27, 2026</time></p>
+				<h2><a href="stories/phone-crackle.html">The song my phone couldn't play</a></h2>
+				<p>WeatherTunes crackled on my phone. Two fixes went after symptoms; the third stopped running the synths live at all.</p>
+				<p><a href="stories/phone-crackle.html">Read the story →</a></p>
 			</article>
 
 			<article class="story card" id="zigbee">
-				<p class="meta">home-assistant-config · sports.py</p>
-				<h2>Touchdown flashes vs. the Zigbee mesh</h2>
-				<p>
-					When the Eagles score, the nine Zigbee bulbs in the basement and the three on the stairs celebrate. The obvious version flashes green and white. The trouble is that
-					every color change is a command to every bulb, and a fast chant of them can congest a Zigbee mesh: bulbs drop commands, fall out of sync,
-					and the room looks like a broken string of Christmas lights.
-				</p>
-				<p>
-					So the color never changes mid-flash. The bulbs hold solid Kelly green, <code>rgb(0, 170, 35)</code>, and only the brightness moves, between
-					100% and 15%. A touchdown gets six stadium-cadence surges, one for each letter of E-A-G-L-E-S, a short breath, then two big ones for the final "EA-GLES!" It ends holding solid green
-					instead of restoring the old scene, because the game's still on.
-				</p>
-				
+				<p class="meta">home-assistant-config · sports.py · <time datetime="2026-10-23">Oct 23, 2026</time></p>
+				<h2><a href="stories/touchdown-flashes.html">Touchdown flashes vs. the Zigbee mesh</a></h2>
+				<p>Celebrating an Eagles touchdown on twelve Zigbee bulbs without flooding the mesh: hold the color, move only the brightness.</p>
+				<p><a href="stories/touchdown-flashes.html">Read the story →</a></p>
 			</article>
 
 			<article class="story card" id="commute">
-				<p class="meta">Good_Morning_Dashboard · FastAPI</p>
-				<h2>A missing notification reads as "all good"</h2>
-				<p>
-					Good Morning Dashboard tells my household when to leave for the train. SEPTA's API has character. The parameter for how many results you
-					want is <code>req3</code>; the one that looks right, <code>top</code>, is silently ignored. Delay text is free-form ("On time", "5 min",
-					"Cancelled", "Suspended", or something else entirely), and the code never treats text it can't parse as on time.
-				</p>
-				<p class="callout">
-					The design rule I'm proudest of: a push that doesn't arrive looks exactly like a push saying everything's fine. So every upstream has a
-					cache, stale data is served but flagged in the message, and if the check crashes outright, it still sends a "check failed" push. Silence is never the answer.
-				</p>
-				<p>
-					Transfers were the other fun part. When there's no direct train, it plans each leg separately and pairs them, picking the earliest
-					connection you can still make once live delays are counted. If no connection works at the usual station, it tries the other
-					Center City stations and says where to change instead.
-				</p>
-				<p>
-					The newest lesson came from a gap in that rule. The follow-up pushes stopped as soon as the first train left, which is exactly when the
-					connection becomes the risky part. SEPTA's trip planner stops listing a train once it leaves your station, so now the follow-ups read
-					its live delay from SEPTA's train positions instead and keep checking the connection until it leaves. Without GPS it can't know which
-					train my partner actually makes it to, so the push also lists the next trains whose connection clearly works.
-				</p>
-				<p>
-					I also wanted it to be a polite API client. Home Assistant asks for an update every 30 seconds, so answers under a minute old are now reused,
-					and nothing calls SEPTA outside commute hours. That took it from about 4,300 calls a weekday to about 1,500.
-				</p>
+				<p class="meta">Good_Morning_Dashboard · FastAPI · <time datetime="2026-10-23">Oct 23, 2026</time></p>
+				<h2><a href="stories/missing-notification.html">A missing notification reads as "all good"</a></h2>
+				<p>SEPTA's API quirks, planning a two-line trip, and the rule that silence is never the answer.</p>
+				<p><a href="stories/missing-notification.html">Read the story →</a></p>
 			</article>
 
 			<article class="story card" id="stairs">
-				<p class="meta">home-assistant-config · basement.py</p>
-				<h2>My slowest trip up the stairs took 18.76 seconds</h2>
-				<p>
-					The basement lights know which way you're going on the stairs. The door opens, then the motion sensor at the bottom trips within
-					18 seconds: someone's coming down. Motion at the bottom, then the door: someone's leaving, so the lights can turn off behind them.
-				</p>
-				<p>
-					The "leaving" window was 18 seconds too, until the sensor history showed a real, slow, deliberate climb of 18.76 seconds that didn't
-					count. The window is 25 seconds now. Leaving also gets a 20-second grace period that any new motion cancels, so nobody gets blacked out
-					while they're still downstairs. And if someone leaves the door open, closing it soon after motion counts as leaving too.
-				</p>
-				<p>
-					That left one gap: someone sitting still. The stairs sensor can't see the couch, so if one person left while another stayed to watch,
-					the lights went out on them. An mmWave presence sensor now watches the room, and a walk-out is cancelled while it still sees someone.
-					If that sensor goes offline, it counts as empty, so the house falls back to the door and stairs logic, and a broken sensor can't keep the lights on.
-				</p>
-				<p>Calibrating against real sensor data beats guessing, even when the test subject is me.</p>
+				<p class="meta">home-assistant-config · basement.py · <time datetime="2026-10-23">Oct 23, 2026</time></p>
+				<h2><a href="stories/slow-stairs.html">My slowest trip up the stairs took 18.76 seconds</a></h2>
+				<p>Tuning which-way-are-you-going lighting on the basement stairs against real sensor history.</p>
+				<p><a href="stories/slow-stairs.html">Read the story →</a></p>
 			</article>
 		</section>
 

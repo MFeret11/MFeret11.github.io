@@ -16,7 +16,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
-	<link rel="stylesheet" href="styles.css?v=20261028b">
+	<link rel="stylesheet" href="styles.css?v=20261030">
 	<script>
 		(function () {
 			var t;
@@ -25,8 +25,8 @@
 			document.documentElement.dataset.theme = t;
 		})();
 	</script>
-	<script defer src="site.js?v=20261028b"></script>
-	<script defer src="basement.js?v=20261028b"></script>
+	<script defer src="site.js?v=20261030"></script>
+	<script defer src="basement.js?v=20261030"></script>
 </head>
 <body class="basement-page">
 	<a class="skip" href="#main">Skip to content</a>
@@ -280,7 +280,7 @@
 					<p class="note" data-after="tryDoor" hidden>Nobody's there, and the lights are still on.</p>
 					<p class="note" data-after="addMotion" hidden>Door, then motion: coming down. Motion, then door: leaving, so the lights go off.</p>
 					<details class="more"><summary>More</summary>
-						<p>The sensors are a Third Reality Zigbee door sensor and motion sensor. "Leaving" means the door opens within 25 seconds of motion at the bottom. It was 18 seconds until the sensor history showed a slow climb that took 18.76. <a href="projects.html#stairs">The full story</a> · <a href="https://github.com/MFeret11/home-assistant-config/blob/8cab0de/pyscript/basement.py#L422">See the code</a></p>
+						<p>The sensors are a Third Reality Zigbee door sensor and motion sensor. "Leaving" means the door opens within 25 seconds of motion at the bottom. It was 18 seconds until the sensor history showed a slow climb that took 18.76. <a href="stories/slow-stairs.html">The full story</a> · <a href="https://github.com/MFeret11/home-assistant-config/blob/8cab0de/pyscript/basement.py#L422">See the code</a></p>
 					</details>
 					<div class="step-foot"><button class="btn ghost" type="button" data-back>← Back</button><button class="btn ghost" type="button" data-redo>↻ Start over</button><button class="btn" type="button" data-next>Next →</button></div>
 				</section>
@@ -328,7 +328,7 @@
 						<button class="btn task" type="button" data-task="sports" aria-pressed="false">🏈 Eagles game</button>
 					</div>
 					<dl class="readout">
-						<dt>Projector</dt><dd id="rd-proj">off</dd>
+						<dt>Projector</dt><dd id="rd-proj">standby</dd>
 						<dt>Receiver</dt><dd id="rd-rx">off</dd>
 						<dt>App</dt><dd id="rd-app">none</dd>
 					</dl>
@@ -341,30 +341,31 @@
 				<section class="step" data-step="5" aria-labelledby="s5-title" hidden>
 					<p class="ch-num">Chapter 5 of 6</p>
 					<h2 id="s5-title" tabindex="-1">Music without the projector</h2>
-					<p>Music doesn't need the projector. But cutting its power while the lamp cools down can ruin it.</p>
+					<p>Music doesn't need the projector. But cutting its power while the lamp is hot can ruin it.</p>
 					<p class="try">Try it</p>
 					<ol class="tasks">
 						<li><button class="btn task" type="button" data-task="movieToMusic">🎬 Start a movie, then switch to music</button></li>
 						<li><button class="btn task" type="button" data-task="end">⏻ End the session</button></li>
-						<li><button class="btn task" type="button" data-task="unplug">🔌 Again, with the current sensor unplugged</button></li>
+						<li><button class="btn task" type="button" data-task="stray">📺 The TV box wakes up with nobody watching</button></li>
 					</ol>
 					<div class="amps">
 						<div class="amps-head"><span>Projector current</span><span class="mono" id="st-amps">0.00 A</span></div>
-						<svg viewBox="0 0 260 96" id="amps-chart" role="img" aria-label="Projector current during the cooldown">
+						<svg viewBox="0 0 260 96" id="amps-chart" role="img" aria-label="Projector current">
 							<rect id="amps-cool" x="0" y="0" width="0" height="84" class="amps-cool"/>
-							<text id="amps-cool-label" x="4" y="12" class="amps-note" opacity="0">90 s cooldown</text>
+							<text id="amps-cool-label" x="4" y="80" class="amps-note" opacity="0">2 min hold</text>
 							<line id="amps-thresh" x1="0" x2="260" class="amps-thresh"/>
-							<text id="amps-thresh-label" x="256" text-anchor="end" class="amps-note">0.06 A</text>
+							<text id="amps-thresh-label" x="256" text-anchor="end" class="amps-note">lamp lit</text>
 							<line x1="0" y1="84" x2="260" y2="84" class="amps-axis"/>
 							<polyline id="amps-line" points="" class="amps-line"/>
 							<g id="amps-dots"></g>
-							<text id="amps-empty" x="130" y="50" text-anchor="middle" class="amps-note">End the session to watch the cooldown</text>
+							<text id="amps-empty" x="130" y="50" text-anchor="middle" class="amps-note">End the session to watch it cool down</text>
 						</svg>
 					</div>
 					<p class="note" data-after="movieToMusic" hidden>The lamp is warm, so the projector stays on.</p>
-					<p class="note" data-after="unplug" hidden>No reading, no cut. A plug left on costs cents. A cut mid-cooldown costs a lamp.</p>
+					<p class="note" data-after="end" hidden>Its power stays on. Standby draws about 0.01 A, and the remote's power button can wake it again.</p>
+					<p class="note" data-after="stray" hidden>Putting it back to sleep is safe. Cutting its power isn't, so the guard never does.</p>
 					<details class="more"><summary>More</summary>
-						<p>The projector plugs into a Third Reality Zigbee smart plug that measures current, so Home Assistant can tell "lamp on" from "fans only." Music mode cuts the projector's power before anything turns on, so HDMI-CEC can't wake it, unless the lamp is still warm. At the end, Home Assistant waits 90 seconds, then cuts power only after two near-zero readings in a row. <a href="projects.html#projector">The full story</a> · <a href="https://github.com/MFeret11/home-assistant-config/blob/8cab0de/pyscript/theater.py#L1815">See the code</a></p>
+						<p>The projector plugs into a Third Reality Zigbee smart plug that measures current, so Home Assistant can tell "lamp on" from "fans only." When a session ends, the projector goes to standby over HDMI-CEC and its own fans cool the lamp, with the power left on. Music cuts the power only when the projector is already cold, so HDMI-CEC can't light the lamp for a song. If the lamp stays lit for 2 minutes while nobody's using the theater, a guard puts it back to sleep and sends a notification, without ever cutting the power. <a href="stories/projector-interlock.html">The full story</a> · <a href="https://github.com/MFeret11/home-assistant-config/blob/233242e/pyscript/interlocks.py#L184">See the code</a></p>
 					</details>
 					<div class="step-foot"><button class="btn ghost" type="button" data-back>← Back</button><button class="btn ghost" type="button" data-redo>↻ Start over</button><button class="btn" type="button" data-next>Next →</button></div>
 				</section>

@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var SPEED = 10; // long waits (cooldowns, timers) run this many times faster
+  var SPEED = 10; // long waits (fans spinning down, timers) run this many times faster
   var WARM = "#ffcf96"; // Adaptive Lighting's evening warm white
   var CANDLE = "#ff9a4a"; // 2000 K "stealth" stair light
   var GREEN = "#00aa23"; // Eagles Kelly green, rgb(0, 170, 35)
@@ -19,6 +19,7 @@
   var REPO = "https://github.com/MFeret11/home-assistant-config/blob/";
   var OLD = "c1f5e84ce9be0d1441bb63ce18d28d74e4ba2d4a"; // before the mmWave sensor
   var NEW = "8cab0de"; // mmWave presence added to basement.py
+  var STANDBY = "233242e"; // projector stays in standby; stray-wake guard in interlocks.py
   var RULES = {
     doorOnly: ["First version: door only", "The door opened, so the lights came on. A door can't tell someone arriving from someone leaving, so nothing ever turns them off.", null],
     empty: ["Empty basement", "Nobody's downstairs, so every light is off.", "basement.py", 597],
@@ -36,7 +37,8 @@
     showtime: ["Showtime", "Something is playing: full blackout. Only the bias lights behind the screen stay on.", "basement.py", 686],
     intermission: ["Intermission", "Paused: the dimmer comes up to a 3% glow (after 4 s in the real room). The lounge and bar stay off.", "basement.py", 692],
     music: ["Music", "Music stays fully dark, playing or paused. No glow state, by design.", "basement.py", 667],
-    warmMusic: ["Music, projector still warm", "The projector is already on, so music leaves it running. Cutting its power now would stop the fans cooling the lamp. It shuts down properly when the session ends.", "theater.py", 2005, NEW],
+    warmMusic: ["Music, projector still warm", "The projector is already on, so music leaves it running. Cutting its power now would stop the fans cooling the lamp. It goes to standby when the session ends.", "theater.py", 1956, STANDBY],
+    coldMusic: ["Music, projector cold", "The projector is cold, so its power is cut before the receiver wakes. Otherwise HDMI-CEC could light the lamp just to play a song.", "theater.py", 1945, STANDBY],
     sports: ["Game day", "An Eagles game switches on Social mode and paints the room and stairs solid Kelly green at 100%.", "basement.py", 641],
     social: ["Social mode", "In Social mode the theater never touches the lights, and nothing times out. Good for cards night during a movie.", "basement.py", 661],
     socialStairs: ["Social stairs", "Social mode: opening the door turns the stairs on in the current palette and leaves them on. No timeouts.", "basement.py", 441],
@@ -45,9 +47,8 @@
     sessionEnd: ["Ordered shutdown", "House lights up first, then the TV box, receiver and Batocera shut down in order.", "theater.py", 2211],
     curtain: ["Curtain call", "House lights rise to 20% warm white for 10 minutes so people can find their way out. Walking out turns everything off 1.5 s after the door closes.", "basement.py", 708],
     curtainOut: ["Curtain call walk-out", "Someone walked out during the curtain call: 1.5 s later the whole basement turns off.", "basement.py", 543],
-    cooldown: ["Projector cooldown", "The lamp is off but its fans need power. Wait 90 s, then poll the current every 10 s and cut mains only after two readings in a row at or below 0.06 A.", "theater.py", 1855],
-    cooldownCancel: ["Cooldown cancelled", "A new show started, so the cooldown is cancelled and the projector keeps its power.", "theater.py", 1950],
-    sensorFail: ["Fail safe", "The current sensor isn't answering. Without a reading, the projector's power stays on: a plug left on costs cents, a cut mid-cooldown costs a lamp.", "theater.py", 1878],
+    standby: ["Standby, not off", "Session end puts the projector to sleep over HDMI-CEC. Its own fans cool the lamp, its power stays on, and the remote's power button can wake it again.", "theater.py", 2150, STANDBY],
+    strayWake: ["Stray wake guard", "The lamp has been lit for 2 minutes with nobody using the theater. Send CEC sleep through the TV box, check again a minute later, and send a notification. It never cuts the power.", "interlocks.py", 184, STANDBY],
     batocera: ["Batocera power", "Batocera gets a clean shutdown command; its relay opens only after it draws under 0.05 A for 12 s straight.", "theater.py", 1828]
   };
 
@@ -57,8 +58,7 @@
     music: { label: "Music", input: "HDMI1", dsp: "7ch Stereo", app: "Spotify", spill: "#1db954" },
     sports: { label: "Eagles game", input: "HDMI1", dsp: "Sports", app: "the HDHomeRun app", spill: "#58c25e" }
   };
-  var OPT = { tuners: false, sensor: false }; // "try to break it" switches
-  var ACTIVE = { movie: 1, game: 1, sports: 1 }; // modes that cancel a projector cooldown
+  var OPT = { tuners: false }; // "try to break it" switches
 
   var $ = function (id) {
     return document.getElementById(id);
@@ -85,8 +85,8 @@
       palette: false,
       sportsGreen: false,
       curtain: false,
-      projector: "off", // off | on | cooling | polling | fans
-      amps: 0,
+      projector: "standby", // off (power cut) | standby | on | cooling (lamp off, fans running)
+      amps: 0.01, // standby draw
       rx: null,
       batocera: false,
       room: [0, 0, 0, 0, 0, 0, 0, 0, 0].map(function () {
@@ -682,7 +682,7 @@
     $("dark").setAttribute("opacity", darkness.toFixed(3));
     $("bias").setAttribute("opacity", S.bias ? "0.6" : "0");
     $("beam").setAttribute("opacity", screenOn ? "0.12" : "0");
-    $("lens").setAttribute("fill", S.projector === "on" ? "#fff8e1" : S.projector === "off" ? "#444" : "#ff8a65");
+    $("lens").setAttribute("fill", S.projector === "on" ? "#fff8e1" : S.projector === "cooling" ? "#ff8a65" : "#444");
 
     var spillColor = screenOn ? (S.flashing ? "#2fd36b" : MODES[S.mode].spill) : null;
     if (spillColor && spillColor !== lastSpill) {
@@ -736,7 +736,7 @@
     setText("st-door", S.door ? "open" : "closed");
     setText("st-motion", S.motion ? "detected" : "clear");
     setText("st-rx", S.rx ? S.rx.input + " · " + S.rx.dsp : "off");
-    setText("st-proj", { off: "off", on: "on", cooling: "cooling down", polling: "checking current", fans: "ON (fans protected)" }[S.projector]);
+    setText("st-proj", PROJ_TEXT[S.projector]);
     setText("st-amps", S.amps === null ? "unavailable" : S.amps.toFixed(2) + " A");
     setText("st-bias", S.bias ? "on" : "off");
 
@@ -745,7 +745,9 @@
   }
 
   // ---------- projector current chart ----------
-  var CH = { w: 260, h: 84, max: 340 }; // 90 s cooldown + 25 polls x 10 s
+  var PROJ_TEXT = { off: "off (power cut)", standby: "standby", on: "on", cooling: "cooling (fans on)" };
+  var LIT = 0.5; // PROJECTOR_LAMP_LIT_AMPS
+  var CH = { w: 260, h: 84, max: 300 }; // 2 min stray-wake hold + the fans spinning down
   var chartPts = [];
   function ay(a) {
     return CH.h - Math.sqrt(Math.min(a, 2) / 2) * (CH.h - 6); // square-root scale so 0.06 A is visible
@@ -760,16 +762,17 @@
     $("amps-cool").setAttribute("width", "0");
     $("amps-cool-label").setAttribute("opacity", "0");
     $("amps-empty").setAttribute("opacity", "1");
-    var y = ay(0.06);
+    var y = ay(LIT);
     $("amps-thresh").setAttribute("y1", y);
     $("amps-thresh").setAttribute("y2", y);
     $("amps-thresh-label").setAttribute("y", y - 3);
   }
-  function chartStart() {
+  // hold: seconds to shade at the start (the guard's 2-minute hold), 0 for none
+  function chartStart(hold) {
     chartReset();
     $("amps-empty").setAttribute("opacity", "0");
-    $("amps-cool").setAttribute("width", ax(90));
-    $("amps-cool-label").setAttribute("opacity", "1");
+    $("amps-cool").setAttribute("width", ax(hold || 0));
+    $("amps-cool-label").setAttribute("opacity", hold ? "1" : "0");
   }
   function chartPoint(t, a) {
     if (a === null) {
@@ -791,9 +794,9 @@
     el("circle", { cx: ax(t), cy: a === null ? CH.h - 2 : ay(a), r: 3, class: "amps-dot " + cls }, $("amps-dots"));
   }
 
-  // Lamp-off current: fans run hard, then spin down to standby.
+  // Lamp-off current: fans run hard, then spin down to standby (about 0.01 A).
   function fanAmps(t) {
-    var a = t < 100 ? 0.9 - t * 0.004 : Math.max(0.04, 0.5 * Math.exp(-(t - 100) / 12));
+    var a = t < 100 ? 0.9 - t * 0.004 : Math.max(0.01, 0.5 * Math.exp(-(t - 100) / 12));
     return Math.round(a * 100) / 100;
   }
 
@@ -825,18 +828,24 @@
 
     var projectorUp = S.projector === "on";
     if (mode === "music" && !projectorUp) {
-      log("Music with the projector off: it stays off, and the phone streams straight to the receiver");
+      if (S.projector === "cooling") {
+        log("Projector still cooling: music leaves its power on");
+      } else {
+        if (S.projector === "standby") {
+          S.projector = "off";
+          S.amps = 0;
+          rule("coldMusic");
+          log("Projector cold: its power is cut before the receiver wakes, so HDMI-CEC can't light the lamp");
+          render();
+          await realSleep(1200);
+        }
+        log("Music with the projector off: the phone streams straight to the receiver");
+      }
       S.rx = { input: m.input, dsp: m.dsp };
     } else {
-      if (S.projector === "cooling" || S.projector === "polling" || S.projector === "fans") {
-        log("New show during the projector cooldown: cooldown cancelled, power stays on, lamp back on", "good");
-        rule("cooldownCancel");
-        S.projector = "on";
-        await realSleep(1400);
-      }
       if (S.projector !== "on") {
+        log(S.projector === "off" ? "Projector relay closed, lamp warming up" : "Projector wakes from standby over HDMI-CEC, lamp warming up");
         S.projector = "on";
-        log("Projector relay closed, lamp warming up");
       }
       S.amps = 1.92;
       S.rx = { input: m.input, dsp: m.dsp };
@@ -991,55 +1000,19 @@
     render();
   }
 
-  async function cooldown() {
-    S.projector = "cooling";
-    rule("cooldown");
-    chartStart();
-    log("Projector lamp off, fans still running. Mandatory 90 s cooldown");
-    var t = 0;
-    for (; t < 90; t += 5) {
-      if (S.mode && ACTIVE[S.mode]) return;
-      S.amps = fanAmps(t);
-      chartPoint(t, S.amps);
+  // Lamp off, fans cooling it, power on. Plots from chart time t0 until standby.
+  async function spinDown(t0) {
+    for (var k = 0, t = t0; ; k += 5, t += 5) {
+      if (S.projector !== "cooling") return; // a new show woke it
+      var a = fanAmps(k);
+      S.amps = a;
+      chartPoint(t, a);
       render();
+      if (a <= 0.01) break;
       await sleep(5000);
     }
-    S.projector = "polling";
-    var low = 0;
-    var failShown = false;
-    for (var n = 1; n <= 25; n++, t += 10) {
-      if (S.mode && ACTIVE[S.mode]) return;
-      if (OPT.sensor) {
-        low = 0;
-        S.amps = null;
-        chartPoint(t, null);
-        chartDot(t, null, "bad");
-        log("Poll " + n + "/25: current sensor unavailable, retrying", "warn");
-        if (!failShown) rule("sensorFail");
-        failShown = true;
-        render();
-        await sleep(10000);
-        continue;
-      }
-      var a = fanAmps(t);
-      S.amps = a;
-      low = a <= 0.06 ? low + 1 : 0;
-      chartPoint(t, a);
-      chartDot(t, a, a <= 0.06 ? "ok" : "");
-      log("Poll " + n + "/25: " + a.toFixed(2) + " A" + (a <= 0.06 ? " (" + low + " of 2 low readings in a row)" : ""));
-      render();
-      if (low >= 2) {
-        S.projector = "off";
-        S.amps = 0;
-        log("Two readings in a row at or below 0.06 A: projector relay open", "good");
-        render();
-        return;
-      }
-      await sleep(10000);
-    }
-    S.projector = "fans";
-    log("No confirmed reading in 25 tries: mains stay ON so the fans keep running", "warn");
-    rule("sensorFail");
+    S.projector = "standby";
+    log("Lamp cool, fans off: projector in standby at 0.01 A, power still on", "good");
     render();
   }
 
@@ -1102,8 +1075,12 @@
     S.busy = false;
     render();
     if (S.projector === "on") {
-      await sleep(2500);
-      cooldown();
+      S.projector = "cooling";
+      rule("standby");
+      chartStart(0);
+      log("Projector to standby over HDMI-CEC: lamp off, its fans cool it, power stays on");
+      render();
+      spinDown(0);
     }
   }
 
@@ -1121,7 +1098,6 @@
     roomEl.classList.remove("flashing");
     $("scr-flash").setAttribute("opacity", "0");
     OPT.tuners = false;
-    OPT.sensor = false;
     if ($("log")) $("log").textContent = "";
     chartReset();
     rule("empty");
@@ -1260,16 +1236,26 @@
       }
     },
     end: { ok: function () { return idle() && S.inUse && !!done.movieToMusic && !done.end; }, run: endSession },
-    unplug: {
-      resets: true,
-      ok: function () { return idle() && !!done.end && !S.inUse; },
+    stray: {
+      ok: function () { return idle() && !!done.end && !S.inUse && S.projector === "standby"; },
       run: async function () {
-        reset();
-        showNow();
-        OPT.sensor = true;
-        log("Current sensor unplugged", "warn");
-        await realSleep(900);
-        await endSession();
+        log("The TV box wakes up for an update, and over HDMI-CEC it wakes the projector too", "warn");
+        S.projector = "on";
+        S.amps = 1.92;
+        chartStart(120);
+        for (var t = 0; t <= 120; t += 10) {
+          if (S.projector !== "on") return;
+          chartPoint(t, S.amps);
+          render();
+          if (t < 120) await sleep(10000);
+        }
+        rule("strayWake");
+        log("Lamp lit for 2 minutes with nobody using the theater: CEC sleep through the TV box");
+        S.projector = "cooling";
+        var cooling = spinDown(120);
+        await sleep(60000);
+        log("Phone notification: the projector woke up with nobody using the theater. It's back in standby.", "good");
+        await cooling;
       }
     },
     // 6. Game day
@@ -1285,7 +1271,8 @@
     addMmwave: function () { return S.rule === "mmwaveHold"; },
     movieToMusic: function () { return !!done.movieToMusic; },
     td: function () { return !!done.td; },
-    unplug: function () { return S.rule === "sensorFail"; }
+    end: function () { return !!done.end && S.projector === "standby"; },
+    stray: function () { return !!done.stray && S.projector === "standby"; }
   };
   var shown = {};
 
@@ -1318,7 +1305,7 @@
       if (NOTES[id]()) shown[id] = true;
       n.hidden = !shown[id];
     });
-    $("rd-proj").textContent = { off: "off", on: "on", cooling: "cooling down", polling: "checking current", fans: "on (fans protected)" }[S.projector];
+    $("rd-proj").textContent = PROJ_TEXT[S.projector];
     $("rd-rx").textContent = S.rx ? S.rx.input + " · " + S.rx.dsp : "off";
     $("rd-app").textContent = !S.mode
       ? "none"

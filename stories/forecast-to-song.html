@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>How a forecast becomes a song · Matthew Feret</title>
+	<meta name="description" content="How WeatherTunes maps an hourly forecast onto scale, key, tempo and instruments, and keeps it all in tune.">
+	<meta property="og:title" content="How a forecast becomes a song">
+	<meta property="og:description" content="How WeatherTunes maps an hourly forecast onto scale, key, tempo and instruments, and keeps it all in tune.">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://mferet.com/stories/forecast-to-song.html">
+	<link rel="icon" href="../favicon.ico" sizes="32x32">
+	<link rel="icon" href="../images/favicon/favicon.svg" type="image/svg+xml">
+	<link rel="apple-touch-icon" href="../images/favicon/apple-touch-icon.png">
+	<link rel="manifest" href="../images/favicon/manifest.json">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+	<link rel="stylesheet" href="../styles.css?v=20261030">
+	<script>
+		(function () {
+			var t;
+			try { t = localStorage.getItem("theme"); } catch (e) {}
+			if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+			document.documentElement.dataset.theme = t;
+		})();
+	</script>
+	<script defer src="../site.js?v=20261030"></script>
+	<link rel="alternate" type="application/atom+xml" title="Matt Feret · Stories" href="../feed.xml">
+</head>
+<body>
+	<a class="skip" href="#main">Skip to content</a>
+	<header class="site-header">
+		<div class="wrap header-inner">
+			<a class="brand" href="../index.html"><svg class="logo" viewBox="0 0 39 24" aria-hidden="true"><rect class="m" x="0" y="0" width="4" height="4" rx="0.8"/><rect class="f" x="20" y="0" width="4" height="4" rx="0.8"/><rect class="f" x="25" y="0" width="4" height="4" rx="0.8"/><rect class="f" x="30" y="0" width="4" height="4" rx="0.8"/><rect class="f" x="35" y="0" width="4" height="4" rx="0.8"/><rect class="m" x="0" y="5" width="4" height="4" rx="0.8"/><rect class="m" x="5" y="5" width="4" height="4" rx="0.8"/><rect class="m" x="15" y="5" width="4" height="4" rx="0.8"/><rect class="m" x="20" y="5" width="4" height="4" rx="0.8"/><rect class="m" x="0" y="10" width="4" height="4" rx="0.8"/><rect class="m" x="10" y="10" width="4" height="4" rx="0.8"/><rect class="m" x="20" y="10" width="4" height="4" rx="0.8"/><rect class="f" x="25" y="10" width="4" height="4" rx="0.8"/><rect class="f" x="30" y="10" width="4" height="4" rx="0.8"/><rect class="m" x="0" y="15" width="4" height="4" rx="0.8"/><rect class="m" x="20" y="15" width="4" height="4" rx="0.8"/><rect class="m" x="0" y="20" width="4" height="4" rx="0.8"/><rect class="m" x="20" y="20" width="4" height="4" rx="0.8"/></svg><span>Matt Feret</span></a>
+			<nav class="site-nav" aria-label="Main">
+				<a href="../index.html">Home</a>
+				<a href="../basement.html">Theater Automation</a>
+				<a href="../commute.html">Commute</a>
+				<a href="https://mferet.com/WeatherTunes/">WeatherTunes</a>
+				<a href="../projects.html" aria-current="page">Stories</a>
+				<a href="../about.html">About</a>
+			</nav>
+			<button class="lights" type="button" aria-pressed="false"><span class="lights-track" aria-hidden="true"></span><span class="lights-label">Movie mode</span></button>
+		</div>
+	</header>
+
+	<main id="main" class="wrap">
+		<article class="story">
+			<p class="eyebrow"><a href="../projects.html">Stories</a></p>
+			<h1>How a forecast becomes a song</h1>
+			<p class="meta">WeatherTunes · compose.js + mapping.js · <time datetime="2026-10-31">Oct 31, 2026</time></p>
+			<p>
+				WeatherTunes takes one day's hourly forecast and turns it into a song about 20 seconds long. Every hour from midnight to 11 pm gets two beats,
+				so a storm that passes in an hour still gets its moment. I didn't want data beeping at random pitches, so I built it around one rule:
+				the weather picks the musical choices, and music theory keeps them in tune.
+			</p>
+			<table>
+				<thead><tr><th scope="col">Weather</th><th scope="col">Music</th></tr></thead>
+				<tbody>
+					<tr><td>Cloud, rain and storms</td><td>The scale: bright Lydian on a clear, warm day, then major, Mixolydian, Dorian and minor, down to dark Phrygian in a downpour.</td></tr>
+					<tr><td>Air pressure</td><td>The key. Its trend over the day steers the chords: clearing days get progressions that climb, worsening days get ones that fall.</td></tr>
+					<tr><td>Wind</td><td>The tempo, from 100 BPM in still air to 156 in a gale.</td></tr>
+					<tr><td>Temperature, hour by hour</td><td>The melody. The day's high is the song's highest note.</td></tr>
+					<tr><td>Feels-like temperature</td><td>The melody instrument: glass bells in deep cold, then flute, soft keys, plucked strings and marimba, up to a reedy pipe in the heat.</td></tr>
+					<tr><td>Humidity and dew point</td><td>Reverb and swing. Muggy air sounds wetter and plays lazier, and humid air under cloud crackles like vinyl.</td></tr>
+					<tr><td>Cloud cover</td><td>Turns down the treble and steps the melody back in the mix.</td></tr>
+					<tr><td>Rain and snow</td><td>A shuffled beat, and a noise bed that follows the hour: a faint hiss for fog, fuller noise for rain, a deep rumble for storms. Snow turns the rain into bells.</td></tr>
+					<tr><td>Storm fuel (CAPE)</td><td>Distortion. The more energy the air holds for thunderstorms, the more grit the band picks up as the weather turns.</td></tr>
+					<tr><td>Calm, fog or freezing air</td><td>Half-time bass. Rough hours switch it to double time.</td></tr>
+				</tbody>
+			</table>
+			<p>
+				Then the day tells its story. Each hour gets an intensity from its rain, gusts and thunder. The song builds for a few hours before rough
+				weather arrives, swells at the peak while a low drum grows into a roll, and releases afterward with a sparser melody and more reverb.
+				When the sky clearly brightens or darkens, the song changes mode on the same root, so a stormy morning that clears can end in major.
+				A calm day keeps one mood and just breathes with its own small changes.
+			</p>
+			<p class="callout">
+				The theory rules are short: every note stays in the scale, beats 1 and 3 land on a note of the current chord, big leaps move an octave
+				closer, and every section ends on the root or the fifth. The chord-tone rule did the most to make it sound composed instead of random.
+			</p>
+			<p>
+				Three of the sample days show the range. A 47 °C July day in Phoenix plays in C Lydian on a reedy pipe, with a soft arpeggio running
+				through the clear daylight. A drizzly London day plays in F♯ minor on plucked strings over ghostly, wordless voices, with the rain beat
+				under every hour. An Oslo snowstorm plays in A minor on glass bells over a hushed choir, at 156 BPM because of the wind.
+			</p>
+			<p>
+				The hardest part was ordinary weather. Extreme days are easy to tell apart. When I listened to 89 everyday forecasts from 12 cities,
+				too many of them sounded alike, and one organ pad played under 40% of them. So I moved the cut-offs to where everyday weather actually
+				falls, split cloudy days into three different pads, and let calm days swell with changes measured against their own range.
+			</p>
+			<p>The same place and day always give the same song, and the liner notes under each one explain why it sounds the way it does. <a href="https://mferet.com/WeatherTunes/">Hear today's weather where you are.</a></p>
+		</article>
+
+		<nav class="story-nav" aria-label="More stories">
+			<a href="../projects.html">← All stories</a>
+			<a href="phone-crackle.html">Next: The song my phone couldn't play →</a>
+		</nav>
+	</main>
+
+	<footer class="site-footer">
+		<div class="wrap">
+			<p>admin [at] mferet [dot] com · <a href="../Matthew_Feret_Resume.pdf">Résumé</a> · <a href="https://github.com/MFeret11">GitHub</a> · <a href="https://www.linkedin.com/in/mferet/">LinkedIn</a> · <a href="https://soundcloud.com/mferet">SoundCloud</a></p>
+			<p class="fine">Hand-written HTML and CSS. The old version of this site used a UI framework until its CDN disappeared, so this one doesn't.</p>
+		</div>
+	</footer>
+</body>
+</html>

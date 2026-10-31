@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>The song my phone couldn't play · Matthew Feret</title>
+	<meta name="description" content="WeatherTunes crackled on my phone. Two fixes went after symptoms; the third stopped running the synths live at all.">
+	<meta property="og:title" content="The song my phone couldn't play">
+	<meta property="og:description" content="WeatherTunes crackled on my phone. Two fixes went after symptoms; the third stopped running the synths live at all.">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://mferet.com/stories/phone-crackle.html">
+	<link rel="icon" href="../favicon.ico" sizes="32x32">
+	<link rel="icon" href="../images/favicon/favicon.svg" type="image/svg+xml">
+	<link rel="apple-touch-icon" href="../images/favicon/apple-touch-icon.png">
+	<link rel="manifest" href="../images/favicon/manifest.json">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+	<link rel="stylesheet" href="../styles.css?v=20261030">
+	<script>
+		(function () {
+			var t;
+			try { t = localStorage.getItem("theme"); } catch (e) {}
+			if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+			document.documentElement.dataset.theme = t;
+		})();
+	</script>
+	<script defer src="../site.js?v=20261030"></script>
+	<link rel="alternate" type="application/atom+xml" title="Matt Feret · Stories" href="../feed.xml">
+</head>
+<body>
+	<a class="skip" href="#main">Skip to content</a>
+	<header class="site-header">
+		<div class="wrap header-inner">
+			<a class="brand" href="../index.html"><svg class="logo" viewBox="0 0 39 24" aria-hidden="true"><rect class="m" x="0" y="0" width="4" height="4" rx="0.8"/><rect class="f" x="20" y="0" width="4" height="4" rx="0.8"/><rect class="f" x="25" y="0" width="4" height="4" rx="0.8"/><rect class="f" x="30" y="0" width="4" height="4" rx="0.8"/><rect class="f" x="35" y="0" width="4" height="4" rx="0.8"/><rect class="m" x="0" y="5" width="4" height="4" rx="0.8"/><rect class="m" x="5" y="5" width="4" height="4" rx="0.8"/><rect class="m" x="15" y="5" width="4" height="4" rx="0.8"/><rect class="m" x="20" y="5" width="4" height="4" rx="0.8"/><rect class="m" x="0" y="10" width="4" height="4" rx="0.8"/><rect class="m" x="10" y="10" width="4" height="4" rx="0.8"/><rect class="m" x="20" y="10" width="4" height="4" rx="0.8"/><rect class="f" x="25" y="10" width="4" height="4" rx="0.8"/><rect class="f" x="30" y="10" width="4" height="4" rx="0.8"/><rect class="m" x="0" y="15" width="4" height="4" rx="0.8"/><rect class="m" x="20" y="15" width="4" height="4" rx="0.8"/><rect class="m" x="0" y="20" width="4" height="4" rx="0.8"/><rect class="m" x="20" y="20" width="4" height="4" rx="0.8"/></svg><span>Matt Feret</span></a>
+			<nav class="site-nav" aria-label="Main">
+				<a href="../index.html">Home</a>
+				<a href="../basement.html">Theater Automation</a>
+				<a href="../commute.html">Commute</a>
+				<a href="https://mferet.com/WeatherTunes/">WeatherTunes</a>
+				<a href="../projects.html" aria-current="page">Stories</a>
+				<a href="../about.html">About</a>
+			</nav>
+			<button class="lights" type="button" aria-pressed="false"><span class="lights-track" aria-hidden="true"></span><span class="lights-label">Movie mode</span></button>
+		</div>
+	</header>
+
+	<main id="main" class="wrap">
+		<article class="story">
+			<p class="eyebrow"><a href="../projects.html">Stories</a></p>
+			<h1>The song my phone couldn't play</h1>
+			<p class="meta">WeatherTunes · audio · <time datetime="2026-10-27">Oct 27, 2026</time></p>
+			<p>
+				WeatherTunes sounded fine on my laptop. On my phone it crackled and stuttered. Synthesizers in the browser have to make every
+				sample just before it plays, and when the device falls behind, you hear it.
+			</p>
+			<p>
+				My first two fixes went after symptoms. Bigger audio buffers helped a little. Then I built a "32-bit mode" that plays the same song on
+				simpler, console-style instruments, like an old game sound chip. It rendered 29 to 41% faster, and the phone still crackled.
+				Profiling showed why: a song is hundreds of audio nodes, and just running that graph live was the cost, not any one instrument.
+			</p>
+			<p class="callout">
+				So nothing plays live anymore. The song renders offline as fast as the device allows, and the finished audio streams in blocks to a
+				plain player. Play waits a moment until the render will stay ahead, so a slow phone waits a little longer instead of crackling.
+				Muting a part mid-song renders the rest again and crossfades over.
+			</p>
+			<p>It plays cleanly on my phone now. The fix wasn't a faster instrument; it was not running the instruments live at all. <a href="https://mferet.com/WeatherTunes/">Try it on yours.</a></p>
+		</article>
+
+		<nav class="story-nav" aria-label="More stories">
+			<a href="../projects.html">← All stories</a>
+			<a href="touchdown-flashes.html">Next: Touchdown flashes vs. the Zigbee mesh →</a>
+		</nav>
+	</main>
+
+	<footer class="site-footer">
+		<div class="wrap">
+			<p>admin [at] mferet [dot] com · <a href="../Matthew_Feret_Resume.pdf">Résumé</a> · <a href="https://github.com/MFeret11">GitHub</a> · <a href="https://www.linkedin.com/in/mferet/">LinkedIn</a> · <a href="https://soundcloud.com/mferet">SoundCloud</a></p>
+			<p class="fine">Hand-written HTML and CSS. The old version of this site used a UI framework until its CDN disappeared, so this one doesn't.</p>
+		</div>
+	</footer>
+</body>
+</html>

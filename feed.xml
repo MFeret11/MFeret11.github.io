@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+	<title>Matt Feret · Stories</title>
+	<subtitle>Side projects, and the bugs, fixes and design decisions behind them.</subtitle>
+	<link href="https://mferet.com/feed.xml" rel="self"/>
+	<link href="https://mferet.com/projects.html"/>
+	<id>https://mferet.com/projects.html</id>
+	<updated>2026-10-31T12:00:00Z</updated>
+	<author><name>Matthew Feret</name></author>
+	<entry>
+		<title>How a forecast becomes a song</title>
+		<link href="https://mferet.com/stories/forecast-to-song.html"/>
+		<id>https://mferet.com/stories/forecast-to-song.html</id>
+		<published>2026-10-31T12:00:00Z</published>
+		<updated>2026-10-31T12:00:00Z</updated>
+		<summary>How WeatherTunes maps an hourly forecast onto scale, key, tempo and instruments, and keeps it all in tune.</summary>
+	</entry>
+	<entry>
+		<title>The song my phone couldn&#x27;t play</title>
+		<link href="https://mferet.com/stories/phone-crackle.html"/>
+		<id>https://mferet.com/stories/phone-crackle.html</id>
+		<published>2026-10-27T12:00:00Z</published>
+		<updated>2026-10-27T12:00:00Z</updated>
+		<summary>WeatherTunes crackled on my phone. Two fixes went after symptoms; the third stopped running the synths live at all.</summary>
+	</entry>
+	<entry>
+		<title>Touchdown flashes vs. the Zigbee mesh</title>
+		<link href="https://mferet.com/stories/touchdown-flashes.html"/>
+		<id>https://mferet.com/stories/touchdown-flashes.html</id>
+		<published>2026-10-23T12:00:00Z</published>
+		<updated>2026-10-23T12:00:00Z</updated>
+		<summary>Celebrating an Eagles touchdown on twelve Zigbee bulbs without flooding the mesh: hold the color, move only the brightness.</summary>
+	</entry>
+	<entry>
+		<title>The projector you must not unplug</title>
+		<link href="https://mferet.com/stories/projector-interlock.html"/>
+		<id>https://mferet.com/stories/projector-interlock.html</id>
+		<published>2026-10-23T12:00:00Z</published>
+		<updated>2026-10-31T12:00:00Z</updated>
+		<summary>Why my projector now goes to sleep instead of losing power, and the guard that catches it waking up alone.</summary>
+	</entry>
+	<entry>
+		<title>My slowest trip up the stairs took 18.76 seconds</title>
+		<link href="https://mferet.com/stories/slow-stairs.html"/>
+		<id>https://mferet.com/stories/slow-stairs.html</id>
+		<published>2026-10-23T12:00:00Z</published>
+		<updated>2026-10-23T12:00:00Z</updated>
+		<summary>Tuning which-way-are-you-going lighting on the basement stairs against real sensor history.</summary>
+	</entry>
+	<entry>
+		<title>A missing notification reads as &quot;all good&quot;</title>
+		<link href="https://mferet.com/stories/missing-notification.html"/>
+		<id>https://mferet.com/stories/missing-notification.html</id>
+		<published>2026-10-23T12:00:00Z</published>
+		<updated>2026-10-23T12:00:00Z</updated>
+		<summary>SEPTA's API quirks, planning a two-line trip, and the rule that silence is never the answer.</summary>
+	</entry>
+</feed>

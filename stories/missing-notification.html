@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>A missing notification reads as "all good" · Matthew Feret</title>
+	<meta name="description" content="SEPTA's API quirks, planning a two-line trip, and the rule that silence is never the answer.">
+	<meta property="og:title" content="A missing notification reads as "all good"">
+	<meta property="og:description" content="SEPTA's API quirks, planning a two-line trip, and the rule that silence is never the answer.">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://mferet.com/stories/missing-notification.html">
+	<link rel="icon" href="../favicon.ico" sizes="32x32">
+	<link rel="icon" href="../images/favicon/favicon.svg" type="image/svg+xml">
+	<link rel="apple-touch-icon" href="../images/favicon/apple-touch-icon.png">
+	<link rel="manifest" href="../images/favicon/manifest.json">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+	<link rel="stylesheet" href="../styles.css?v=20261030">
+	<script>
+		(function () {
+			var t;
+			try { t = localStorage.getItem("theme"); } catch (e) {}
+			if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+			document.documentElement.dataset.theme = t;
+		})();
+	</script>
+	<script defer src="../site.js?v=20261030"></script>
+	<link rel="alternate" type="application/atom+xml" title="Matt Feret · Stories" href="../feed.xml">
+</head>
+<body>
+	<a class="skip" href="#main">Skip to content</a>
+	<header class="site-header">
+		<div class="wrap header-inner">
+			<a class="brand" href="../index.html"><svg class="logo" viewBox="0 0 39 24" aria-hidden="true"><rect class="m" x="0" y="0" width="4" height="4" rx="0.8"/><rect class="f" x="20" y="0" width="4" height="4" rx="0.8"/><rect class="f" x="25" y="0" width="4" height="4" rx="0.8"/><rect class="f" x="30" y="0" width="4" height="4" rx="0.8"/><rect class="f" x="35" y="0" width="4" height="4" rx="0.8"/><rect class="m" x="0" y="5" width="4" height="4" rx="0.8"/><rect class="m" x="5" y="5" width="4" height="4" rx="0.8"/><rect class="m" x="15" y="5" width="4" height="4" rx="0.8"/><rect class="m" x="20" y="5" width="4" height="4" rx="0.8"/><rect class="m" x="0" y="10" width="4" height="4" rx="0.8"/><rect class="m" x="10" y="10" width="4" height="4" rx="0.8"/><rect class="m" x="20" y="10" width="4" height="4" rx="0.8"/><rect class="f" x="25" y="10" width="4" height="4" rx="0.8"/><rect class="f" x="30" y="10" width="4" height="4" rx="0.8"/><rect class="m" x="0" y="15" width="4" height="4" rx="0.8"/><rect class="m" x="20" y="15" width="4" height="4" rx="0.8"/><rect class="m" x="0" y="20" width="4" height="4" rx="0.8"/><rect class="m" x="20" y="20" width="4" height="4" rx="0.8"/></svg><span>Matt Feret</span></a>
+			<nav class="site-nav" aria-label="Main">
+				<a href="../index.html">Home</a>
+				<a href="../basement.html">Theater Automation</a>
+				<a href="../commute.html">Commute</a>
+				<a href="https://mferet.com/WeatherTunes/">WeatherTunes</a>
+				<a href="../projects.html" aria-current="page">Stories</a>
+				<a href="../about.html">About</a>
+			</nav>
+			<button class="lights" type="button" aria-pressed="false"><span class="lights-track" aria-hidden="true"></span><span class="lights-label">Movie mode</span></button>
+		</div>
+	</header>
+
+	<main id="main" class="wrap">
+		<article class="story">
+			<p class="eyebrow"><a href="../projects.html">Stories</a></p>
+			<h1>A missing notification reads as "all good"</h1>
+			<p class="meta">Good_Morning_Dashboard · FastAPI · <time datetime="2026-10-23">Oct 23, 2026</time></p>
+			<p>
+				Good Morning Dashboard tells my household when to leave for the train. SEPTA's API has character. The parameter for how many results you
+				want is <code>req3</code>; the one that looks right, <code>top</code>, is silently ignored. Delay text is free-form ("On time", "5 min",
+				"Cancelled", "Suspended", or something else entirely), and the code never treats text it can't parse as on time.
+			</p>
+			<p class="callout">
+				The design rule I'm proudest of: a push that doesn't arrive looks exactly like a push saying everything's fine. So every upstream has a
+				cache, stale data is served but flagged in the message, and if the check crashes outright, it still sends a "check failed" push. Silence is never the answer.
+			</p>
+			<p>
+				Transfers were the other fun part. When there's no direct train, it plans each leg separately and pairs them, picking the earliest
+				connection you can still make once live delays are counted. If no connection works at the usual station, it tries the other
+				Center City stations and says where to change instead.
+			</p>
+			<p>
+				The newest lesson came from a gap in that rule. The follow-up pushes stopped as soon as the first train left, which is exactly when the
+				connection becomes the risky part. SEPTA's trip planner stops listing a train once it leaves your station, so now the follow-ups read
+				its live delay from SEPTA's train positions instead and keep checking the connection until it leaves. Without GPS it can't know which
+				train my partner actually makes it to, so the push also lists the next trains whose connection clearly works.
+			</p>
+			<p>
+				I also wanted it to be a polite API client. Home Assistant asks for an update every 30 seconds, so answers under a minute old are now reused,
+				and nothing calls SEPTA outside commute hours. That took it from about 4,300 calls a weekday to about 1,500.
+			</p>
+		</article>
+
+		<nav class="story-nav" aria-label="More stories">
+			<a href="../projects.html">← All stories</a>
+			<a href="slow-stairs.html">Next: My slowest trip up the stairs took 18.76 seconds →</a>
+		</nav>
+	</main>
+
+	<footer class="site-footer">
+		<div class="wrap">
+			<p>admin [at] mferet [dot] com · <a href="../Matthew_Feret_Resume.pdf">Résumé</a> · <a href="https://github.com/MFeret11">GitHub</a> · <a href="https://www.linkedin.com/in/mferet/">LinkedIn</a> · <a href="https://soundcloud.com/mferet">SoundCloud</a></p>
+			<p class="fine">Hand-written HTML and CSS. The old version of this site used a UI framework until its CDN disappeared, so this one doesn't.</p>
+		</div>
+	</footer>
+</body>
+</html>
