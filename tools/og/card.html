@@ -1,0 +1,43 @@
+<!doctype html><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;width:1200px;height:630px;overflow:hidden}
+body{background:#0c0a12;color:#ece9f5;font-family:Inter,sans-serif;position:relative;
+ background-image:radial-gradient(700px 420px at 100% 0%,rgba(124,77,255,.28),transparent 70%),radial-gradient(500px 360px at 0% 100%,rgba(79,195,247,.10),transparent 70%)}
+.top{position:absolute;left:64px;right:64px;top:52px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:16px;font:700 30px "Space Grotesk";letter-spacing:-.01em}
+.logo{width:58px;height:36px}.logo .m{fill:#ece9f5}.logo .f{fill:#a78bfa}
+.url{font:500 24px "JetBrains Mono";color:#a6a1b8}
+.main{position:absolute;left:64px;right:64px;top:150px;bottom:64px;display:flex;gap:48px;align-items:center}
+.text{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font:600 22px "JetBrains Mono";color:#a78bfa;text-transform:uppercase;letter-spacing:.08em;margin:0 0 20px}
+h1{font:700 68px/1.05 "Space Grotesk";letter-spacing:-.02em;margin:0;text-wrap:balance}
+.has-img h1{font-size:58px}
+p.desc{font-size:28px;line-height:1.4;color:#a6a1b8;margin:26px 0 0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-wrap:pretty}
+.has-img p.desc{font-size:25px}
+.img{flex:0 0 auto;max-width:540px;max-height:416px;display:flex}
+.img img{max-width:540px;max-height:416px;border-radius:18px;box-shadow:0 0 0 1px rgba(167,139,250,.25),0 20px 60px rgba(124,77,255,.35)}
+.bar{position:absolute;left:0;right:0;bottom:0;height:8px;background:linear-gradient(90deg,#a78bfa,#4fc3f7)}
+.collage{flex:0 0 520px;height:420px;position:relative}
+.collage img{position:absolute;border-radius:16px;box-shadow:0 0 0 1px rgba(167,139,250,.25),0 18px 50px rgba(0,0,0,.55),0 0 60px rgba(124,77,255,.25)}
+.collage .c1{width:430px;left:0;top:10px;transform:rotate(-3deg)}
+.collage .c2{width:270px;right:0;top:120px;transform:rotate(3deg)}
+.collage .c3{width:190px;left:70px;top:236px;transform:rotate(-1deg)}
+</style>
+<body>
+<div class="top"><div class="brand"><svg class="logo" viewBox="0 0 39 24" aria-hidden="true"><rect class="m" x="0" y="0" width="4" height="4" rx="0.8"/><rect class="f" x="20" y="0" width="4" height="4" rx="0.8"/><rect class="f" x="25" y="0" width="4" height="4" rx="0.8"/><rect class="f" x="30" y="0" width="4" height="4" rx="0.8"/><rect class="f" x="35" y="0" width="4" height="4" rx="0.8"/><rect class="m" x="0" y="5" width="4" height="4" rx="0.8"/><rect class="m" x="5" y="5" width="4" height="4" rx="0.8"/><rect class="m" x="15" y="5" width="4" height="4" rx="0.8"/><rect class="m" x="20" y="5" width="4" height="4" rx="0.8"/><rect class="m" x="0" y="10" width="4" height="4" rx="0.8"/><rect class="m" x="10" y="10" width="4" height="4" rx="0.8"/><rect class="m" x="20" y="10" width="4" height="4" rx="0.8"/><rect class="f" x="25" y="10" width="4" height="4" rx="0.8"/><rect class="f" x="30" y="10" width="4" height="4" rx="0.8"/><rect class="m" x="0" y="15" width="4" height="4" rx="0.8"/><rect class="m" x="20" y="15" width="4" height="4" rx="0.8"/><rect class="m" x="0" y="20" width="4" height="4" rx="0.8"/><rect class="m" x="20" y="20" width="4" height="4" rx="0.8"/></svg><span>Matt Feret</span></div><div class="url">mferet.com</div></div>
+<div class="main" id="main"><div class="text"><p class="eyebrow" id="e"></p><h1 id="t"></h1><p class="desc" id="d"></p></div></div>
+<div class="bar"></div>
+<script>
+const q=new URLSearchParams(location.search);
+document.getElementById("e").textContent=q.get("e")||"";
+document.getElementById("t").textContent=q.get("t")||"";
+document.getElementById("d").textContent=q.get("d")||"";
+if(q.get("img")){const m=document.getElementById("main");m.classList.add("has-img");document.body.classList.add("has-img");
+ const w=document.createElement("div");w.className="img";const i=document.createElement("img");i.src=q.get("img");w.appendChild(i);m.appendChild(w);}
+if(q.get("collage")){const m=document.getElementById("main");m.classList.add("has-img");
+ const w=document.createElement("div");w.className="collage";
+ [["img-room.png","c1"],["img-commute.png","c2"],["img-wt.png","c3"]].forEach(([src,c])=>{const i=document.createElement("img");i.src=src;i.className=c;w.appendChild(i);});
+ m.appendChild(w);}
+</script>
