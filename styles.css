@@ -610,6 +610,20 @@ a.card {
   height: auto;
 }
 
+.photo {
+  position: relative;
+}
+
+.photo figcaption {
+  position: absolute;
+  left: 12px;
+  bottom: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: #fff;
+  text-shadow: 0 1px 3px #000;
+}
+
 .embed {
   width: 100%;
   border: 0;
