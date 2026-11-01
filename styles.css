@@ -454,12 +454,12 @@ a.card {
 }
 
 :root[data-theme="dark"] .hero-art img {
-  filter: brightness(0.55) saturate(1.2) hue-rotate(15deg);
+  filter: brightness(0.75);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .hero-art img {
-    filter: brightness(0.55) saturate(1.2) hue-rotate(15deg);
+    filter: brightness(0.75);
   }
 }
 
@@ -598,6 +598,7 @@ a.card {
 
 .photo {
   margin: 0;
+  align-self: start;
   border-radius: var(--radius);
   overflow: hidden;
   border: 1px solid var(--border);
