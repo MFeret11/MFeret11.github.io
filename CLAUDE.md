@@ -47,6 +47,8 @@ Keep these off the site:
 - the commuter's real stations, times or coordinates (call them "partner" or "my household")
 - LAN or Tailscale IPs
 
+Keep the day job general (employer, stack, the kind of platform): no metrics, scale numbers or project details from the current employer.
+
 The contact address is shown obfuscated, as `admin [at] mferet [dot] com`. The simulator must never call the real Home Assistant.
 
 `Matthew_Feret_Resume.pdf` is the current résumé, linked from the About day-job card, the About contact buttons, and every page footer. It shows only the obfuscated contact address.

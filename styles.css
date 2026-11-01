@@ -417,7 +417,7 @@ a.card {
 .hero {
   display: grid;
   gap: 32px;
-  grid-template-columns: 1.4fr 1fr;
+  grid-template-columns: 1.3fr 1fr;
   align-items: center;
 }
 
@@ -426,6 +426,7 @@ a.card {
 }
 
 .hero-art {
+  margin: 0;
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--glow);
