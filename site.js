@@ -30,3 +30,11 @@
 
   sync();
 })();
+
+// Phones: the nav is a sideways strip; start it with this page's link in view.
+(function () {
+  var nav = document.querySelector(".site-nav");
+  var here = nav && nav.querySelector('[aria-current="page"]');
+  if (!here || nav.scrollWidth <= nav.clientWidth) return;
+  nav.scrollLeft = here.offsetLeft - nav.offsetLeft - (nav.clientWidth - here.offsetWidth) / 2;
+})();

@@ -262,16 +262,52 @@ code {
   box-shadow: 0 0 10px #7c4dff;
 }
 
+/* Phones: one row. The links become a strip you can swipe sideways (the logo
+   already goes home), fading out at the right edge to show there's more. */
 @media (max-width: 640px) {
+  .header-inner {
+    flex-wrap: nowrap;
+    gap: 8px;
+    min-height: 54px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+  .brand {
+    flex: none;
+  }
   .site-nav {
-    order: 3;
-    width: 100%;
-    margin-left: -10px;
+    flex: 1 1 auto;
+    min-width: 0;
+    margin-left: 0;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 0 20px 0 12px;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 18px, #000 calc(100% - 24px), transparent);
+    mask-image: linear-gradient(to right, transparent, #000 18px, #000 calc(100% - 24px), transparent);
+  }
+  .site-nav::-webkit-scrollbar {
+    display: none;
+  }
+  .site-nav a {
+    flex: none;
+    white-space: nowrap;
+    padding: 6px 8px;
+  }
+  .site-nav a:first-child {
+    display: none;
   }
   .lights {
-    margin-left: auto;
+    flex: none;
+    margin-left: 0;
   }
   .lights-label {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand span {
     display: none;
   }
 }
