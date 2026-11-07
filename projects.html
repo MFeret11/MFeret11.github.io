@@ -40,9 +40,9 @@
 			<a class="brand" href="index.html"><svg class="logo" viewBox="0 0 39 24" aria-hidden="true"><rect class="m" x="0" y="0" width="4" height="4" rx="0.8"/><rect class="f" x="20" y="0" width="4" height="4" rx="0.8"/><rect class="f" x="25" y="0" width="4" height="4" rx="0.8"/><rect class="f" x="30" y="0" width="4" height="4" rx="0.8"/><rect class="f" x="35" y="0" width="4" height="4" rx="0.8"/><rect class="m" x="0" y="5" width="4" height="4" rx="0.8"/><rect class="m" x="5" y="5" width="4" height="4" rx="0.8"/><rect class="m" x="15" y="5" width="4" height="4" rx="0.8"/><rect class="m" x="20" y="5" width="4" height="4" rx="0.8"/><rect class="m" x="0" y="10" width="4" height="4" rx="0.8"/><rect class="m" x="10" y="10" width="4" height="4" rx="0.8"/><rect class="m" x="20" y="10" width="4" height="4" rx="0.8"/><rect class="f" x="25" y="10" width="4" height="4" rx="0.8"/><rect class="f" x="30" y="10" width="4" height="4" rx="0.8"/><rect class="m" x="0" y="15" width="4" height="4" rx="0.8"/><rect class="m" x="20" y="15" width="4" height="4" rx="0.8"/><rect class="m" x="0" y="20" width="4" height="4" rx="0.8"/><rect class="m" x="20" y="20" width="4" height="4" rx="0.8"/></svg><span>Matt Feret</span></a>
 			<nav class="site-nav" aria-label="Main">
 				<a href="index.html">Home</a>
+				<a href="https://mferet.com/WeatherTunes/">WeatherTunes</a>
 				<a href="basement.html">Theater Automation</a>
 				<a href="commute.html">Commute</a>
-				<a href="https://mferet.com/WeatherTunes/">WeatherTunes</a>
 				<a href="projects.html" aria-current="page">Stories</a>
 				<a href="about.html">About</a>
 			</nav>
@@ -60,6 +60,13 @@
 		<section class="section grid" aria-label="The projects">
 			<div class="card">
 				<p class="eyebrow">Project</p>
+				<h2>WeatherTunes</h2>
+				<ul class="tags"><li>JavaScript</li><li>Tone.js</li><li>Web Audio</li><li>Open-Meteo</li></ul>
+				<p>Turns today's forecast into a short piece of music. Each hour gets two beats: temperature shapes the melody, cloud and rain pick the scale, air pressure picks the key, wind sets the tempo, and the climate picks the instruments. The sky plays too, from moonrise bells to meteor showers. Music-theory rules keep it in tune, and the same place and day always gives the same song, with liner notes explaining why.</p>
+				<div class="actions"><a class="btn" href="https://mferet.com/WeatherTunes/">Hear your weather</a><a class="btn" href="https://github.com/MFeret11/WeatherTunes">GitHub</a></div>
+			</div>
+			<div class="card">
+				<p class="eyebrow">Project</p>
 				<h2>Basement Theater &amp; Home Automation</h2>
 				<ul class="tags"><li>Python</li><li>Home Assistant</li><li>pyscript</li><li>Docker</li><li>GitHub Actions</li></ul>
 				<p>One button picks a mode (movie, game, sports, music), and the house sets the receiver, launches the app, sets the lights and puts matching artwork on a wall dashboard. About 140 tests, run in CI on every commit, because every commit is a deploy.</p>
@@ -71,13 +78,6 @@
 				<ul class="tags"><li>Python</li><li>FastAPI</li><li>APScheduler</li><li>Docker</li><li>pytest</li></ul>
 				<p>A FastAPI service that says when to leave for the train. It plans SEPTA Regional Rail trips with transfers, tracks live delays, and sends a weekday push with the train home and the next ones that still connect. It keeps following both legs until the connecting train leaves, pushing again only if things get worse.</p>
 				<div class="actions"><a class="btn" href="https://github.com/MFeret11/Good_Morning_Dashboard">GitHub</a><a class="btn" href="commute.html">Try the demo</a></div>
-			</div>
-			<div class="card">
-				<p class="eyebrow">Project</p>
-				<h2>WeatherTunes</h2>
-				<ul class="tags"><li>JavaScript</li><li>Tone.js</li><li>Web Audio</li><li>Open-Meteo</li></ul>
-				<p>Turns today's forecast into a short piece of music. Each hour gets two beats: temperature shapes the melody, cloud and rain pick the scale, air pressure picks the key, wind sets the tempo, and the climate picks the instruments. The sky plays too, from moonrise bells to meteor showers. Music-theory rules keep it in tune, and the same place and day always gives the same song, with liner notes explaining why.</p>
-				<div class="actions"><a class="btn" href="https://mferet.com/WeatherTunes/">Hear your weather</a><a class="btn" href="https://github.com/MFeret11/WeatherTunes">GitHub</a></div>
 			</div>
 		</section>
 
