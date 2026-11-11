@@ -21,7 +21,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
-	<link rel="stylesheet" href="styles.css?v=20261106c">
+	<link rel="stylesheet" href="styles.css?v=20261111">
 	<script>
 		(function () {
 			var t;
@@ -30,7 +30,7 @@
 			document.documentElement.dataset.theme = t;
 		})();
 	</script>
-	<script defer src="site.js?v=20261106"></script>
+	<script defer src="site.js?v=20261111"></script>
 </head>
 <body>
 	<a class="skip" href="#main">Skip to content</a>
@@ -53,11 +53,11 @@
 		<section class="hero">
 			<div>
 				<p class="eyebrow">Hi, I'm Matt</p>
-				<h1>I build things and share what I build.</h1>
+				<h1>I build things my household actually uses.</h1>
 				<p class="lede">
 					I'm a senior software engineer in the Philadelphia area, working on enterprise software in Java, Python and AWS.
-					On my own time I've made a home theater that runs itself, a commuter dashboard for my household,
-					and an app that turns today's forecast into music. Come check them out.
+					On my own time I've made a home theater that runs itself, a commuter dashboard for my partner,
+					and an app that plays today's forecast as music. Each one is here to try.
 				</p>
 				<div class="actions">
 					<a class="btn primary" href="projects.html">See the projects →</a>
@@ -73,25 +73,36 @@
 
 		<section class="section" aria-labelledby="explore">
 			<h2 id="explore">Poke around</h2>
+			<div class="grid">
+				<a class="card shot" href="https://mferet.com/WeatherTunes/">
+					<img src="images/home/weathertunes.jpg" alt="WeatherTunes playing a hot day in Phoenix: an album cover drawn from the forecast, a Play button and the hour-by-hour chart" width="960" height="540">
+					<div class="shot-body">
+						<p class="eyebrow">New</p>
+						<h3>WeatherTunes</h3>
+						<p>Your forecast, played as music. Sunny days sound bright, storms go dark and minor, and the wind sets the tempo. Try your own city.</p>
+						<p class="go">Hear your weather →</p>
+					</div>
+				</a>
+				<a class="card shot" href="basement.html">
+					<img src="images/home/theater.jpg" alt="The basement simulator on game day: a football game on the projector screen and every light flashing green" loading="lazy" width="960" height="541">
+					<div class="shot-body">
+						<p class="eyebrow">Interactive</p>
+						<h3>Theater Automation</h3>
+						<p>It started with not wanting to get up for the lights, and kept growing one problem at a time. Walk downstairs, press play, score a touchdown, then try to break the projector's safety interlock.</p>
+						<p class="go">Go downstairs →</p>
+					</div>
+				</a>
+				<a class="card shot" href="commute.html">
+					<img src="images/home/commute.jpg" alt="The commute demo: a kitchen display warning of a missed connection beside the phone notifications that followed it" loading="lazy" width="960" height="541">
+					<div class="shot-body">
+						<p class="eyebrow">Interactive</p>
+						<h3>Good Morning Dashboard</h3>
+						<p>A commute on two Regional Rail lines, planned as one trip, which the SEPTA app can't do. Watch a weekday play out, then see what happens when a connection slips.</p>
+						<p class="go">Watch a commute →</p>
+					</div>
+				</a>
+			</div>
 			<div class="grid grid-2">
-				<a class="card" href="https://mferet.com/WeatherTunes/">
-					<p class="eyebrow">New</p>
-					<h3>WeatherTunes</h3>
-					<p>Your forecast, played as music. Sunny days sound bright, storms go dark and minor, and the wind sets the tempo. Try your own city.</p>
-					<p class="go">Hear your weather →</p>
-				</a>
-				<a class="card" href="basement.html">
-					<p class="eyebrow">Interactive</p>
-					<h3>Theater Automation</h3>
-					<p>It started with not wanting to get up for the lights, and kept growing one problem at a time. Walk downstairs, bring a friend, press play, score a touchdown, then try to break the projector's safety interlock.</p>
-					<p class="go">Go downstairs →</p>
-				</a>
-				<a class="card" href="commute.html">
-					<p class="eyebrow">Interactive</p>
-					<h3>Good Morning Dashboard</h3>
-					<p>A commute on two Regional Rail lines, planned as one trip, which the SEPTA app can't do. Watch a weekday play out on the kitchen display and the phone, then see what happens when a connection slips.</p>
-					<p class="go">Watch a commute →</p>
-				</a>
 				<a class="card" href="projects.html">
 					<p class="eyebrow">Stories</p>
 					<h3>Projects and stories</h3>

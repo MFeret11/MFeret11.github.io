@@ -262,9 +262,9 @@ code {
   box-shadow: 0 0 10px #7c4dff;
 }
 
-/* Phones: one row. The links become a strip you can swipe sideways (the logo
+/* Phones and tablets: one row. The links become a strip you can swipe sideways (the logo
    already goes home), fading out at the right edge to show there's more. */
-@media (max-width: 640px) {
+@media (max-width: 900px) {
   .header-inner {
     flex-wrap: nowrap;
     gap: 8px;
@@ -306,8 +306,84 @@ code {
   }
 }
 
+@media (min-width: 481px) and (max-width: 900px) {
+  .has-menu .lights-label {
+    display: inline;
+  }
+}
+
+/* With site.js running, phones get a Menu button instead of the strip:
+   the links drop down under the header, all six of them. */
+.menu-btn {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font: 500 0.85rem var(--font-body);
+  padding: 6px 12px 6px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.menu-btn svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.menu-btn[aria-expanded="true"] {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+@media (max-width: 900px) {
+  .has-menu .menu-btn {
+    display: inline-flex;
+    margin-left: auto;
+  }
+  .has-menu .site-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 2px;
+    overflow: visible;
+    padding: 8px 12px 12px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .has-menu .site-nav.open {
+    display: flex;
+  }
+  .has-menu .site-nav a,
+  .has-menu .site-nav a:first-child {
+    display: block;
+    padding: 12px;
+    font-size: 1rem;
+  }
+}
+
 @media (max-width: 480px) {
   .brand span {
+    display: none;
+  }
+  .has-menu .brand span {
+    display: inline;
+  }
+}
+
+@media (max-width: 340px) {
+  .has-menu .brand span {
     display: none;
   }
 }
@@ -503,6 +579,51 @@ a.card {
 @media (max-width: 760px) {
   .hero {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Home: the three demos, each with a still of what you'll find there. */
+.card.shot {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+}
+
+.shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+  transition: filter 0.8s ease;
+}
+
+.shot-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 20px 24px 24px;
+}
+
+.shot-body .go {
+  margin-top: auto;
+  margin-bottom: 0;
+}
+
+.grid + .grid {
+  margin-top: 20px;
+}
+
+:root[data-theme="dark"] .shot img {
+  filter: brightness(0.82);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .shot img {
+    filter: brightness(0.82);
   }
 }
 

@@ -31,10 +31,38 @@
   sync();
 })();
 
-// Phones: the nav is a sideways strip; start it with this page's link in view.
+// Phones: the links sit behind a Menu button, so every page is one tap away.
+// Without this script the nav stays a strip you can swipe sideways.
 (function () {
-  var nav = document.querySelector(".site-nav");
-  var here = nav && nav.querySelector('[aria-current="page"]');
-  if (!here || nav.scrollWidth <= nav.clientWidth) return;
-  nav.scrollLeft = here.offsetLeft - nav.offsetLeft - (nav.clientWidth - here.offsetWidth) / 2;
+  var header = document.querySelector(".site-header");
+  var nav = header && header.querySelector(".site-nav");
+  if (!nav) return;
+
+  var btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "menu-btn";
+  btn.setAttribute("aria-expanded", "false");
+  nav.id = nav.id || "site-nav";
+  btn.setAttribute("aria-controls", nav.id);
+  btn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>Menu</span>';
+  nav.parentNode.insertBefore(btn, nav);
+  header.classList.add("has-menu");
+
+  function set(open) {
+    nav.classList.toggle("open", open);
+    btn.setAttribute("aria-expanded", String(open));
+  }
+
+  btn.addEventListener("click", function () {
+    set(!nav.classList.contains("open"));
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && nav.classList.contains("open")) {
+      set(false);
+      btn.focus();
+    }
+  });
+  document.addEventListener("click", function (e) {
+    if (!header.contains(e.target)) set(false);
+  });
 })();
