@@ -10,7 +10,7 @@ My personal site: who I am, what I've built, and the stories behind it. Live at 
 
 ## How it's built
 
-Hand-written HTML, CSS and JavaScript with no framework and no build step, hosted on GitHub Pages. Light and dark themes follow your system setting and can be toggled. Ideas for what's next are in [BACKLOG.md](BACKLOG.md).
+Hand-written HTML, CSS and JavaScript with no framework and no build step, hosted on GitHub Pages. Light and dark themes follow your system setting and can be toggled.
 
 To run it locally:
 
